@@ -6,7 +6,6 @@ import Layout from '@/components/Layout'
 import Heading from '@/components/Heading'
 import ContactForm from '@/components/forms/ContactForm'
 
-console.log(ContactForm)
 
 
 // const inter = Inter({ subsets: ['latin'] })

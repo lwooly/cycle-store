@@ -3,6 +3,10 @@ import Image from 'next/image'
 // import { Inter } from 'next/font/google'
 import {Button, AccessTimeFilledIcon} from '@/components/mui'
 import Layout from '@/components/Layout'
+import Heading from '@/components/Heading'
+import ContactForm from '@/components/forms/ContactForm'
+
+console.log(ContactForm)
 
 
 // const inter = Inter({ subsets: ['latin'] })
@@ -17,11 +21,8 @@ export default function Contact() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <h1>Contact</h1>
-        <Button variant='contained'>
-          <AccessTimeFilledIcon/>
-          Button
-          </Button>
+        <Heading>Contact</Heading>
+        <ContactForm/>
       </Layout>
     </>
   )

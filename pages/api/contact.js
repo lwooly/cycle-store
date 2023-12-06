@@ -13,12 +13,14 @@ const handler = async (req, res) => {
 console.log(req.body)
 const msg = {
   to: from,
-  cc: ADMIN_EMAIL,
+  // cc: ADMIN_EMAIL,
   from: ADMIN_EMAIL,
   subject,
   text: message,
   html: `<p>${message}</p>>`
 };
+
+console.log(msg)
 
   try {
     await sgMail.send(msg);

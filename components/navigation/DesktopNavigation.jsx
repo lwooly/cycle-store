@@ -56,7 +56,16 @@ function DesktopNavigation({
             >
               Contact
             </Button>
+            <Button
+              sx={{ color: lightTextColor }}
+              component={Link}
+              href={"/blog"}
+            >
+              Blog
+            </Button>
+            
           </Box>
+          
         </Toolbar>
       </AppBar>
     </>

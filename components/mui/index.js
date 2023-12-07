@@ -16,7 +16,12 @@ import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import TextField from "@mui/material/TextField"
+import TextField from "@mui/material/TextField";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia" ;
+
 
 export {
   Button,
@@ -37,5 +42,9 @@ export {
   AppBar,
   MenuIcon,
   Toolbar,
-  TextField
+  TextField,
+  Card,
+  CardActions, 
+  CardContent, 
+  CardMedia,
 };

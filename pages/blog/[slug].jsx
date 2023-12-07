@@ -1,10 +1,24 @@
-
 import Head from 'next/head'
 import Image from 'next/image'
 import Layout from '@/components/Layout'
 import Heading from '@/components/Heading'
+const { HYGRAPH_ENDPOINT, HYGRAPH_TOKEN } = process.env
+import { AllPosts, SinglePost } from '@/lib/hygraph/queries'
+import { Card, CardActions, CardContent, CardMedia, List, ListItem } from '@/components/mui'
+import Link from 'next/link'
+import Markdown from 'marked-react'
 
-export default function SinglePost() {
+
+export default function BlogPost({ssd = {}}) {
+
+    console.log(ssd)
+
+    const {
+        title,
+        body,
+        heroImage: { url }
+    } = ssd;
+
   return (
     <>
       <Head>
@@ -14,10 +28,82 @@ export default function SinglePost() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading>Single Post</Heading>
+        <Heading></Heading>
+        <Card component={'article'} sx={{width:'100%'}}>
+                    <CardMedia sx={{display:'grid', placeContent:'center'}}>
+                        <Image alt={title} src={url} width={400} height={300}/>
+                    </CardMedia>
+                    <CardContent>
+                        <Heading component='h2'>{title}</Heading>
+                        <Markdown>
+                        {body}
+                        </Markdown>
+                    </CardContent>
+                </Card>
       </Layout>
     </>
   )
-}
+};
 
-const getStaticProps = () => {}
+
+export const getStaticPaths = async () => {
+    //make call to hygraph to get blog posts
+const allPosts = await fetch(HYGRAPH_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset="UTF8"',
+      "Authorization": `Bearer ${HYGRAPH_TOKEN}`
+    },
+    body: JSON.stringify({
+      query: AllPosts
+    })
+  })
+  .then((res) => res.json())
+  .then((res) => {
+    // console.log(res.data.blogPosts)
+    return res.data.blogPosts
+  })
+  .catch((err) => console.log(`API ERROR:`, err));
+
+//   console.log(`ALL POSTS` , allPosts)
+
+  const paths = allPosts.map((post) => ({
+    params: {slug: post.slug },
+  }));
+
+  console.log(`PATHS`, paths)
+
+  return {
+    paths,
+    fallback: false
+  };
+};
+
+
+export const getStaticProps = async ({ params }) => {
+    //make call to hygraph to get blog posts
+    
+    const post = await fetch(HYGRAPH_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset="UTF8"',
+          "Authorization": `Bearer ${HYGRAPH_TOKEN}`
+        },
+        body: JSON.stringify({
+            query: SinglePost,
+            variables: { slug: params.slug }
+        })
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(`POST`, res.data.blogPost)
+        return res.data.blogPost
+      })
+      .catch((err) => console.log(`API ERROR:`, err));
+    
+      return {
+        props: {
+            ssd: post,
+        },
+      };
+    }

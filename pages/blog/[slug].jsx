@@ -11,8 +11,6 @@ import Markdown from 'marked-react'
 
 export default function BlogPost({ssd = {}}) {
 
-    console.log(ssd)
-
     const {
         title,
         body,
@@ -65,8 +63,6 @@ const allPosts = await fetch(HYGRAPH_ENDPOINT, {
   })
   .catch((err) => console.log(`API ERROR:`, err));
 
-//   console.log(`ALL POSTS` , allPosts)
-
   const paths = allPosts.map((post) => ({
     params: {slug: post.slug },
   }));
@@ -96,7 +92,6 @@ export const getStaticProps = async ({ params }) => {
       })
       .then((res) => res.json())
       .then((res) => {
-        console.log(`POST`, res.data.blogPost)
         return res.data.blogPost
       })
       .catch((err) => console.log(`API ERROR:`, err));

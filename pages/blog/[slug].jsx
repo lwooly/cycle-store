@@ -8,7 +8,6 @@ import { Card, CardActions, CardContent, CardMedia, List, ListItem } from '@/com
 import Link from 'next/link'
 import Markdown from 'marked-react'
 
-
 export default function BlogPost({ssd = {}}) {
 
     const {

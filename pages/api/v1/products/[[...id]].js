@@ -20,7 +20,7 @@ const handler = nc({
 })
 
 .post(baseRoute,async (req, res) => {
-    addProduct(res, res);
+    addProduct(req, res);
 })
 
 .put(baseRoute, async(req, res) => {

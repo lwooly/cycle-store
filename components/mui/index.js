@@ -21,6 +21,8 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia" ;
+import CircularProgress from "@mui/material/CircularProgress";
+
 
 
 export {
@@ -47,4 +49,5 @@ export {
   CardActions, 
   CardContent, 
   CardMedia,
+  CircularProgress,
 };

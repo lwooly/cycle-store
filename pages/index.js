@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import {Button, AccessTimeFilledIcon} from '@/components/mui'
+import { Button, AccessTimeFilledIcon} from '@/components/mui'
 import Layout from '@/components/Layout'
 import Heading from '@/components/Heading'
 import Paragraph from '@/components/Paragraph'
+import QueryBoundary from '@/components/QueryBoundary'
+import ProductList from '@/components/ProductList'
 
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
@@ -20,11 +20,9 @@ export default function Home() {
       </Head>
       <Layout>
         <Heading component={'h2'}>Home Page</Heading>
-        <Paragraph>loremmfjabnsfkjabfksbfkjasbf</Paragraph>
-        <Button variant='contained'>
-          <AccessTimeFilledIcon/>
-          Button
-          </Button>
+        <QueryBoundary>
+          <ProductList/>
+        </QueryBoundary>
       </Layout>
     </>
   )

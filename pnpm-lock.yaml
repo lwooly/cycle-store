@@ -29,6 +29,9 @@ dependencies:
   '@tanstack/react-query-devtools':
     specifier: link:tanstack/react-query@4.29.5
     version: link:tanstack/react-query@4.29.5
+  axios:
+    specifier: ^1.6.2
+    version: 1.6.2
   ggl:
     specifier: ^0.0.1
     version: 0.0.1

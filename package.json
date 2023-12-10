@@ -17,6 +17,7 @@
     "@sendgrid/mail": "^8.1.0",
     "@tanstack/react-query": "^4.29.5",
     "@tanstack/react-query-devtools": "link:tanstack/react-query@4.29.5",
+    "axios": "^1.6.2",
     "ggl": "^0.0.1",
     "graphql-request": "^6.1.0",
     "image-url-validator": "^1.0.4",

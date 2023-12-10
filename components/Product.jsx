@@ -7,7 +7,6 @@ import {
 } from "@/components/mui";
 import Heading from "@/components/Heading";
 import Paragraph from "./Paragraph";
-import { ErrorBoundary } from "react-error-boundary";
 import Image from "next/image";
 
 const Product = ({
@@ -24,13 +23,12 @@ const Product = ({
     }
 
   return (
-    <Card component={"div"} sx={{ width: "100%" }}>
+    <Card component={"div"} sx={{ width: "100%", height: "500px" }}>
       <CardMedia sx={{ display: "grid", placeContent: "center" }}>
-        <Image src={imageSrc} alt={title} width={200} height={200} onError={errorHandler}
-            />
+        <Image src={imageSrc} alt={title} width={200} height={200} onError={errorHandler}/>
       </CardMedia>
       <CardContent>
-        <Heading component="h2">{title}</Heading>
+        <Heading component="h2" variant={'h5'}>{title}</Heading>
         <Paragraph>About: {description}</Paragraph>
         <Paragraph>Price: {price}</Paragraph>
         <Paragraph>In Stock: {quantity}</Paragraph>

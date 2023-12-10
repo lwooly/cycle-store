@@ -1,17 +1,20 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "@/lib/theme";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, Hydrate } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function App({ Component, pageProps }) {
-  const queryClient = new QueryClient();
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <CssBaseline />
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <Hydrate state={pageProps.dehydratedState}>
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </Hydrate>
       </QueryClientProvider>
     </>
   );

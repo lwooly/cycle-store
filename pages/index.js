@@ -7,6 +7,9 @@ import Heading from '@/components/Heading'
 import Paragraph from '@/components/Paragraph'
 import QueryBoundary from '@/components/QueryBoundary'
 import ProductList from '@/components/ProductList'
+import { getProductsFromDB } from '@/lib/api-functions/server/products/queries'
+import { QueryClient, dehydrate } from '@tanstack/react-query'
+import { STORAGE_KEY } from '@/lib/tq/products/settings'
 
 
 export default function Home() {
@@ -27,6 +30,22 @@ export default function Home() {
       </Layout>
     </>
   )
+}
+
+export const getStaticProps = async (context) => {
+  const products = await getProductsFromDB().catch((err) => console.log(err))
+  const queryClient = new QueryClient()
+
+  await queryClient.setQueryData(
+    [STORAGE_KEY],
+    JSON.parse(JSON.stringify(products))
+  )
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient)
+    }
+  }
 }
 
 

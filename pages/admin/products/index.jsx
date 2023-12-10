@@ -1,8 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useContext } from "react";
-import { Inter } from "next/font/google";
-import { Button, AccessTimeFilledIcon } from "@/components/mui";
+import Link from "next/link"
 import Layout from "@/components/Layout";
 import Heading from "@/components/Heading";
 import Paragraph from "@/components/Paragraph";
@@ -11,10 +9,9 @@ import ProductList from "@/components/ProductList";
 import { getProductsFromDB } from "@/lib/api-functions/server/products/queries";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { STORAGE_KEY } from "@/lib/tq/products/settings";
-import { UIContext, UIProvider } from "@/components/contexts/UI.context";
+import { Button } from "@/components/mui"
 
-export default function Home() {
-  const { showMessage } = useContext(UIContext);
+export default function AdminProductList() {
 
   return (
     <>
@@ -25,18 +22,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component={"h2"}>Home Page</Heading>
-        <Button
-          variant="contained"
-          onClick={() =>
-            showMessage({
-              type: "error",
-              string: "test message",
-            })
-          }
-        >
-          Alert
-        </Button>
+        <Heading component={"h2"}>Products</Heading>
+        <Button component={Link} href={`/admin/products/add`}>Add Product</Button>
         <QueryBoundary>
           <ProductList />
         </QueryBoundary>

@@ -56,6 +56,8 @@ const ProductList = () => {
 
 const {isLoading, isError, error, data:products} = useProducts()
 
+console.log(products)
+
 if (isLoading) {
     return <CircularProgress/>
 }
@@ -63,7 +65,6 @@ if (isLoading) {
 if (isError) {
     return <Paragraph>{error.message}</Paragraph>
 }
-
 
   return (
     <List component={"ol"} 
@@ -74,7 +75,7 @@ if (isError) {
       {products.map((product) => (
         <ListItem key={product._id} component={"li"}>
             <ErrorBoundary>
-            <Product values={product}/>
+            <Product values={product} linkToProductPage headingLevel="h5"/>
             </ErrorBoundary>
         </ListItem>
       ))}

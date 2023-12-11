@@ -1,11 +1,21 @@
 import Head from "next/head";
 import Layout from "@/components/Layout";
 import Heading from "@/components/Heading";
-import { addProductMutateFn } from "@/lib/tq/products/api";
+import { HOST, addProductMutateFn } from "@/lib/tq/products/api";
 
 import ProductForm from '@/components/forms/ProductForm'
+import { useAddProduct } from "@/lib/tq/products/mutations";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
 
 export default function AddProduct() {
+  const addMutate = useAddProduct()
+  const router = useRouter()
+
+  const addHandler = (data) => {
+    addMutate.mutate(data)
+    router.push('/admin/products/')
+  }
 
   return (
     <>
@@ -17,7 +27,7 @@ export default function AddProduct() {
       </Head>
       <Layout>
         <Heading component={"h1"}>Add Product</Heading>
-        <ProductForm submitHandler={addProductMutateFn} />
+        <ProductForm submitHandler={addHandler} />
       </Layout>
     </>
   );

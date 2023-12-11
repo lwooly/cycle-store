@@ -2,12 +2,19 @@ import Head from "next/head";
 import Layout from "@/components/Layout";
 import Heading from "@/components/Heading";
 import ProductForm from "@/components/forms/ProductForm";
-import { updateProductMutateFn } from "@/lib/tq/products/api";
+import { HOST } from "@/lib/tq/products/api";
 import { getProductFromDB } from "@/lib/api-functions/server/products/queries";
+import { useUpdateProduct } from "@/lib/tq/products/mutations";
+import { useRouter } from "next/router";
 
 export default function UpdateProduct({ssd}) {
+const router = useRouter()
+  const updateMutation = useUpdateProduct()
 
-    console.log(ssd)
+  const updateHandler = (data) => {
+    updateMutation.mutate(data);
+   router.push('/admin/products');
+  }
 
   return (
     <>
@@ -19,7 +26,7 @@ export default function UpdateProduct({ssd}) {
       </Head>
       <Layout>
         <Heading component={"h1"}>Update Product</Heading>
-        <ProductForm product={ssd} submitHandler={updateProductMutateFn}/>
+        <ProductForm product={ssd} submitHandler={updateHandler}/>
         {/* ssd to autofill form for update */}
       </Layout>
     </>
@@ -28,9 +35,7 @@ export default function UpdateProduct({ssd}) {
 
 
 export const getServerSideProps = async ({params}) => {
-    console.log(`params`, params)
     const product = await getProductFromDB(params.id).catch((err) => {console.log(err)})
-    console.log(`product`, product)
     return {
         props: {
             ssd: JSON.parse(JSON.stringify(product))

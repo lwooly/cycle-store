@@ -4,7 +4,9 @@ import { CircularProgress, List, ListItem } from "@/components/mui";
 import Paragraph from "@/components/Paragraph";
 import Product from "@/components/Product";
 
-const ProductList = () => {
+const ProductList = ({
+  removeHandler = () => {},
+}) => {
 //   const products = [
 //     {
 //       _id: "1",
@@ -56,7 +58,7 @@ const ProductList = () => {
 
 const {isLoading, isError, error, data:products} = useProducts()
 
-console.log(products)
+// console.log(products)
 
 if (isLoading) {
     return <CircularProgress/>
@@ -75,7 +77,7 @@ if (isError) {
       {products.map((product) => (
         <ListItem key={product._id} component={"li"}>
             <ErrorBoundary>
-            <Product values={product} linkToProductPage headingLevel="h5"/>
+            <Product values={product} linkToProductPage headingLevel="h5" removeHandler={removeHandler}/>
             </ErrorBoundary>
         </ListItem>
       ))}

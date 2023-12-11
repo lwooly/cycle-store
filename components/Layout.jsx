@@ -24,7 +24,7 @@ function Layout({children}) {
         <Header />
       </header>
       <main>
-        <Container maxWidth="md">
+        <Container maxWidth="xl">
           {children}
         </Container>
       </main>

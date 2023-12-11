@@ -11,6 +11,8 @@ import Heading from "@/components/Heading";
 import Paragraph from "./Paragraph";
 import Image from "next/image";
 import Link from 'next/link'
+import { removeProductMutateFn } from "@/lib/tq/products/api";
+import { useQueryClient } from "@tanstack/react-query";
 
 const hyphenate = (str) => str.replaceAll(" ", "-");
 const slugify = (str, id) => `${hyphenate(str).toLowerCase()}-${id}`;
@@ -19,8 +21,9 @@ const Product = ({
   values: { _id, title, description, price, quantity, image, favorites },
   linkToProductPage,
   headingLevel = 'h2',
-  isAdmin
+  removeHandler = () => console.log('no delete handler provided'),
 }) => {
+  const queryClient = useQueryClient()
   const [imageSrc, setImageSrc] = useState(image);
   // const [showProductLink, setShowProductLink] = useState(false)
 
@@ -66,6 +69,13 @@ const Product = ({
           component={Link}
         >
           Update Product
+        </Button>
+        <Button
+          variant="contained"
+          aria-label="delete"
+          onClick={() => removeHandler(_id)}
+        >
+          Delete Product
         </Button>
       </CardActions>
     </Card>

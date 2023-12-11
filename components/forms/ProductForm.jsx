@@ -36,15 +36,6 @@ const ProductForm = ({ submitHandler, product }) => {
   const submitFn = (vals) => {
     setFormValues(vals);
     submitHandler(vals);
-
-    //show updated values in form for update form
-    if (product) {
-      reset(formValues);
-    // reset to blank form for add form
-    } else {
-      reset();
-    }
-    
   };
 
   const formRowStyle = {

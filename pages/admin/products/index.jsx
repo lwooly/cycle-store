@@ -10,8 +10,15 @@ import { getProductsFromDB } from "@/lib/api-functions/server/products/queries";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { STORAGE_KEY } from "@/lib/tq/products/settings";
 import { Button } from "@/components/mui"
+import { useRemoveProduct } from "@/lib/tq/products/mutations";
 
 export default function AdminProductList() {
+
+  const removeMutation = useRemoveProduct();
+
+  const removeHandler = (id) => {
+    removeMutation.mutate(id)
+  }
 
   return (
     <>
@@ -25,7 +32,7 @@ export default function AdminProductList() {
         <Heading component={"h2"}>Products Admin</Heading>
         <Button component={Link} href={`/admin/products/add`}>Add Product</Button>
         <QueryBoundary>
-          <ProductList/>
+          <ProductList removeHandler={removeHandler}/>
         </QueryBoundary>
       </Layout>
     </>

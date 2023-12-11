@@ -1,15 +1,9 @@
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link"
 import Layout from "@/components/Layout";
 import Heading from "@/components/Heading";
-import Paragraph from "@/components/Paragraph";
-import QueryBoundary from "@/components/QueryBoundary";
-import ProductList from "@/components/ProductList";
-import { getProductsFromDB } from "@/lib/api-functions/server/products/queries";
-import { QueryClient, dehydrate } from "@tanstack/react-query";
-import { STORAGE_KEY } from "@/lib/tq/products/settings";
-import { Button } from "@/components/mui"
+import { addProductMutateFn } from "@/lib/tq/products/api";
+
+import ProductForm from '@/components/forms/ProductForm'
 
 export default function AddProduct() {
 
@@ -23,13 +17,14 @@ export default function AddProduct() {
       </Head>
       <Layout>
         <Heading component={"h1"}>Add Product</Heading>
-        <p>Form goes here</p>
+        <ProductForm submitHandler={addProductMutateFn} />
       </Layout>
     </>
   );
 }
 
-export const getStaticProps = async (context) => {
+// render page at build time on server
+export const getStaticProps = async () => {
   return {
     props: {},
   };

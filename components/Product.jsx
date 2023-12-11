@@ -18,7 +18,8 @@ const slugify = (str, id) => `${hyphenate(str).toLowerCase()}-${id}`;
 const Product = ({
   values: { _id, title, description, price, quantity, image, favorites },
   linkToProductPage,
-  headingLevel = 'h2'
+  headingLevel = 'h2',
+  isAdmin
 }) => {
   const [imageSrc, setImageSrc] = useState(image);
   // const [showProductLink, setShowProductLink] = useState(false)
@@ -59,6 +60,13 @@ const Product = ({
         >
           Go to product page
         </Button>}
+        <Button
+          variant="contained"
+          href={`/admin/products/update/${_id}`}
+          component={Link}
+        >
+          Update Product
+        </Button>
       </CardActions>
     </Card>
   );

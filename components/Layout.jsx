@@ -18,22 +18,6 @@ function Layout({children}) {
     hideDuration,
   } = useContext(UIContext);
 
-  const action = (props) => {
-    console.log(props);
-    return (
-      <React.Fragment>
-        <IconButton
-          size="small"
-          aria-label="close"
-          color="inherit"
-          onClick={handleClose}
-        >
-          <CloseIcon fontSize="small" />
-        </IconButton>
-      </React.Fragment>
-    );
-  };
-
   return (
     <>
       <header>
@@ -51,7 +35,14 @@ function Layout({children}) {
       >
         <Alert onClose={handleClose} severity={severity} sx={{ width: "100%", mb:0 }}>
           {message}
-          {action}
+          <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={handleClose}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
         </Alert>
       </Snackbar>
     </>

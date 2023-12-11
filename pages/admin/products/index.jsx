@@ -22,10 +22,10 @@ export default function AdminProductList() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component={"h2"}>Products</Heading>
+        <Heading component={"h2"}>Products Admin</Heading>
         <Button component={Link} href={`/admin/products/add`}>Add Product</Button>
         <QueryBoundary>
-          <ProductList />
+          <ProductList/>
         </QueryBoundary>
       </Layout>
     </>

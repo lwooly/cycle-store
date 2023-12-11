@@ -1,17 +1,13 @@
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link"
 import Layout from "@/components/Layout";
 import Heading from "@/components/Heading";
-import Paragraph from "@/components/Paragraph";
-import QueryBoundary from "@/components/QueryBoundary";
-import ProductList from "@/components/ProductList";
-import { getProductsFromDB } from "@/lib/api-functions/server/products/queries";
-import { QueryClient, dehydrate } from "@tanstack/react-query";
-import { STORAGE_KEY } from "@/lib/tq/products/settings";
-import { Button } from "@/components/mui"
+import ProductForm from "@/components/forms/ProductForm";
+import { updateProductMutateFn } from "@/lib/tq/products/api";
+import { getProductFromDB } from "@/lib/api-functions/server/products/queries";
 
-export default function AddProduct() {
+export default function UpdateProduct({ssd}) {
+
+    console.log(ssd)
 
   return (
     <>
@@ -22,15 +18,22 @@ export default function AddProduct() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component={"h1"}>Add Product</Heading>
-        <p>Form goes here</p>
+        <Heading component={"h1"}>Update Product</Heading>
+        <ProductForm product={ssd} submitHandler={updateProductMutateFn}/>
+        {/* ssd to autofill form for update */}
       </Layout>
     </>
   );
 }
 
-export const getStaticProps = async (context) => {
-  return {
-    props: {},
-  };
+
+export const getServerSideProps = async ({params}) => {
+    console.log(`params`, params)
+    const product = await getProductFromDB(params.id).catch((err) => {console.log(err)})
+    console.log(`product`, product)
+    return {
+        props: {
+            ssd: JSON.parse(JSON.stringify(product))
+        }
+    }
 };

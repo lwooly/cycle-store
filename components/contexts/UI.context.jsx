@@ -14,12 +14,12 @@ export const UIContext = createContext({
 export const UIProvider = ({children}) => {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
-    const [severity, setServerity] = useState('');
+    const [severity, setServerity] = useState('info');
 
     const onClose = () => {
         setOpen(false);
         setMessage('');
-        setServerity('');
+        setServerity('info');
     };
 
     const showMessage = ({type, string}) => {

@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import Heading from "@/components/Heading";
 import { HOST, addOrderMutateFn } from "@/lib/tq/orders/api";
 
-import OrderForm from '@/components/forms/OrderForm'
+// import OrderForm from '@/components/forms/OrderForm'
 import { useAddOrder } from "@/lib/tq/orders/mutations";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/router";
@@ -27,7 +27,7 @@ export default function AddOrder() {
       </Head>
       <Layout>
         <Heading component={"h1"}>Add Order</Heading>
-        <OrderForm submitHandler={addHandler} />
+        {/* <OrderForm submitHandler={addHandler} /> */}
       </Layout>
     </>
   );

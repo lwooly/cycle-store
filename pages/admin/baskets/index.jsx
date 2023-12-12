@@ -30,7 +30,6 @@ export default function AdminBasketList() {
       </Head>
       <Layout>
         <Heading component={"h2"}>Baskets Admin</Heading>
-        <Button component={Link} href={`/admin/Baskets/add`}>Add Basket</Button>
         <QueryBoundary>
           <BasketList removeHandler={removeHandler}/>
         </QueryBoundary>

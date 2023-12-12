@@ -30,7 +30,7 @@ export default function AdminOrderList() {
       </Head>
       <Layout>
         <Heading component={"h2"}>Orders Admin</Heading>
-        <Button component={Link} href={`/admin/Orders/add`}>Add Order</Button>
+        <Button component={Link} href={`/admin/orders/add`}>Add Order</Button>
         <QueryBoundary>
           <OrderList removeHandler={removeHandler}/>
         </QueryBoundary>

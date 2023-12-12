@@ -1,13 +1,13 @@
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
-import { useProducts } from "@/lib/tq/products/queries";
+import { useBaskets } from "@/lib/tq/baskets/queries";
 import { CircularProgress, List, ListItem } from "@/components/mui";
 import Paragraph from "@/components/Paragraph";
-import Product from "@/components/Product";
+import Basket from "@/components/Basket";
 
-const ProductList = ({
+const BasketList = ({
   removeHandler = () => {},
 }) => {
-//   const products = [
+//   const Baskets = [
 //     {
 //       _id: "1",
 //       title: "Premium Espresso Machine",
@@ -56,10 +56,9 @@ const ProductList = ({
 //     },
 //   ];
 
-const {isLoading, isError, error, data:products} = useProducts()
+const {isLoading, isError, error, data:baskets} = useBaskets()
 
-// console.log(products)
-
+// console.log(Baskets)
 if (isLoading) {
     return <CircularProgress/>
 }
@@ -68,7 +67,7 @@ if (isError) {
     return <Paragraph>{error.message}</Paragraph>
 }
 
-if (!products.length) return <Paragraph>No products available</Paragraph>
+if (!baskets.length) return <Paragraph>No items in basket</Paragraph>
 
   return (
     <List component={"ol"} 
@@ -76,10 +75,10 @@ if (!products.length) return <Paragraph>No products available</Paragraph>
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
     }}>
-      {products.map((product) => (
-        <ListItem key={product._id} component={"li"}>
+      {baskets.map((basket) => (
+        <ListItem key={basket._id} component={"li"}>
             <ErrorBoundary>
-            <Product values={product} linkToProductPage headingLevel="h5" removeHandler={removeHandler}/>
+            <Basket values={basket} linkToBasketPage headingLevel="h5" removeHandler={removeHandler}/>
             </ErrorBoundary>
         </ListItem>
       ))}
@@ -88,4 +87,4 @@ if (!products.length) return <Paragraph>No products available</Paragraph>
 };
 
 
-export default ProductList;
+export default BasketList;

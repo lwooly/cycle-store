@@ -42,7 +42,7 @@ function DesktopNavigation({
               flexGrow: 1,
             }}
           >
-            Design Shop
+            Coffee Shop
           </Typography>
           <Box
             sx={{

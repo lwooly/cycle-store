@@ -18,9 +18,7 @@ const defaults = {
 
 const ProductForm = ({ submitHandler, product }) => {
   const [formValues, setFormValues] = useState(product);
-  const [imgError, setImgError] = useState(false);
-
-  console.log(imgError)
+  const [imageSrc, setImageSrc] = useState("");
 
   let schema = addProductSchema;
   if (product) {
@@ -42,27 +40,38 @@ const ProductForm = ({ submitHandler, product }) => {
 
   // watch image url field
   const imageUrl = watch("image");
+// check if image url is valid prior to rendering image component.
+  const isValidUrl = (url) => {
+  try {
+    new URL(url)
+    return url.startsWith('/') || url.startsWith('http://') || url.startsWith('https://')
+  } catch (err) {
+    return false
+  }
+}
 
-  //reset error status so code checks url when url is changed by user;
-  useEffect(() => {
-    setImgError(false);
-  }, [imageUrl])
-
-  //show image
+// render preview image if url is valid
   const renderImage = () => {
-    if (imgError) {
-      return (<Paragraph>No image at this url</Paragraph>)
+    if(!isValidUrl(imageUrl)) {
+      return (<Paragraph>No image at url</Paragraph>)
     } else {
       return (
-        <Image
-          alt={"Preview image"}
-          src={imageUrl}
-          height={200}
-          width={200}
-          onError={() => setImgError(true)}
-        />
-      );
+      <Image
+      alt={"Preview image"}
+      src={imageUrl}
+      height={200}
+      width={200}
+      onError={(err) => errorHandler(err)}
+    />)
     }
+  }
+
+  const defaultImgSrc =
+    "https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+  const errorHandler = (error) => {
+    console.log("Image loading error", error);
+    setImageSrc(defaultImgSrc);
   };
 
   const submitFn = (vals) => {
@@ -93,6 +102,7 @@ const ProductForm = ({ submitHandler, product }) => {
             )}
           />
         </div>
+        {renderImage()}
         <div style={formRowStyle}>
           <Controller
             control={control}
@@ -176,7 +186,7 @@ const ProductForm = ({ submitHandler, product }) => {
           Submit
         </Button>
       </form>
-      <ErrorBoundary>{renderImage()}</ErrorBoundary>
+    
     </>
   );
 };

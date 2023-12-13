@@ -1,24 +1,23 @@
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link"
-import Layout from "@/components/Layout";
-import Heading from "@/components/Heading";
-import Paragraph from "@/components/Paragraph";
-import QueryBoundary from "@/components/QueryBoundary";
-import BasketList from "@/components/BasketList";
-import { getBasketsFromDB } from "@/lib/api-functions/server/baskets/queries";
-import { QueryClient, dehydrate } from "@tanstack/react-query";
-import { STORAGE_KEY } from "@/lib/tq/baskets/settings";
-import { Button } from "@/components/mui"
-import { useRemoveBasket } from "@/lib/tq/baskets/mutations";
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import Layout from '@/components/Layout';
+import Heading from '@/components/Heading';
+import Paragraph from '@/components/Paragraph';
+import QueryBoundary from '@/components/QueryBoundary';
+import BasketList from '@/components/BasketList';
+import { getBasketsFromDB } from '@/lib/api-functions/server/baskets/queries';
+import { STORAGE_KEY } from '@/lib/tq/baskets/settings';
+import { Button } from '@/components/mui';
+import { useRemoveBasket } from '@/lib/tq/baskets/mutations';
 
 export default function AdminBasketList() {
-
   const removeMutation = useRemoveBasket();
 
   const removeHandler = (id) => {
-    removeMutation.mutate(id)
-  }
+    removeMutation.mutate(id);
+  };
 
   return (
     <>
@@ -29,9 +28,9 @@ export default function AdminBasketList() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component={"h2"}>Baskets Admin</Heading>
+        <Heading component="h2">Baskets Admin</Heading>
         <QueryBoundary>
-          <BasketList removeHandler={removeHandler}/>
+          <BasketList removeHandler={removeHandler} />
         </QueryBoundary>
       </Layout>
     </>
@@ -44,7 +43,7 @@ export const getStaticProps = async (context) => {
 
   await queryClient.setQueryData(
     [STORAGE_KEY],
-    JSON.parse(JSON.stringify(Baskets))
+    JSON.parse(JSON.stringify(Baskets)),
   );
 
   return {

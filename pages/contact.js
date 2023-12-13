@@ -1,12 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Head from 'next/head';
+import Image from 'next/image';
 // import { Inter } from 'next/font/google'
-import {Button, AccessTimeFilledIcon} from '@/components/mui'
-import Layout from '@/components/Layout'
-import Heading from '@/components/Heading'
-import ContactForm from '@/components/forms/ContactForm'
-
-
+import { Button, AccessTimeFilledIcon } from '@/components/mui';
+import Layout from '@/components/Layout';
+import Heading from '@/components/Heading';
+import ContactForm from '@/components/forms/ContactForm';
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -21,8 +19,8 @@ export default function Contact() {
       </Head>
       <Layout>
         <Heading>Contact</Heading>
-        <ContactForm/>
+        <ContactForm />
       </Layout>
     </>
-  )
+  );
 }

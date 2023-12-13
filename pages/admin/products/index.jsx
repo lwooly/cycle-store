@@ -1,24 +1,23 @@
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link"
-import Layout from "@/components/Layout";
-import Heading from "@/components/Heading";
-import Paragraph from "@/components/Paragraph";
-import QueryBoundary from "@/components/QueryBoundary";
-import ProductList from "@/components/ProductList";
-import { getProductsFromDB } from "@/lib/api-functions/server/products/queries";
-import { QueryClient, dehydrate } from "@tanstack/react-query";
-import { STORAGE_KEY } from "@/lib/tq/products/settings";
-import { Button } from "@/components/mui"
-import { useRemoveProduct } from "@/lib/tq/products/mutations";
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import Layout from '@/components/Layout';
+import Heading from '@/components/Heading';
+import Paragraph from '@/components/Paragraph';
+import QueryBoundary from '@/components/QueryBoundary';
+import ProductList from '@/components/ProductList';
+import { getProductsFromDB } from '@/lib/api-functions/server/products/queries';
+import { STORAGE_KEY } from '@/lib/tq/products/settings';
+import { Button } from '@/components/mui';
+import { useRemoveProduct } from '@/lib/tq/products/mutations';
 
 export default function AdminProductList() {
-
   const removeMutation = useRemoveProduct();
 
   const removeHandler = (id) => {
-    removeMutation.mutate(id)
-  }
+    removeMutation.mutate(id);
+  };
 
   return (
     <>
@@ -29,10 +28,12 @@ export default function AdminProductList() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component={"h2"}>Products Admin</Heading>
-        <Button component={Link} href={`/admin/products/add`}>Add Product</Button>
+        <Heading component="h2">Products Admin</Heading>
+        <Button component={Link} href="/admin/products/add">
+          Add Product
+        </Button>
         <QueryBoundary>
-          <ProductList removeHandler={removeHandler}/>
+          <ProductList removeHandler={removeHandler} />
         </QueryBoundary>
       </Layout>
     </>
@@ -45,7 +46,7 @@ export const getStaticProps = async (context) => {
 
   await queryClient.setQueryData(
     [STORAGE_KEY],
-    JSON.parse(JSON.stringify(products))
+    JSON.parse(JSON.stringify(products)),
   );
 
   return {

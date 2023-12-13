@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   ListItem,
   Card,
@@ -6,38 +9,35 @@ import {
   CardMedia,
   CardActions,
   Button,
-} from "@/components/mui";
-import Heading from "@/components/Heading";
-import Paragraph from "./Paragraph";
-import Image from "next/image";
-import Link from 'next/link'
-import { removeBasketMutateFn } from "@/lib/tq/baskets/api";
-import { useQueryClient } from "@tanstack/react-query";
+} from '@/components/mui';
+import Heading from '@/components/Heading';
+import Paragraph from './Paragraph';
+import { removeBasketMutateFn } from '@/lib/tq/baskets/api';
 
-const hyphenate = (str) => str.replaceAll(" ", "-");
+const hyphenate = (str) => str.replaceAll(' ', '-');
 const slugify = (str, id) => `${hyphenate(str).toLowerCase()}-${id}`;
 
-const Basket = ({
+function Basket({
   values: { _id, title, description, price, quantity, image, favorites },
   linkToBasketPage,
   headingLevel = 'h2',
   removeHandler = () => console.log('no delete handler provided'),
-}) => {
-  const queryClient = useQueryClient()
+}) {
+  const queryClient = useQueryClient();
   const [imageSrc, setImageSrc] = useState(image);
   // const [showBasketLink, setShowBasketLink] = useState(false)
 
   const defaultImgSrc =
-    "https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+    'https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
   const errorHandler = (error) => {
-    console.log("Default to backup image", error);
+    console.log('Default to backup image', error);
     setImageSrc(defaultImgSrc);
   };
 
   return (
-    <Card component={"div"} sx={{ width: "100%", height: "500px" }}>
-      <CardMedia sx={{ display: "grid", placeContent: "center" }}>
+    <Card component="div" sx={{ width: '100%', height: '500px' }}>
+      <CardMedia sx={{ display: 'grid', placeContent: 'center' }}>
         <Image
           src={imageSrc}
           alt={title}
@@ -53,16 +53,18 @@ const Basket = ({
         <Paragraph>About: {description}</Paragraph>
         <Paragraph>Price: {price}</Paragraph>
         <Paragraph>In Stock: {quantity}</Paragraph>
-        <Paragraph>Favorites: {favorites ? favorites : 0}</Paragraph>
+        <Paragraph>Favorites: {favorites || 0}</Paragraph>
       </CardContent>
       <CardActions>
-        {linkToBasketPage && <Button
-          variant="contained"
-          href={`/baskets/${slugify(title, _id)}`}
-          component={Link}
-        >
-          Go to Basket page
-        </Button>}
+        {linkToBasketPage && (
+          <Button
+            variant="contained"
+            href={`/baskets/${slugify(title, _id)}`}
+            component={Link}
+          >
+            Go to Basket page
+          </Button>
+        )}
         <Button
           variant="contained"
           href={`/admin/baskets/update/${_id}`}
@@ -80,6 +82,6 @@ const Basket = ({
       </CardActions>
     </Card>
   );
-};
+}
 
 export default Basket;

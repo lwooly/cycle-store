@@ -1,14 +1,22 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import Layout from '@/components/Layout'
-import Heading from '@/components/Heading'
-const { HYGRAPH_ENDPOINT, HYGRAPH_TOKEN } = process.env
-import { AllPosts } from '@/lib/hygraph/queries'
-import { Card, CardActions, CardContent, CardMedia, List, ListItem } from '@/components/mui'
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import Layout from '@/components/Layout';
+import Heading from '@/components/Heading';
+import { AllPosts } from '@/lib/hygraph/queries';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  List,
+  ListItem,
+} from '@/components/mui';
 
-export default function Blog({ssd = []}) {
-    console.log(ssd, `ssd`)
+const { HYGRAPH_ENDPOINT, HYGRAPH_TOKEN } = process.env;
+
+export default function Blog({ ssd = [] }) {
+  console.log(ssd, `ssd`);
   return (
     <>
       <Head>
@@ -19,48 +27,49 @@ export default function Blog({ssd = []}) {
       </Head>
       <Layout>
         <Heading>Blog</Heading>
-        <List component={'ol'} sx={{listStyle:'none'}}>
-            {ssd.map(({id, title, slug, heroImage:{ url }}) => (
+        <List component="ol" sx={{ listStyle: 'none' }}>
+          {ssd.map(({ id, title, slug, heroImage: { url } }) => (
             <ListItem key={id}>
-                <Card component={'article'} sx={{width:'100%'}}>
-                    <CardMedia sx={{display:'grid', placeContent:'center'}}>
-                        <Image alt={title} src={url} width={200} height={200}/>
-                    </CardMedia>
-                    <CardContent>
-                        <Heading component='h2'>{title}</Heading>
-                    </CardContent>
-                    <CardActions>
-                        <Link href={`/blog/${slug}`}>Read more...</Link>
-                    </CardActions>
-                </Card>
-            </ListItem>) )}
+              <Card component="article" sx={{ width: '100%' }}>
+                <CardMedia sx={{ display: 'grid', placeContent: 'center' }}>
+                  <Image alt={title} src={url} width={200} height={200} />
+                </CardMedia>
+                <CardContent>
+                  <Heading component="h2">{title}</Heading>
+                </CardContent>
+                <CardActions>
+                  <Link href={`/blog/${slug}`}>Read more...</Link>
+                </CardActions>
+              </Card>
+            </ListItem>
+          ))}
         </List>
       </Layout>
     </>
-  )
+  );
 }
 
-
 export const getStaticProps = async () => {
-//make call to hygraph to get blog posts
+  // make call to hygraph to get blog posts
 
-const allPosts = await fetch(HYGRAPH_ENDPOINT, {
+  const allPosts = await fetch(HYGRAPH_ENDPOINT, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json; charset="UTF8"',
-      "Authorization": `Bearer ${HYGRAPH_TOKEN}`
+      Authorization: `Bearer ${HYGRAPH_TOKEN}`,
     },
     body: JSON.stringify({
-      query: AllPosts
-    })
-  }).then((res) => res.json())
-  .catch((err) => console.log(`API ERROR:`, err));
+      query: AllPosts,
+    }),
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log(`API ERROR:`, err));
 
-  const posts = allPosts.data.blogPosts
+  const posts = allPosts.data.blogPosts;
 
   return {
     props: {
-        ssd: posts,
+      ssd: posts,
     },
   };
-}
+};

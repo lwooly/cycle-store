@@ -1,21 +1,21 @@
-import Head from "next/head";
-import Layout from "@/components/Layout";
-import Heading from "@/components/Heading";
-import { HOST, addOrderMutateFn } from "@/lib/tq/orders/api";
+import Head from 'next/head';
+import { redirect } from 'next/navigation';
+import { useRouter } from 'next/router';
+import Layout from '@/components/Layout';
+import Heading from '@/components/Heading';
+import { HOST, addOrderMutateFn } from '@/lib/tq/orders/api';
 
 // import OrderForm from '@/components/forms/OrderForm'
-import { useAddOrder } from "@/lib/tq/orders/mutations";
-import { redirect } from "next/navigation";
-import { useRouter } from "next/router";
+import { useAddOrder } from '@/lib/tq/orders/mutations';
 
 export default function AddOrder() {
-  const addMutate = useAddOrder()
-  const router = useRouter()
+  const addMutate = useAddOrder();
+  const router = useRouter();
 
   const addHandler = (data) => {
-    addMutate.mutate(data)
-    router.push('/admin/orders/')
-  }
+    addMutate.mutate(data);
+    router.push('/admin/orders/');
+  };
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function AddOrder() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component={"h1"}>Add Order</Heading>
+        <Heading component="h1">Add Order</Heading>
         {/* <OrderForm submitHandler={addHandler} /> */}
       </Layout>
     </>
@@ -34,8 +34,6 @@ export default function AddOrder() {
 }
 
 // render page at build time on server
-export const getStaticProps = async () => {
-  return {
-    props: {},
-  };
-};
+export const getStaticProps = async () => ({
+  props: {},
+});

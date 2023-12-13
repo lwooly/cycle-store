@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
-import Header from "./Header";
+import React, { useContext } from 'react';
+import Header from './Header';
 import {
   Container,
   Alert,
   Snackbar,
   IconButton,
   CloseIcon,
-} from "@/components/mui";
-import { UIContext } from "@/components/contexts/UI.context";
+} from '@/components/mui';
+import { UIContext } from '@/components/contexts/UI.context';
 
-function Layout({children}) {
+function Layout({ children }) {
   const {
     isOpen: open,
     severity,
@@ -24,25 +24,27 @@ function Layout({children}) {
         <Header />
       </header>
       <main>
-        <Container maxWidth="xl">
-          {children}
-        </Container>
+        <Container maxWidth="xl">{children}</Container>
       </main>
       <Snackbar
         open={open}
         autoHideDuration={hideDuration}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%", mb:0 }}>
+        <Alert
+          onClose={handleClose}
+          severity={severity}
+          sx={{ width: '100%', mb: 0 }}
+        >
           {message}
           <IconButton
-          size="small"
-          aria-label="close"
-          color="inherit"
-          onClick={handleClose}
-        >
-          <CloseIcon fontSize="small" />
-        </IconButton>
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
         </Alert>
       </Snackbar>
     </>

@@ -1,17 +1,17 @@
-import Head from "next/head";
-import Image from "next/image";
-import { useContext } from "react";
-import { Inter } from "next/font/google";
-import { Button, AccessTimeFilledIcon } from "@/components/mui";
-import Layout from "@/components/Layout";
-import Heading from "@/components/Heading";
-import Paragraph from "@/components/Paragraph";
-import QueryBoundary from "@/components/QueryBoundary";
-import ProductList from "@/components/ProductList";
-import { getProductsFromDB } from "@/lib/api-functions/server/products/queries";
-import { QueryClient, dehydrate } from "@tanstack/react-query";
-import { STORAGE_KEY } from "@/lib/tq/products/settings";
-import { UIContext, UIProvider } from "@/components/contexts/UI.context";
+import Head from 'next/head';
+import Image from 'next/image';
+import { useContext } from 'react';
+import { Inter } from 'next/font/google';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import { Button, AccessTimeFilledIcon } from '@/components/mui';
+import Layout from '@/components/Layout';
+import Heading from '@/components/Heading';
+import Paragraph from '@/components/Paragraph';
+import QueryBoundary from '@/components/QueryBoundary';
+import ProductList from '@/components/ProductList';
+import { getProductsFromDB } from '@/lib/api-functions/server/products/queries';
+import { STORAGE_KEY } from '@/lib/tq/products/settings';
+import { UIContext, UIProvider } from '@/components/contexts/UI.context';
 
 export default function Home() {
   const { showMessage } = useContext(UIContext);
@@ -25,13 +25,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component={"h2"}>Home Page</Heading>
+        <Heading component="h2">Home Page</Heading>
         <Button
           variant="contained"
           onClick={() =>
             showMessage({
-              type: "error",
-              string: "test message",
+              type: 'error',
+              string: 'test message',
             })
           }
         >
@@ -51,7 +51,7 @@ export const getStaticProps = async (context) => {
 
   await queryClient.setQueryData(
     [STORAGE_KEY],
-    JSON.parse(JSON.stringify(products))
+    JSON.parse(JSON.stringify(products)),
   );
 
   return {

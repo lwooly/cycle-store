@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { TextField, Button } from "@/components/mui";
-import { sendEmail } from '@/lib/api-functions/client/index'
-
+import React, { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { TextField, Button } from '@/components/mui';
+import { sendEmail } from '@/lib/api-functions/client/index';
 
 const schema = yup
   .object()
@@ -15,15 +14,13 @@ const schema = yup
   })
   .required();
 
-
 const defaults = {
-  from: "",
-  subject: "",
-  message: "",
+  from: '',
+  subject: '',
+  message: '',
 };
 
-
-const ContactForm = ({ submitHandler }) => {
+function ContactForm({ submitHandler }) {
   const {
     handleSubmit,
     formState: { errors, isDirty, isValid, isSubmitting },
@@ -32,18 +29,18 @@ const ContactForm = ({ submitHandler }) => {
     formState,
   } = useForm({
     resolver: yupResolver(schema),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: defaults,
   });
 
   const submitFn = (vals) => {
     reset();
     console.log(vals);
-    sendEmail(vals)
+    sendEmail(vals);
   };
 
   const formRowStyle = {
-    marginBlockEnd: "1em",
+    marginBlockEnd: '1em',
   };
 
   return (
@@ -104,7 +101,7 @@ const ContactForm = ({ submitHandler }) => {
         primary="true"
         variant="contained"
         disabled={!isDirty}
-        sx={{mx:2}}
+        sx={{ mx: 2 }}
       >
         Reset
       </Button>
@@ -116,9 +113,8 @@ const ContactForm = ({ submitHandler }) => {
       >
         Submit
       </Button>
-    
     </form>
   );
-};
+}
 
 export default ContactForm;

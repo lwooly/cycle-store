@@ -1,29 +1,29 @@
+import { useQueryErrorResetBoundary } from '@tanstack/react-query';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Suspense } from 'react';
+import { Button, CircularProgress } from '@/components/mui';
+import Paragraph from '@/components/Paragraph';
 
-import { useQueryErrorResetBoundary } from '@tanstack/react-query'
-import { ErrorBoundary } from "react-error-boundary";
-import { Suspense } from "react";
-import { Button, CircularProgress } from "@/components/mui";
-import Paragraph from "@/components/Paragraph";
-
-//Spinner
-const LoadingView = () => <CircularProgress />;
+// Spinner
+function LoadingView() {
+  return <CircularProgress />;
+}
 
 // Error + retry
-const ErrorView = ({ error, resetErrorBoundary }) => {
-
+function ErrorView({ error, resetErrorBoundary }) {
   return (
     <div>
       <div>
         <Paragraph>{error.message}</Paragraph>
       </div>
-      <Button variant={"contained"} onClick={() => resetErrorBoundary()}>
+      <Button variant="contained" onClick={() => resetErrorBoundary()}>
         Try again
       </Button>
     </div>
   );
-};
+}
 
-export const QueryBoundary = ({ children }) => {
+export function QueryBoundary({ children }) {
   const { reset } = useQueryErrorResetBoundary();
 
   return (
@@ -33,6 +33,6 @@ export const QueryBoundary = ({ children }) => {
       </ErrorBoundary>
     </div>
   );
-};
+}
 
 export default QueryBoundary;

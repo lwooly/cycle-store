@@ -1,11 +1,11 @@
-import { Typography } from "./mui";
+import { Typography } from './mui';
 
-const Paragraph = ({children, ...props}) => {
-    return (
-        <Typography paragraph {...props}>
-            {children}
-        </Typography>
-    );
-};
+function Paragraph({ children, ...props }) {
+  return (
+    <Typography paragraph {...props}>
+      {children}
+    </Typography>
+  );
+}
 
 export default Paragraph;

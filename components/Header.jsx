@@ -1,9 +1,8 @@
-
-import * as React from "react";
-import Box from "@mui/material/Box";
+import * as React from 'react';
+import Box from '@mui/material/Box';
 // import Toolbar from "@mui/material/Toolbar";
-import MobileNavigation from "@/components/navigation/MobileNavigation";
-import DesktopNavigation from "@/components/navigation/DesktopNavigation";
+import MobileNavigation from '@/components/navigation/MobileNavigation';
+import DesktopNavigation from '@/components/navigation/DesktopNavigation';
 // import ErrorBoundary from "./debug/ErrorBoundary";
 
 function Header() {
@@ -14,7 +13,7 @@ function Header() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex' }}>
       <MobileNavigation
         handleDrawerToggle={handleDrawerToggle}
         mobileOpen={mobileOpen}

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import { useTheme } from '@mui/material/styles';
 import {
@@ -11,11 +11,14 @@ import {
   Button,
 } from '@/components/mui';
 
+
 function DesktopNavigation({
   handleDrawerToggle = () =>
     console.log('no handleDrawerToggle function provided'),
 }) {
   const theme = useTheme();
+  const { user } = useUser();
+
   // console.log(theme);
   const lightTextColor = theme.palette.common.white;
   return (
@@ -58,6 +61,8 @@ function DesktopNavigation({
           <Button sx={{ color: lightTextColor }} component={Link} href="/blog">
             Blog
           </Button>
+          {(user ? (
+            <>
           <Button
             sx={{ color: lightTextColor }}
             component={Link}
@@ -65,6 +70,23 @@ function DesktopNavigation({
           >
             Profile
           </Button>
+          <Button
+            sx={{ color: lightTextColor }}
+            component={Link}
+            href={`api/auth/logout`}
+          >
+            Log out
+          </Button>
+          </>
+          ) : (
+            <Button
+            sx={{ color: lightTextColor }}
+            component={Link}
+            href={`api/auth/login`}
+          >
+            Log in
+          </Button>
+          ))}
         </Box>
       </Toolbar>
     </AppBar>

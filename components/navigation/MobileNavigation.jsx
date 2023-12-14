@@ -1,4 +1,4 @@
-import React from 'react';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import {
   Box,
@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@/components/mui';
 
+
 function MobileNavigation({
   mobileOpen = false,
   handleDrawerToggle = () =>
@@ -22,6 +23,8 @@ function MobileNavigation({
     textDecoration: 'none',
     flexGrow: 1,
   };
+
+  const {user} = useUser()
   return (
     <Box component="nav">
       <Drawer
@@ -63,6 +66,33 @@ function MobileNavigation({
                 </ListItemButton>
               </Link>
             </ListItem>
+
+            {user ? (
+              <>
+              <ListItem>
+              <Link href="/profile" passHref style={itemLinkStyles}>
+                <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
+                  <ListItemText primary="Profile" />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+            <ListItem>
+              <Link href="/api/auth/logout" passHref style={itemLinkStyles}>
+                <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
+                  <ListItemText primary="Log out" />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+            </>
+            ):(
+              <ListItem>
+              <Link href="/api/auth/login" passHref style={itemLinkStyles}>
+                <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
+                  <ListItemText primary="Log in" />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+            )}
           </List>
         </Box>
       </Drawer>

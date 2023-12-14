@@ -1,23 +1,17 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useContext } from 'react';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { Router, useRouter } from 'next/router';
+import { getSession } from '@auth0/nextjs-auth0';
 import { Button, AccessTimeFilledIcon } from '@/components/mui';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import { UIContext, UIProvider } from '@/components/contexts/UI.context';
 import Paragraph from '@/components/Paragraph';
+import UserDisplay from '@/components/UserDisplay';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import settings from '@/lib/api-functions/server/permissions';
 
-export default function Profile() {
-  const { showMessage } = useContext(UIContext);
-  const { user, error, isLoading } = useUser();
-  const router = useRouter();
-
-  if (!user) {
-    router.push('/api/auth/login');
-    return <Paragraph>Redirect to login page</Paragraph>;
-  }
+export default function Profile({ user }) {
 
   return (
     <>
@@ -29,20 +23,10 @@ export default function Profile() {
       </Head>
       <Layout>
         <Heading component="h2">Profile Page</Heading>
-        {/* <Button
-          variant="contained"
-          onClick={() =>
-            showMessage({
-              type: 'error',
-              string: 'test message',
-            })
-          }
-        >
-          Alert
-        </Button> */}
-        (// eslint-disable-next-line @next/next/no-html-link-for-pages)
-        <a href="/api/auth/login">Login</a>
+        <UserDisplay ssd={user} />
       </Layout>
     </>
   );
 }
+
+export const getServerSideProps = withPageAuthRequired();

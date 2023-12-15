@@ -52,7 +52,7 @@ try {
   req.user = session.user;
   next();
 } catch (err) {
-  handleUnauthorisedAPICall(res);
+  return handleUnauthorisedAPICall(res);
 }
 })
   .get(baseRoute, async (req, res) => {
@@ -61,21 +61,21 @@ try {
 
   .post(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, create)) {
-      handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res)
     }
     addProduct(req, res);
   })
 
   .put(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, update)) {
-      handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res)
     }
     updateProduct(req, res);
   })
 
   .delete(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, remove)) {
-      handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res)
     }
     removeProduct(req, res);
   });

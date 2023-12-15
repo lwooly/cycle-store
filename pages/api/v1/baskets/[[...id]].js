@@ -51,7 +51,7 @@ try {
   req.user = session.user;
   next();
 } catch (err) {
-  handleUnauthorisedAPICall(res);
+  return handleUnauthorisedAPICall(res);
 }
 })
 // endpoint methods
@@ -61,21 +61,21 @@ try {
 
   .post(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, create)) {
-      handleUnauthorisedAPICall(res)
+     return handleUnauthorisedAPICall(res)
     }
     addBasket(req, res);
   })
 
   .put(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, update)) {
-      handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res)
     }
     updateBasket(req, res);
   })
 
   .delete(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, remove)) {
-      handleUnauthorisedAPICall(res)
+     return handleUnauthorisedAPICall(res)
     }
     removeBasket(req, res);
   });

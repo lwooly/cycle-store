@@ -50,7 +50,7 @@ try {
   req.user = session.user;
   next();
 } catch (err) {
-  handleUnauthorisedAPICall(res);
+  return handleUnauthorisedAPICall(res);
 }
 })
 
@@ -61,21 +61,21 @@ try {
 
   .post(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, create)) {
-      handleUnauthorisedAPICall(res)
+     return handleUnauthorisedAPICall(res)
     }
     addOrder(req, res);
   })
 
   .put(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, update)) {
-      handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res)
     }
     updateOrder(req, res);
   })
 
   .delete(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, remove)) {
-      handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res)
     }
     removeOrder(req, res);
   });

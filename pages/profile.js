@@ -1,18 +1,16 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useContext } from 'react';
-import { getSession } from '@auth0/nextjs-auth0';
+import { getSession , withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { Button, AccessTimeFilledIcon } from '@/components/mui';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import { UIContext, UIProvider } from '@/components/contexts/UI.context';
 import Paragraph from '@/components/Paragraph';
 import UserDisplay from '@/components/UserDisplay';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import settings from '@/lib/api-functions/server/permissions';
 
 export default function Profile({ user }) {
-
   return (
     <>
       <Head>

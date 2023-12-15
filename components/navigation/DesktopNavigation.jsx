@@ -11,7 +11,6 @@ import {
   Button,
 } from '@/components/mui';
 
-
 function DesktopNavigation({
   handleDrawerToggle = () =>
     console.log('no handleDrawerToggle function provided'),
@@ -61,32 +60,32 @@ function DesktopNavigation({
           <Button sx={{ color: lightTextColor }} component={Link} href="/blog">
             Blog
           </Button>
-          {(user ? (
+          {user ? (
             <>
-          <Button
-            sx={{ color: lightTextColor }}
-            component={Link}
-            href="/profile"
-          >
-            Profile
-          </Button>
-          <Button
-            sx={{ color: lightTextColor }}
-            component={Link}
-            href={`api/auth/logout`}
-          >
-            Log out
-          </Button>
-          </>
+              <Button
+                sx={{ color: lightTextColor }}
+                component={Link}
+                href="/profile"
+              >
+                Profile
+              </Button>
+              <Button
+                sx={{ color: lightTextColor }}
+                component={Link}
+                href="/api/auth/logout"
+              >
+                Log out
+              </Button>
+            </>
           ) : (
             <Button
-            sx={{ color: lightTextColor }}
-            component={Link}
-            href={`api/auth/login`}
-          >
-            Log in
-          </Button>
-          ))}
+              sx={{ color: lightTextColor }}
+              component={Link}
+              href="/api/auth/login"
+            >
+              Log in
+            </Button>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

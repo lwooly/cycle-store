@@ -7,21 +7,20 @@ import {
   removeBasket,
 } from '@/lib/api-functions/server/baskets/controllers';
 
-import { checkPermission, checkRole, handleUnauthorisedAPICall } from '@/lib/utils';
+import {
+  checkPermission,
+  checkRole,
+  handleUnauthorisedAPICall,
+} from '@/lib/utils';
 
-import permissions from '@/lib/api-functions/server/permissions'
+import permissions from '@/lib/api-functions/server/permissions';
 
 const {
   identifier,
   roles,
   permissions: {
-    baskets: {
-      create,
-      update,
-      remove
-    }
-  }
-  
+    baskets: { create, update, remove },
+  },
 } = permissions;
 
 console.log(`next connect`);
@@ -38,44 +37,43 @@ const handler = nc({
   },
   attachParams: true,
 })
-// middleware to protect routes
-.use(async (req, res, next) => {
-
-  console.log('middleware running')
-  if (req.method === 'GET'){
-    return next();
-  }
-console.log('skipped')
-try {
-  const session = await getSession(req, res);
-  req.user = session.user;
-  next();
-} catch (err) {
-  return handleUnauthorisedAPICall(res);
-}
-})
-// endpoint methods
+  // middleware to protect routes
+  .use(async (req, res, next) => {
+    console.log('middleware running');
+    if (req.method === 'GET') {
+      return next();
+    }
+    console.log('skipped');
+    try {
+      const session = await getSession(req, res);
+      req.user = session.user;
+      next();
+    } catch (err) {
+      return handleUnauthorisedAPICall(res);
+    }
+  })
+  // endpoint methods
   .get(baseRoute, async (req, res) => {
     getBaskets(req, res);
   })
 
   .post(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, create)) {
-     return handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res);
     }
     addBasket(req, res);
   })
 
   .put(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, update)) {
-      return handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res);
     }
     updateBasket(req, res);
   })
 
   .delete(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, remove)) {
-     return handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res);
     }
     removeBasket(req, res);
   });

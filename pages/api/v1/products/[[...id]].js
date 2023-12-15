@@ -7,23 +7,21 @@ import {
   removeProduct,
 } from '@/lib/api-functions/server/products/controllers';
 
-import { checkPermission, checkRole, handleUnauthorisedAPICall } from '@/lib/utils';
+import {
+  checkPermission,
+  checkRole,
+  handleUnauthorisedAPICall,
+} from '@/lib/utils';
 
-import permissions from '@/lib/api-functions/server/permissions'
+import permissions from '@/lib/api-functions/server/permissions';
 
 const {
   identifier,
   roles,
   permissions: {
-    products: {
-      create,
-      update,
-      remove
-    }
-  }
-  
+    products: { create, update, remove },
+  },
 } = permissions;
-
 
 console.log(`next connect`);
 
@@ -39,43 +37,42 @@ const handler = nc({
   },
   attachParams: true,
 })
-// middleware to protect routes
-.use(async (req, res, next) => {
-
-  console.log('middleware running')
-  if (req.method === 'GET'){
-    return next();
-  }
-console.log('skipped')
-try {
-  const session = await getSession(req, res);
-  req.user = session.user;
-  next();
-} catch (err) {
-  return handleUnauthorisedAPICall(res);
-}
-})
+  // middleware to protect routes
+  .use(async (req, res, next) => {
+    console.log('middleware running');
+    if (req.method === 'GET') {
+      return next();
+    }
+    console.log('skipped');
+    try {
+      const session = await getSession(req, res);
+      req.user = session.user;
+      next();
+    } catch (err) {
+      return handleUnauthorisedAPICall(res);
+    }
+  })
   .get(baseRoute, async (req, res) => {
     getProducts(req, res);
   })
 
   .post(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, create)) {
-      return handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res);
     }
     addProduct(req, res);
   })
 
   .put(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, update)) {
-      return handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res);
     }
     updateProduct(req, res);
   })
 
   .delete(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, remove)) {
-      return handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res);
     }
     removeProduct(req, res);
   });

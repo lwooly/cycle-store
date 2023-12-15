@@ -6,21 +6,20 @@ import {
   removeOrder,
 } from '@/lib/api-functions/server/orders/controllers';
 
-import { checkPermission, checkRole, handleUnauthorisedAPICall } from '@/lib/utils';
+import {
+  checkPermission,
+  checkRole,
+  handleUnauthorisedAPICall,
+} from '@/lib/utils';
 
-import permissions from '@/lib/api-functions/server/permissions'
+import permissions from '@/lib/api-functions/server/permissions';
 
 const {
   identifier,
   roles,
   permissions: {
-    orders: {
-      create,
-      update,
-      remove
-    }
-  }
-  
+    orders: { create, update, remove },
+  },
 } = permissions;
 
 console.log(`next connect`);
@@ -37,45 +36,44 @@ const handler = nc({
   },
   attachParams: true,
 })
-// middleware to protect routes
-.use(async (req, res, next) => {
+  // middleware to protect routes
+  .use(async (req, res, next) => {
+    console.log('middleware running');
+    if (req.method === 'GET') {
+      return next();
+    }
+    console.log('skipped');
+    try {
+      const session = await getSession(req, res);
+      req.user = session.user;
+      next();
+    } catch (err) {
+      return handleUnauthorisedAPICall(res);
+    }
+  })
 
-  console.log('middleware running')
-  if (req.method === 'GET'){
-    return next();
-  }
-console.log('skipped')
-try {
-  const session = await getSession(req, res);
-  req.user = session.user;
-  next();
-} catch (err) {
-  return handleUnauthorisedAPICall(res);
-}
-})
-
-//endpoint methods 
+  // endpoint methods
   .get(baseRoute, async (req, res) => {
     getOrders(req, res);
   })
 
   .post(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, create)) {
-     return handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res);
     }
     addOrder(req, res);
   })
 
   .put(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, update)) {
-      return handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res);
     }
     updateOrder(req, res);
   })
 
   .delete(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, remove)) {
-      return handleUnauthorisedAPICall(res)
+      return handleUnauthorisedAPICall(res);
     }
     removeOrder(req, res);
   });

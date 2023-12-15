@@ -11,7 +11,6 @@ import {
   Typography,
 } from '@/components/mui';
 
-
 function MobileNavigation({
   mobileOpen = false,
   handleDrawerToggle = () =>
@@ -24,7 +23,7 @@ function MobileNavigation({
     flexGrow: 1,
   };
 
-  const {user} = useUser()
+  const { user } = useUser();
   return (
     <Box component="nav">
       <Drawer
@@ -69,29 +68,29 @@ function MobileNavigation({
 
             {user ? (
               <>
+                <ListItem>
+                  <Link href="/profile" passHref style={itemLinkStyles}>
+                    <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
+                      <ListItemText primary="Profile" />
+                    </ListItemButton>
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link href="/api/auth/logout" passHref style={itemLinkStyles}>
+                    <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
+                      <ListItemText primary="Log out" />
+                    </ListItemButton>
+                  </Link>
+                </ListItem>
+              </>
+            ) : (
               <ListItem>
-              <Link href="/profile" passHref style={itemLinkStyles}>
-                <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
-                  <ListItemText primary="Profile" />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link href="/api/auth/logout" passHref style={itemLinkStyles}>
-                <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
-                  <ListItemText primary="Log out" />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            </>
-            ):(
-              <ListItem>
-              <Link href="/api/auth/login" passHref style={itemLinkStyles}>
-                <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
-                  <ListItemText primary="Log in" />
-                </ListItemButton>
-              </Link>
-            </ListItem>
+                <Link href="/api/auth/login" passHref style={itemLinkStyles}>
+                  <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
+                    <ListItemText primary="Log in" />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
             )}
           </List>
         </Box>

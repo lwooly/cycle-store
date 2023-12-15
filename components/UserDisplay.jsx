@@ -11,7 +11,7 @@ import {
 } from '@/components/mui';
 import Paragraph from './Paragraph';
 
-function UserDisplay({ssd: user}) {
+function UserDisplay({ ssd: user }) {
   // const { user } = useUser();
   const router = useRouter();
 
@@ -21,7 +21,7 @@ function UserDisplay({ssd: user}) {
         <CardContent>
           <Paragraph>User is not logged in.</Paragraph>
           <Button
-            variant='contained'
+            variant="contained"
             onClick={() => router.push('/api/auth/login')}
           >
             Log in
@@ -44,8 +44,8 @@ function UserDisplay({ssd: user}) {
           <Paragraph>User: {user.nickname}</Paragraph>
         </CardContent>
         <CardActions>
-        <Button
-            variant='contained'
+          <Button
+            variant="contained"
             onClick={() => router.push('/api/auth/logout')}
           >
             Log out

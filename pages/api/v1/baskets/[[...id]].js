@@ -1,10 +1,28 @@
 import nc from 'next-connect';
+import { getSession } from '@auth0/nextjs-auth0';
 import {
   getBaskets,
   addBasket,
   updateBasket,
   removeBasket,
 } from '@/lib/api-functions/server/baskets/controllers';
+
+import { checkPermission, checkRole, handleUnauthorisedAPICall } from '@/lib/utils';
+
+import permissions from '@/lib/api-functions/server/permissions'
+
+const {
+  identifier,
+  roles,
+  permissions: {
+    baskets: {
+      create,
+      update,
+      remove
+    }
+  }
+  
+} = permissions;
 
 console.log(`next connect`);
 
@@ -20,19 +38,45 @@ const handler = nc({
   },
   attachParams: true,
 })
+// middleware to protect routes
+.use(async (req, res, next) => {
+
+  console.log('middleware running')
+  if (req.method === 'GET'){
+    return next();
+  }
+console.log('skipped')
+try {
+  const session = await getSession(req, res);
+  req.user = session.user;
+  next();
+} catch (err) {
+  handleUnauthorisedAPICall(res);
+}
+})
+// endpoint methods
   .get(baseRoute, async (req, res) => {
     getBaskets(req, res);
   })
 
   .post(baseRoute, async (req, res) => {
+    if (!checkPermission(req.user, identifier, create)) {
+      handleUnauthorisedAPICall(res)
+    }
     addBasket(req, res);
   })
 
   .put(baseRoute, async (req, res) => {
+    if (!checkPermission(req.user, identifier, update)) {
+      handleUnauthorisedAPICall(res)
+    }
     updateBasket(req, res);
   })
 
   .delete(baseRoute, async (req, res) => {
+    if (!checkPermission(req.user, identifier, remove)) {
+      handleUnauthorisedAPICall(res)
+    }
     removeBasket(req, res);
   });
 

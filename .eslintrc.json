@@ -9,7 +9,9 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  "plugins": ["prettier"],
   "rules": {
+    "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": "off"
   },

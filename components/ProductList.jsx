@@ -4,7 +4,7 @@ import { CircularProgress, List, ListItem } from '@/components/mui';
 import Paragraph from '@/components/Paragraph';
 import Product from '@/components/Product';
 
-function ProductList({ removeHandler = () => {} }) {
+function ProductList({ removeHandler = () => {}, userProductPermissions }) {
   //   const products = [
   //     {
   //       _id: "1",
@@ -84,6 +84,7 @@ function ProductList({ removeHandler = () => {} }) {
               linkToProductPage
               headingLevel="h5"
               removeHandler={removeHandler}
+              userProductPermissions={userProductPermissions}
             />
           </ErrorBoundary>
         </ListItem>

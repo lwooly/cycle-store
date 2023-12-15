@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
+import { getSession } from '@auth0/nextjs-auth0';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import Paragraph from '@/components/Paragraph';
@@ -11,13 +12,37 @@ import { getProductsFromDB } from '@/lib/api-functions/server/products/queries';
 import { STORAGE_KEY } from '@/lib/tq/products/settings';
 import { Button } from '@/components/mui';
 import { useRemoveProduct } from '@/lib/tq/products/mutations';
+import { checkPermission } from '@/lib/utils';
 
-export default function AdminProductList() {
+import permissions from '@/lib/api-functions/server/permissions';
+
+const {
+  identifier,
+  permissions: {
+    products: {
+      create: createProduct,
+      update: updateProduct,
+      remove: removeProduct,
+    },
+  },
+} = permissions;
+
+export default function AdminProductList({ user }) {
+  // product removal function
   const removeMutation = useRemoveProduct();
 
   const removeHandler = (id) => {
     removeMutation.mutate(id);
   };
+
+  // admin permissions to be prop drilled for rbac button interfaces
+  const userProductPermissions = {
+    canAdd: checkPermission(user, identifier, createProduct),
+    canUpdate: checkPermission(user, identifier, updateProduct),
+    canRemove: checkPermission(user, identifier, removeProduct),
+  };
+
+  console.log()
 
   return (
     <>
@@ -29,11 +54,20 @@ export default function AdminProductList() {
       </Head>
       <Layout>
         <Heading component="h2">Products Admin</Heading>
-        <Button component={Link} href="/admin/products/add">
-          Add Product
-        </Button>
+        {userProductPermissions.canAdd && (
+          <Button
+            component={Link}
+            href="/admin/products/add"
+            aria-label="create product"
+          >
+            Add Product
+          </Button>
+        )}
         <QueryBoundary>
-          <ProductList removeHandler={removeHandler} />
+          <ProductList
+            removeHandler={removeHandler}
+            userProductPermissions={userProductPermissions}
+          />
         </QueryBoundary>
       </Layout>
     </>
@@ -49,9 +83,12 @@ export const getStaticProps = async (context) => {
     JSON.parse(JSON.stringify(products)),
   );
 
+  const session = getSession(context.req, context.res);
+
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
+      user: session.user,
     },
   };
 };

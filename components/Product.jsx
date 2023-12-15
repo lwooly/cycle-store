@@ -22,11 +22,16 @@ function Product({
   linkToProductPage,
   headingLevel = 'h2',
   removeHandler = () => console.log('no delete handler provided'),
-  canUpdate = false,
-  canRemove = false,
+  userProductPermissions,
 }) {
   const [imageSrc, setImageSrc] = useState(image);
   // const [showProductLink, setShowProductLink] = useState(false)
+
+  const {
+    canAdd = false,
+    canUpdate = false,
+    canRemove = false,
+  } = userProductPermissions;
 
   const defaultImgSrc =
     'https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';

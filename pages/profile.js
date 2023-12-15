@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useContext } from 'react';
-import { getSession , withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { Button, AccessTimeFilledIcon } from '@/components/mui';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';

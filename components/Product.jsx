@@ -22,8 +22,9 @@ function Product({
   linkToProductPage,
   headingLevel = 'h2',
   removeHandler = () => console.log('no delete handler provided'),
+  canUpdate = false,
+  canRemove = false,
 }) {
-  const queryClient = useQueryClient();
   const [imageSrc, setImageSrc] = useState(image);
   // const [showProductLink, setShowProductLink] = useState(false)
 
@@ -65,20 +66,26 @@ function Product({
             Go to product page
           </Button>
         )}
-        <Button
-          variant="contained"
-          href={`/admin/products/update/${_id}`}
-          component={Link}
-        >
-          Update Product
-        </Button>
-        <Button
-          variant="contained"
-          aria-label="delete"
-          onClick={() => removeHandler(_id)}
-        >
-          Delete Product
-        </Button>
+        {canUpdate && (
+          <Button
+            variant="contained"
+            aria-label="update"
+            href={`/admin/products/update/${_id}`}
+            component={Link}
+          >
+            Update Product
+          </Button>
+        )}
+
+        {canRemove && (
+          <Button
+            variant="contained"
+            aria-label="delete"
+            onClick={() => removeHandler(_id)}
+          >
+            Delete Product
+          </Button>
+        )}
       </CardActions>
     </Card>
   );

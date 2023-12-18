@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
-import { getSession } from '@auth0/nextjs-auth0';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import Paragraph from '@/components/Paragraph';
@@ -27,6 +27,8 @@ const {
   },
 } = permissions;
 
+console.log('identifier', identifier);
+
 export default function AdminProductList({ user }) {
   // product removal function
   const removeMutation = useRemoveProduct();
@@ -42,7 +44,7 @@ export default function AdminProductList({ user }) {
     canRemove: checkPermission(user, identifier, removeProduct),
   };
 
-  console.log()
+  console.log('userproductpermissions', userProductPermissions);
 
   return (
     <>
@@ -74,21 +76,27 @@ export default function AdminProductList({ user }) {
   );
 }
 
-export const getStaticProps = async (context) => {
-  const products = await getProductsFromDB().catch((err) => console.log(err));
-  const queryClient = new QueryClient();
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    const products = await getProductsFromDB().catch((err) => console.log(err));
+    const queryClient = new QueryClient();
 
-  await queryClient.setQueryData(
-    [STORAGE_KEY],
-    JSON.parse(JSON.stringify(products)),
-  );
+    await queryClient.setQueryData(
+      [STORAGE_KEY],
+      JSON.parse(JSON.stringify(products)),
+    );
 
-  const session = getSession(context.req, context.res);
+    console.log('context', context);
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-      user: session.user,
-    },
-  };
-};
+    const session = await getSession(context.req, context.res);
+
+    console.log(session);
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+        user: session.user,
+      },
+    };
+  },
+});

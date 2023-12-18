@@ -14,7 +14,7 @@ export const config = {
   matcher: '/admin/(.*)',
 };
 
-export default withMiddlewareAuthRequired(async function middleware(req) {
+export default withMiddlewareAuthRequired(async (req) => {
   try {
     const res = NextResponse.next();
     const session = await getSession(req, res);

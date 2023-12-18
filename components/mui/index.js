@@ -1,5 +1,4 @@
 import Button from '@mui/material/Button';
-import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
@@ -24,10 +23,12 @@ import CardMedia from '@mui/material/CardMedia';
 import CircularProgress from '@mui/material/CircularProgress';
 import Avatar from '@mui/material/Avatar';
 
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 export {
   Avatar,
   Button,
-  AccessTimeFilledIcon,
   Container,
   Alert,
   Snackbar,
@@ -50,4 +51,6 @@ export {
   CardContent,
   CardMedia,
   CircularProgress,
+  DeleteIcon,
+  EditIcon,
 };

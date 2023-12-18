@@ -9,6 +9,9 @@ import {
   CardMedia,
   CardActions,
   Button,
+  IconButton,
+  EditIcon,
+  DeleteIcon,
 } from '@/components/mui';
 import Heading from '@/components/Heading';
 import Paragraph from './Paragraph';
@@ -28,10 +31,10 @@ function Product({
   // const [showProductLink, setShowProductLink] = useState(false)
 
   const {
-    canAdd = false,
+    // canAdd = false,
     canUpdate = false,
     canRemove = false,
-  } = userProductPermissions;
+  } = userProductPermissions || {};
 
   const defaultImgSrc =
     'https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
@@ -72,24 +75,24 @@ function Product({
           </Button>
         )}
         {canUpdate && (
-          <Button
+          <IconButton
             variant="contained"
             aria-label="update"
             href={`/admin/products/update/${_id}`}
             component={Link}
           >
-            Update Product
-          </Button>
+            <EditIcon />
+          </IconButton>
         )}
 
         {canRemove && (
-          <Button
+          <IconButton
             variant="contained"
             aria-label="delete"
             onClick={() => removeHandler(_id)}
           >
-            Delete Product
-          </Button>
+            <DeleteIcon />
+          </IconButton>
         )}
       </CardActions>
     </Card>

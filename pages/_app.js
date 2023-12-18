@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import {

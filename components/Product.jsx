@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQueryClient } from '@tanstack/react-query';
 import {
-  ListItem,
   Card,
   CardContent,
   CardMedia,
@@ -15,7 +13,6 @@ import {
 } from '@/components/mui';
 import Heading from '@/components/Heading';
 import Paragraph from './Paragraph';
-import { removeProductMutateFn } from '@/lib/tq/products/api';
 
 const hyphenate = (str) => str.replaceAll(' ', '-');
 const slugify = (str, id) => `${hyphenate(str).toLowerCase()}-${id}`;

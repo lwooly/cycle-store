@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ClassSharp } from '@mui/icons-material';
 import Image from 'next/image';
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { addProductSchema, updateProductSchema } from '@/lib/validation';
 import { TextField, Button } from '@/components/mui';
 import Paragraph from '../Paragraph';
@@ -17,6 +15,7 @@ const defaults = {
 };
 
 function ProductForm({ submitHandler, product }) {
+  // TODO state is updated and causes rerender but values not passed in.
   const [formValues, setFormValues] = useState(product);
   const [imageSrc, setImageSrc] = useState('');
 

@@ -18,9 +18,12 @@
   },
   "settings": {
     "import/resolver": {
-      "alias": {
-        "map": [["@/*", "./*"]],
-        "extensions": [".js", ".jsx", ".json"]
+      "eslint-import-resolver-custom-alias": {
+        "alias": {
+          "@": "."
+        },
+        "extensions": [".js", ".jsx"],
+        "packages": ["packages/*"]
       }
     }
   }

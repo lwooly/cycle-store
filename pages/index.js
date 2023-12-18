@@ -1,17 +1,14 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import { useContext } from 'react';
-import { Inter } from 'next/font/google';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
-import { Button, AccessTimeFilledIcon } from '@/components/mui';
+import { Button } from '@/components/mui';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
-import Paragraph from '@/components/Paragraph';
-import QueryBoundary from '@/components/QueryBoundary';
+import QueryBoundaries from '@/components/QueryBoundary';
 import ProductList from '@/components/ProductList';
 import { getProductsFromDB } from '@/lib/api-functions/server/products/queries';
 import { STORAGE_KEY } from '@/lib/tq/products/settings';
-import { UIContext, UIProvider } from '@/components/contexts/UI.context';
+import { UIContext } from '@/components/contexts/UI.context';
 
 export default function Home() {
   const { showMessage } = useContext(UIContext);
@@ -37,15 +34,15 @@ export default function Home() {
         >
           Alert
         </Button>
-        <QueryBoundary>
+        <QueryBoundaries>
           <ProductList />
-        </QueryBoundary>
+        </QueryBoundaries>
       </Layout>
     </>
   );
 }
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async () => {
   const products = await getProductsFromDB().catch((err) => console.log(err));
   const queryClient = new QueryClient();
 

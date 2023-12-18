@@ -4,9 +4,8 @@ import {
   getSession,
 } from '@auth0/nextjs-auth0/edge';
 import { NextResponse } from 'next/server';
-import { checkRole } from './lib/utils';
-
 import permissions from '@/lib/api-functions/server/permissions';
+import { checkRole } from './lib/utils';
 
 const { identifier, roles } = permissions;
 
@@ -28,6 +27,6 @@ export default withMiddlewareAuthRequired(async (req) => {
     return res;
   } catch (err) {
     console.log(err);
-    NextResponse.redirect(new URL('/api/auth/login', req.url));
+    return NextResponse.redirect(new URL('/api/auth/login', req.url));
   }
 });

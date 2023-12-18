@@ -1,16 +1,14 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
-import Paragraph from '@/components/Paragraph';
-import QueryBoundary from '@/components/QueryBoundary';
 import OrderList from '@/components/OrderList';
 import { getOrdersFromDB } from '@/lib/api-functions/server/orders/queries';
 import { STORAGE_KEY } from '@/lib/tq/orders/settings';
 import { Button } from '@/components/mui';
 import { useRemoveOrder } from '@/lib/tq/orders/mutations';
+import QueryBoundaries from '@/components/QueryBoundary';
 
 export default function AdminOrderList() {
   const removeMutation = useRemoveOrder();
@@ -32,15 +30,15 @@ export default function AdminOrderList() {
         <Button component={Link} href="/admin/orders/add">
           Add Order
         </Button>
-        <QueryBoundary>
+        <QueryBoundaries>
           <OrderList removeHandler={removeHandler} />
-        </QueryBoundary>
+        </QueryBoundaries>
       </Layout>
     </>
   );
 }
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async () => {
   const Orders = await getOrdersFromDB().catch((err) => console.log(err));
   const queryClient = new QueryClient();
 

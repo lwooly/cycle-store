@@ -1,15 +1,11 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
-import Paragraph from '@/components/Paragraph';
-import QueryBoundary from '@/components/QueryBoundary';
+import QueryBoundaries from '@/components/QueryBoundary';
 import BasketList from '@/components/BasketList';
 import { getBasketsFromDB } from '@/lib/api-functions/server/baskets/queries';
 import { STORAGE_KEY } from '@/lib/tq/baskets/settings';
-import { Button } from '@/components/mui';
 import { useRemoveBasket } from '@/lib/tq/baskets/mutations';
 
 export default function AdminBasketList() {
@@ -29,15 +25,15 @@ export default function AdminBasketList() {
       </Head>
       <Layout>
         <Heading component="h2">Baskets Admin</Heading>
-        <QueryBoundary>
+        <QueryBoundaries>
           <BasketList removeHandler={removeHandler} />
-        </QueryBoundary>
+        </QueryBoundaries>
       </Layout>
     </>
   );
 }
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async () => {
   const Baskets = await getBasketsFromDB().catch((err) => console.log(err));
   const queryClient = new QueryClient();
 

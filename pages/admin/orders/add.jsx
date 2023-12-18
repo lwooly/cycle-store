@@ -1,21 +1,21 @@
 import Head from 'next/head';
-import { redirect } from 'next/navigation';
-import { useRouter } from 'next/router';
+// import { redirect } from 'next/navigation';
+// import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
-import { HOST, addOrderMutateFn } from '@/lib/tq/orders/api';
+// import { HOST, addOrderMutateFn } from '@/lib/tq/orders/api';
 
 // import OrderForm from '@/components/forms/OrderForm'
-import { useAddOrder } from '@/lib/tq/orders/mutations';
+// import { useAddOrder } from '@/lib/tq/orders/mutations';
 
 export default function AddOrder() {
-  const addMutate = useAddOrder();
-  const router = useRouter();
+  // const addMutate = useAddOrder();
+  // const router = useRouter();
 
-  const addHandler = (data) => {
-    addMutate.mutate(data);
-    router.push('/admin/orders/');
-  };
+  // const addHandler = (data) => {
+  //   addMutate.mutate(data);
+  //   router.push('/admin/orders/');
+  // };
 
   return (
     <>

@@ -10,6 +10,7 @@ import {
   Typography,
   Button,
 } from '@/components/mui';
+import BasketIcon from '@/components/BasketIcon';
 
 function DesktopNavigation({
   handleDrawerToggle = () =>
@@ -50,6 +51,7 @@ function DesktopNavigation({
             display: { xs: 'none', sm: 'block' },
           }}
         >
+          <BasketIcon />
           <Button
             sx={{ color: lightTextColor }}
             component={Link}

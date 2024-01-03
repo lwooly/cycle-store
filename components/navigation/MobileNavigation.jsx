@@ -10,6 +10,7 @@ import {
   ListItemText,
   Typography,
 } from '@/components/mui';
+import BasketIcon from '@/components/BasketIcon';
 
 function MobileNavigation({
   mobileOpen = false,
@@ -44,6 +45,9 @@ function MobileNavigation({
           </Typography>
           <Divider />
           <List>
+            <ListItem>
+              <BasketIcon />
+            </ListItem>
             <ListItem>
               <Link href="/" passHref style={itemLinkStyles} to="/">
                 <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>

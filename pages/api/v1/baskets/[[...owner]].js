@@ -5,6 +5,7 @@ import {
   addBasket,
   updateBasket,
   removeBasket,
+  getOwnBasket,
 } from '@/lib/api-functions/server/baskets/controllers';
 
 import {
@@ -14,6 +15,7 @@ import {
 } from '@/lib/utils';
 
 import permissions from '@/lib/api-functions/server/permissions';
+import { addToBasketMutateFn } from '@/lib/tq/baskets/api';
 
 const {
   identifier,
@@ -23,14 +25,12 @@ const {
   },
 } = permissions;
 
-console.log(`next connect`);
-
-const baseRoute = '/api/v1/baskets/:id?';
+const baseRoute = '/api/v1/baskets/:owner?/:item?';
 
 const handler = nc({
   onError: (err, req, res) => {
     console.error(err.stack);
-    res.status(500).end('something broke!');
+    res.status(500).end('Internal Server Error');
   },
   onNoMatch: (req, res) => {
     res.status(404).end('Page is not found');
@@ -39,11 +39,10 @@ const handler = nc({
 })
   // middleware to protect routes
   .use(async (req, res, next) => {
-    console.log('middleware running');
-    if (req.method === 'GET') {
-      return next();
-    }
-    console.log('skipped');
+    // console.log('middleware running');
+    // if (req.method === 'GET') {
+    //   return next();
+    // }
     try {
       const session = await getSession(req, res);
       req.user = session.user;
@@ -54,10 +53,24 @@ const handler = nc({
   })
   // endpoint methods
   .get(baseRoute, async (req, res) => {
-    getBaskets(req, res);
+    const { owner } = req.params;
+    if (owner === 'own') {
+      console.log('here')
+      const basket = await getOwnBasket(req, res);
+      return basket;
+    }
+
+    const isAdmin = checkRole(req.user, identifier, 'admin');
+
+    if (!owner && !isAdmin) {
+      return handleUnauthorisedAPICall(res);
+    }
   })
 
   .post(baseRoute, async (req, res) => {
+    if (owner === 'own') {
+      return addToUserBasket(req, res);
+    }
     if (!checkPermission(req.user, identifier, create)) {
       return handleUnauthorisedAPICall(res);
     }
@@ -72,6 +85,9 @@ const handler = nc({
   })
 
   .delete(baseRoute, async (req, res) => {
+    if (owner === 'own') {
+      return removeItemFromBasket(req, res);
+    }
     if (!checkPermission(req.user, identifier, remove)) {
       return handleUnauthorisedAPICall(res);
     }

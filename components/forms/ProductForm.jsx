@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
@@ -16,8 +16,8 @@ const defaults = {
 
 function ProductForm({ submitHandler, product }) {
   // TODO state is updated and causes rerender but values not passed in.
-  const [formValues, setFormValues] = useState(product);
-  const [imageSrc, setImageSrc] = useState('');
+  // const [formValues, setFormValues] = useState(product);
+  // const [imageSrc, setImageSrc] = useState('');
 
   let schema = addProductSchema;
   if (product) {
@@ -29,7 +29,7 @@ function ProductForm({ submitHandler, product }) {
     formState: { errors, isDirty, isValid, isSubmitting },
     reset,
     control,
-    formState,
+    // formState,
     watch,
   } = useForm({
     resolver: yupResolver(schema),
@@ -42,6 +42,7 @@ function ProductForm({ submitHandler, product }) {
   // check if image url is valid prior to rendering image component.
   const isValidUrl = (url) => {
     try {
+      // eslint-disable-next-line no-new
       new URL(url);
       return (
         url.startsWith('/') ||
@@ -51,6 +52,11 @@ function ProductForm({ submitHandler, product }) {
     } catch (err) {
       return false;
     }
+  };
+
+  const errorHandler = (error) => {
+    console.log('Image loading error', error);
+    // setImageSrc(defaultImgSrc);
   };
 
   // render preview image if url is valid
@@ -69,16 +75,11 @@ function ProductForm({ submitHandler, product }) {
     );
   };
 
-  const defaultImgSrc =
-    'https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-
-  const errorHandler = (error) => {
-    console.log('Image loading error', error);
-    setImageSrc(defaultImgSrc);
-  };
+  // const defaultImgSrc =
+  //   'https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
   const submitFn = (vals) => {
-    setFormValues(vals);
+    // setFormValues(vals);
     submitHandler(vals);
   };
 

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import Header from './Header';
 import {
   Container,
   Alert,
@@ -8,6 +7,7 @@ import {
   CloseIcon,
 } from '@/components/mui';
 import { UIContext } from '@/components/contexts/UI.context';
+import Header from './Header';
 
 function Layout({ children }) {
   const {

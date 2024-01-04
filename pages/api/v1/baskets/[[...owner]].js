@@ -1,7 +1,7 @@
 import nc from 'next-connect';
 import { getSession } from '@auth0/nextjs-auth0';
 import {
-  getBaskets,
+  // getBaskets,
   addBasket,
   updateBasket,
   removeBasket,
@@ -17,11 +17,10 @@ import {
 } from '@/lib/utils';
 
 import permissions from '@/lib/api-functions/server/permissions';
-import { addToBasketMutateFn } from '@/lib/tq/baskets/api';
+// import { addToBasketMutateFn } from '@/lib/tq/baskets/api';
 
 const {
   identifier,
-  roles,
   permissions: {
     baskets: { create, update, remove },
   },
@@ -40,6 +39,7 @@ const handler = nc({
   attachParams: true,
 })
   // middleware to protect routes
+  // eslint-disable-next-line consistent-return
   .use(async (req, res, next) => {
     // console.log('middleware running');
     // if (req.method === 'GET') {
@@ -67,6 +67,7 @@ const handler = nc({
     if (!owner && !isAdmin) {
       return handleUnauthorisedAPICall(res);
     }
+    return undefined;
   })
 
   .post(baseRoute, async (req, res) => {
@@ -78,6 +79,7 @@ const handler = nc({
       return handleUnauthorisedAPICall(res);
     }
     addBasket(req, res);
+    return undefined;
   })
 
   .put(baseRoute, async (req, res) => {
@@ -85,6 +87,7 @@ const handler = nc({
       return handleUnauthorisedAPICall(res);
     }
     updateBasket(req, res);
+    return undefined;
   })
 
   .delete(baseRoute, async (req, res) => {
@@ -98,6 +101,7 @@ const handler = nc({
       return handleUnauthorisedAPICall(res);
     }
     removeBasket(req, res);
+    return undefined;
   });
 
 export default handler;

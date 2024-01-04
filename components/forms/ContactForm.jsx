@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { TextField, Button } from '@/components/mui';
-import { sendEmail } from '@/lib/api-functions/client/index';
+import sendEmail from '@/lib/api-functions/client/index';
 
 const schema = yup
   .object()
@@ -20,13 +20,13 @@ const defaults = {
   message: '',
 };
 
-function ContactForm({ submitHandler }) {
+function ContactForm() {
   const {
     handleSubmit,
     formState: { errors, isDirty, isValid, isSubmitting },
     reset,
     control,
-    formState,
+    // formState,
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'onChange',

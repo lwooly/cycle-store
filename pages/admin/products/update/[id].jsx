@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import ProductForm from '@/components/forms/ProductForm';
-import { HOST } from '@/lib/tq/products/api';
+// import { HOST } from '@/lib/tq/products/api';
 import { getProductFromDB } from '@/lib/api-functions/server/products/queries';
 import { useUpdateProduct } from '@/lib/tq/products/mutations';
 

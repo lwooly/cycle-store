@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback } from 'react';
+import { createContext, useMemo, useState } from 'react';
 
 export const UIContext = createContext({
   snackbar: {
@@ -28,18 +28,19 @@ export function UIProvider({ children }) {
     setServerity(type);
   };
 
+  const contextValue = useMemo(
+    () => ({
+      isOpen: open,
+      hideDuration: 6000,
+      onClose,
+      message,
+      showMessage,
+      severity,
+    }),
+    [open, onClose, message, showMessage, severity],
+  );
+
   return (
-    <UIContext.Provider
-      value={{
-        isOpen: open,
-        hideDuration: 6000,
-        onClose,
-        message,
-        showMessage,
-        severity,
-      }}
-    >
-      {children}
-    </UIContext.Provider>
+    <UIContext.Provider value={contextValue}>{children}</UIContext.Provider>
   );
 }

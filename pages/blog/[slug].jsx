@@ -1,18 +1,10 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 import Markdown from 'marked-react';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import { AllPosts, SinglePost } from '@/lib/hygraph/queries';
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  List,
-  ListItem,
-} from '@/components/mui';
+import { Card, CardContent, CardMedia } from '@/components/mui';
 
 const { HYGRAPH_ENDPOINT, HYGRAPH_TOKEN } = process.env;
 

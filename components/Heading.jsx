@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { Typography } from '@/components/mui';
 
 function Heading({ children, component = 'h1', variant, ...props }) {

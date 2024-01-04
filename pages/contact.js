@@ -1,7 +1,5 @@
 import Head from 'next/head';
-import Image from 'next/image';
 // import { Inter } from 'next/font/google'
-import { Button, AccessTimeFilledIcon } from '@/components/mui';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import ContactForm from '@/components/forms/ContactForm';

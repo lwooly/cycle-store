@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQueryClient } from '@tanstack/react-query';
 import {
-  ListItem,
   Card,
   CardContent,
   CardMedia,
@@ -12,7 +10,6 @@ import {
 } from '@/components/mui';
 import Heading from '@/components/Heading';
 import Paragraph from './Paragraph';
-import { removeBasketMutateFn } from '@/lib/tq/baskets/api';
 
 const hyphenate = (str) => str.replaceAll(' ', '-');
 const slugify = (str, id) => `${hyphenate(str).toLowerCase()}-${id}`;
@@ -23,9 +20,7 @@ function Basket({
   headingLevel = 'h2',
   removeHandler = () => console.log('no delete handler provided'),
 }) {
-  const queryClient = useQueryClient();
   const [imageSrc, setImageSrc] = useState(image);
-  // const [showBasketLink, setShowBasketLink] = useState(false)
 
   const defaultImgSrc =
     'https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';

@@ -1,12 +1,12 @@
 import Head from 'next/head';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
-import Paragraph from '@/components/Paragraph';
-import QueryBoundary from '@/components/QueryBoundary';
+// import Paragraph from '@/components/Paragraph';
+import { QueryBoundary } from '@/components/QueryBoundary';
 import ProductList from '@/components/ProductList';
 import { getProductsFromDB } from '@/lib/api-functions/server/products/queries';
 import { STORAGE_KEY } from '@/lib/tq/products/settings';

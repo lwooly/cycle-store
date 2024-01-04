@@ -9,7 +9,7 @@ import {
 
 import {
   checkPermission,
-  checkRole,
+  // checkRole,
   handleUnauthorisedAPICall,
 } from '@/lib/utils';
 
@@ -17,7 +17,7 @@ import permissions from '@/lib/api-functions/server/permissions';
 
 const {
   identifier,
-  roles,
+  // roles,
   permissions: {
     products: { create, update, remove },
   },
@@ -51,6 +51,7 @@ const handler = nc({
     } catch (err) {
       return handleUnauthorisedAPICall(res);
     }
+    return undefined;
   })
   .get(baseRoute, async (req, res) => {
     getProducts(req, res);
@@ -60,21 +61,21 @@ const handler = nc({
     if (!checkPermission(req.user, identifier, create)) {
       return handleUnauthorisedAPICall(res);
     }
-    addProduct(req, res);
+    return addProduct(req, res);
   })
 
   .put(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, update)) {
       return handleUnauthorisedAPICall(res);
     }
-    updateProduct(req, res);
+    return updateProduct(req, res);
   })
 
   .delete(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, remove)) {
       return handleUnauthorisedAPICall(res);
     }
-    removeProduct(req, res);
+    return removeProduct(req, res);
   });
 
 export default handler;

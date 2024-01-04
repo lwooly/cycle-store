@@ -82,6 +82,7 @@ function ProductList({
       }}
     >
       {products.map((product) => (
+        // eslint-disable-next-line no-underscore-dangle
         <ListItem key={product._id} component="li">
           <ErrorBoundary>
             <Product

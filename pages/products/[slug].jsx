@@ -6,7 +6,6 @@ import {
   getProductFromDB,
   getProductsFromDB,
 } from '@/lib/api-functions/server/products/queries';
-import Heading from '@/components/Heading';
 import Layout from '@/components/Layout';
 
 const hyphenate = (str) => str.replaceAll(' ', '-');

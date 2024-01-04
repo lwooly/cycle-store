@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQueryClient } from '@tanstack/react-query';
+
 import {
-  ListItem,
   Card,
   CardContent,
   CardMedia,
@@ -12,7 +11,6 @@ import {
 } from '@/components/mui';
 import Heading from '@/components/Heading';
 import Paragraph from './Paragraph';
-import { removeOrderMutateFn } from '@/lib/tq/orders/api';
 
 const hyphenate = (str) => str.replaceAll(' ', '-');
 const slugify = (str, id) => `${hyphenate(str).toLowerCase()}-${id}`;
@@ -23,7 +21,6 @@ function Order({
   headingLevel = 'h2',
   removeHandler = () => console.log('no delete handler provided'),
 }) {
-  const queryClient = useQueryClient();
   const [imageSrc, setImageSrc] = useState(image);
   // const [showOrderLink, setShowOrderLink] = useState(false)
 

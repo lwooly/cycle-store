@@ -8,15 +8,16 @@ import {
 
 import {
   checkPermission,
-  checkRole,
+  // checkRole,
   handleUnauthorisedAPICall,
 } from '@/lib/utils';
 
 import permissions from '@/lib/api-functions/server/permissions';
+import { getSession } from '@auth0/nextjs-auth0';
 
 const {
   identifier,
-  roles,
+  // roles,
   permissions: {
     orders: { create, update, remove },
   },
@@ -50,6 +51,7 @@ const handler = nc({
     } catch (err) {
       return handleUnauthorisedAPICall(res);
     }
+    return undefined;
   })
 
   // endpoint methods
@@ -61,21 +63,21 @@ const handler = nc({
     if (!checkPermission(req.user, identifier, create)) {
       return handleUnauthorisedAPICall(res);
     }
-    addOrder(req, res);
+    return addOrder(req, res);
   })
 
   .put(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, update)) {
       return handleUnauthorisedAPICall(res);
     }
-    updateOrder(req, res);
+    return updateOrder(req, res);
   })
 
   .delete(baseRoute, async (req, res) => {
     if (!checkPermission(req.user, identifier, remove)) {
       return handleUnauthorisedAPICall(res);
     }
-    removeOrder(req, res);
+    return removeOrder(req, res);
   });
 
 export default handler;

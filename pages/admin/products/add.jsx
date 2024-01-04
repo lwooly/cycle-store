@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
-import { HOST, addProductMutateFn } from '@/lib/tq/products/api';
+// import { HOST, addProductMutateFn } from '@/lib/tq/products/api';
 
 import ProductForm from '@/components/forms/ProductForm';
 import { useAddProduct } from '@/lib/tq/products/mutations';

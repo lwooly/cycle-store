@@ -76,6 +76,7 @@ function OrderList({ removeHandler = () => {} }) {
       }}
     >
       {orders.map((order) => (
+        // eslint-disable-next-line no-underscore-dangle
         <ListItem key={order._id} component="li">
           <ErrorBoundary>
             <Order

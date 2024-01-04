@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { dinero, toDecimal } from 'dinero.js';
+import { GBP } from '@dinero.js/currencies';
 import {
   Card,
   CardContent,
@@ -18,10 +20,8 @@ import {
   useAddToBasket,
   useRemoveFromBasket,
 } from '@/lib/tq/baskets/mutations';
+import { formatPrice, slugify } from '@/lib/utils/formatters';
 import Paragraph from './Paragraph';
-
-const hyphenate = (str) => str.replaceAll(' ', '-');
-const slugify = (str, id) => `${hyphenate(str).toLowerCase()}-${id}`;
 
 function Product({
   values: { _id, title, description, price, quantity, image, favorites },
@@ -77,7 +77,12 @@ function Product({
           {title}
         </Heading>
         <Paragraph>About: {description}</Paragraph>
-        <Paragraph>Price: {price}</Paragraph>
+        <Paragraph>
+          Price:{' '}
+          {formatPrice(
+            toDecimal(dinero({ amount: price * 100, currency: GBP })),
+          )}
+        </Paragraph>
         <Paragraph>In Stock: {quantity}</Paragraph>
         <Paragraph>Favorites: {favorites || 0}</Paragraph>
       </CardContent>

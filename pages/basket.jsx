@@ -8,6 +8,7 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { getSession } from '@auth0/nextjs-auth0';
 import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries';
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
+import BasketTotal from '@/components/BasketTotal';
 
 export default function BasketPage({basket}) {
   return (
@@ -20,6 +21,9 @@ export default function BasketPage({basket}) {
       </Head>
       <Layout>
         <Heading component="h2">Basket</Heading>
+        <QueryBoundaries>
+          <BasketTotal />
+        </QueryBoundaries>
         <QueryBoundaries>
           <BasketList />
         </QueryBoundaries>

@@ -71,6 +71,12 @@ function Product({
             Go to product page
           </Button>
         )}
+        <Button
+          variant="contained"
+          onClick={() => addToCart(_id)}
+        >
+          Add to cart
+        </Button>
         {canUpdate && (
           <IconButton
             variant="contained"

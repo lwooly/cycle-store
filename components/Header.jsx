@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 // import Toolbar from "@mui/material/Toolbar";
 import MobileNavigation from '@/components/navigation/MobileNavigation';
 import DesktopNavigation from '@/components/navigation/DesktopNavigation';
+
 // import ErrorBoundary from "./debug/ErrorBoundary";
 
 function Header() {

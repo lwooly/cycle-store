@@ -16,7 +16,6 @@ import {
 } from '@/components/mui';
 import Heading from '@/components/Heading';
 import {
-  useAddBasket,
   useAddToBasket,
   useRemoveFromBasket,
 } from '@/lib/tq/baskets/mutations';
@@ -27,6 +26,7 @@ function Product({
   values: { _id, title, description, price, quantity, image, favorites },
   linkToProductPage,
   headingLevel = 'h2',
+  // eslint-disable-next-line no-console
   removeHandler = () => console.log('no delete handler provided'),
   userProductPermissions,
   inBasket,
@@ -44,6 +44,7 @@ function Product({
     'https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
   const errorHandler = (error) => {
+    // eslint-disable-next-line no-console
     console.log('Default to backup image', error);
     setImageSrc(defaultImgSrc);
   };

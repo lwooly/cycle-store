@@ -54,5 +54,5 @@ export {
   CircularProgress,
   DeleteIcon,
   EditIcon,
-  ClearIcon
+  ClearIcon,
 };

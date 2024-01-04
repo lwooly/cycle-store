@@ -57,7 +57,7 @@ const handler = nc({
   .get(baseRoute, async (req, res) => {
     const { owner } = req.params;
     if (owner === 'own') {
-      console.log('here')
+      console.log('here');
       const basket = await getOwnBasket(req, res);
       return basket;
     }
@@ -90,7 +90,7 @@ const handler = nc({
   .delete(baseRoute, async (req, res) => {
     const { owner } = req.params;
 
-    console.log(owner)
+    console.log(owner);
     if (owner === 'own') {
       return removeItemFromUserBasket(req, res);
     }

@@ -4,13 +4,12 @@ import Heading from '@/components/Heading';
 import QueryBoundaries from '@/components/QueryBoundary';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import BasketList from '@/components/BasketList';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { getSession } from '@auth0/nextjs-auth0';
+import { withPageAuthRequired, getSession } from '@auth0/nextjs-auth0';
 import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries';
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
 import BasketTotal from '@/components/BasketTotal';
 
-export default function BasketPage({basket}) {
+export default function BasketPage() {
   return (
     <>
       <Head>

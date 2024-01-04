@@ -1,5 +1,5 @@
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { nanoid } from 'nanoid';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { useUserBasket } from '@/lib/tq/baskets/queries';
 import { CircularProgress, List, ListItem } from '@/components/mui';
 import Paragraph from '@/components/Paragraph';
@@ -8,7 +8,7 @@ import Product from '@/components/Product';
 
 function BasketList({ removeHandler = () => {} }) {
   const { isLoading, isError, error, data: basket } = useUserBasket();
-  console.log(basket.items)
+  console.log(basket.items);
 
   // console.log(Baskets)
   if (isLoading) {

@@ -13,7 +13,7 @@ export default function AddProduct() {
   const router = useRouter();
 
   const addHandler = (data) => {
-    console.log('called')
+    console.log('called');
     addMutate.mutate(data);
     router.push('/admin/products/');
   };

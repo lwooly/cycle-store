@@ -19,7 +19,7 @@ export default function BasketIcon() {
   return (
     <IconButton aria-label="basket" href="/basket">
       {/* check that this works on the home page as well as the basket page */}
-      <StyledBadge badgeContent={basket?.items.length} color="secondary"> 
+      <StyledBadge badgeContent={basket?.items.length} color="secondary">
         <ShoppingCartIcon />
       </StyledBadge>
     </IconButton>

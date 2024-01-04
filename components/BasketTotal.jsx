@@ -7,7 +7,6 @@ import React from 'react';
 import { formatPrice } from '@/lib/utils/formatters';
 import Paragraph from './Paragraph';
 
-
 function BasketTotal() {
   const { data: basket } = useUserBasket();
   const basketTotal = basket.items.reduce(

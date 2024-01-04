@@ -10,8 +10,14 @@ import {
   IconButton,
   EditIcon,
   DeleteIcon,
+  ClearIcon,
 } from '@/components/mui';
 import Heading from '@/components/Heading';
+import {
+  useAddBasket,
+  useAddToBasket,
+  useRemoveFromBasket,
+} from '@/lib/tq/baskets/mutations';
 import Paragraph from './Paragraph';
 
 const hyphenate = (str) => str.replaceAll(' ', '-');
@@ -23,6 +29,7 @@ function Product({
   headingLevel = 'h2',
   removeHandler = () => console.log('no delete handler provided'),
   userProductPermissions,
+  inBasket,
 }) {
   const [imageSrc, setImageSrc] = useState(image);
   // const [showProductLink, setShowProductLink] = useState(false)
@@ -41,6 +48,19 @@ function Product({
     setImageSrc(defaultImgSrc);
   };
 
+  // Add product to basket
+  const addToBasketMutate = useAddToBasket();
+
+  const addToBasketHandler = (productId) => {
+    addToBasketMutate.mutate(productId);
+  };
+
+  // Remove product from basket
+  const removeFromBasketMutate = useRemoveFromBasket();
+
+  const removeFromBasketHandler = (productId) => {
+    removeFromBasketMutate.mutate(productId);
+  };
   return (
     <Card component="div" sx={{ width: '100%', height: '500px' }}>
       <CardMedia sx={{ display: 'grid', placeContent: 'center' }}>
@@ -71,12 +91,19 @@ function Product({
             Go to product page
           </Button>
         )}
-        <Button
-          variant="contained"
-          onClick={() => addToCart(_id)}
-        >
-          Add to cart
-        </Button>
+        {!inBasket && (
+          <Button variant="contained" onClick={() => addToBasketHandler(_id)}>
+            Add to cart
+          </Button>
+        )}
+        {inBasket && (
+          <IconButton
+            aria-label="remove product from basket"
+            onClick={() => removeFromBasketHandler(_id)}
+          >
+            <ClearIcon />
+          </IconButton>
+        )}
         {canUpdate && (
           <IconButton
             variant="contained"

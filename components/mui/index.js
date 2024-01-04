@@ -25,6 +25,7 @@ import Avatar from '@mui/material/Avatar';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export {
   Avatar,
@@ -53,4 +54,5 @@ export {
   CircularProgress,
   DeleteIcon,
   EditIcon,
+  ClearIcon
 };

@@ -8,6 +8,7 @@ import Product from '@/components/Product';
 
 function BasketList({ removeHandler = () => {} }) {
   const { isLoading, isError, error, data: basket } = useUserBasket();
+  console.log(basket.items)
 
   // console.log(Baskets)
   if (isLoading) {
@@ -18,7 +19,7 @@ function BasketList({ removeHandler = () => {} }) {
     return <Paragraph>{error.message}</Paragraph>;
   }
 
-  if (!basket.length) return <Paragraph>No items in basket</Paragraph>;
+  if (!basket.items.length) return <Paragraph>No items in basket</Paragraph>;
 
   return (
     <List
@@ -28,7 +29,7 @@ function BasketList({ removeHandler = () => {} }) {
         gridTemplateColumns: '1fr 1fr',
       }}
     >
-      {basket.map((product) => (
+      {basket.items.map((product) => (
         <ListItem key={nanoid()} component="li">
           <ErrorBoundary>
             <Product
@@ -36,6 +37,7 @@ function BasketList({ removeHandler = () => {} }) {
               // linkToBasketPage
               headingLevel="h5"
               removeHandler={removeHandler}
+              inBasket
             />
           </ErrorBoundary>
         </ListItem>

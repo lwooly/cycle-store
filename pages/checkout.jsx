@@ -3,13 +3,13 @@ import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import QueryBoundaries from '@/components/QueryBoundary';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
-import BasketList from '@/components/BasketList';
 import { withPageAuthRequired, getSession } from '@auth0/nextjs-auth0';
 import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries';
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
-import BasketTotal from '@/components/BasketTotal';
+import CheckoutSummaryTable from '@/components/CheckoutSummary';
+import { Box } from '@mui/material';
 
-export default function BasketPage() {
+export default function CheckoutPage() {
   return (
     <>
       <Head>
@@ -19,12 +19,11 @@ export default function BasketPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component="h2">Basket</Heading>
+        <Heading component="h1">Checkout</Heading>
         <QueryBoundaries>
-          <BasketTotal />
-        </QueryBoundaries>
-        <QueryBoundaries>
-          <BasketList />
+          <Box sx={{ marginBlockEnd: '2em', mt: '1em' }}>
+            <CheckoutSummaryTable />
+          </Box>
         </QueryBoundaries>
       </Layout>
     </>

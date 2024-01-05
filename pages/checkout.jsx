@@ -8,6 +8,7 @@ import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries'
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
 import CheckoutSummaryTable from '@/components/CheckoutSummary';
 import { Box } from '@mui/material';
+import StripeButton from '@/components/StripeButton';
 
 export default function CheckoutPage() {
   return (
@@ -24,6 +25,9 @@ export default function CheckoutPage() {
           <Box sx={{ marginBlockEnd: '2em', mt: '1em' }}>
             <CheckoutSummaryTable />
           </Box>
+        </QueryBoundaries>
+        <QueryBoundaries>
+          <StripeButton />
         </QueryBoundaries>
       </Layout>
     </>

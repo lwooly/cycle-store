@@ -53,7 +53,8 @@ const handler = async (req, res) => {
       email,
       source: token,
     });
-    console.log(customer.id);
+    console.log(customer.id, 'customer_id');
+    console.log(amount, 'amount');
 
     // create a charge in string
 
@@ -62,6 +63,7 @@ const handler = async (req, res) => {
       currency: 'GBP',
       customer: customer.id,
     });
+    console.log(charge);
   } catch (err) {
     console.log('Stripe error:', err);
     return res.status(500).json({
@@ -81,13 +83,14 @@ const handler = async (req, res) => {
   let basket = { items: [] };
   try {
     basket = await getUserBasketFromDB(req.user.sub);
+    console.log(basket);
 
     // reduce quantity of product in stock by one
     // eslint-disable-next-line no-restricted-syntax
     for (const item of basket.items) {
       item.quantity -= 1;
       // eslint-disable-next-line no-await-in-loop
-      await item.save;
+      await item.save();
     }
   } catch (err) {
     console.log(`Could not decrement item quantities`);
@@ -98,10 +101,10 @@ const handler = async (req, res) => {
     addOrderToDB({
       owner: req.user.sub,
       items: basket.items,
-      recieptURL: charge.reciept_url,
+      receiptURL: charge.receipt_url,
     });
   } catch (err) {
-    console.log(`order not saved`);
+    console.log(`order not saved`, err);
   }
 
   // empty users basket
@@ -118,8 +121,8 @@ const handler = async (req, res) => {
     cc: ADMIN_EMAIL,
     from: ADMIN_EMAIL,
     subject: `Order confirmation`,
-    text: `Thanks ${name} for your order. \n\n You can see your receipt here: ${charge.reciept_url}`,
-    html: `<p>Thanks ${name} for your order. \n\n You can see your receipt <a href=${charge.reciept_url} target="_blank>here</a></p>`,
+    text: `Thanks ${name} for your order. \n\n You can see your receipt here: ${charge.receipt_url}`,
+    html: `<p>Thanks ${name} for your order. \n\n You can see your receipt <a href=${charge.receipt_url} target="_blank">here</a></p>`,
   };
 
   console.log(msg);
@@ -130,7 +133,7 @@ const handler = async (req, res) => {
     return res.status(200).json({
       message: 'Purchase successful',
       // eslint-disable-next-line camelcase
-      recieptURL: charge.reciept_url,
+      receiptURL: charge.receipt_url,
     });
   } catch (err) {
     console.log('Confirmation email send error', err);

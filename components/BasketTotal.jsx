@@ -15,9 +15,8 @@ function BasketTotal() {
     dinero({ amount: 0, currency: GBP }),
   );
   const basketLength = basket.items.length;
-  console.log(basket);
+  // console.log(basket);
 
-  console.log(basketLength);
   return (
     // fragment is required to  return a JavaScript conditional expression at the top level of a component's return statement.
     // eslint-disable-next-line react/jsx-no-useless-fragment

@@ -2,21 +2,21 @@ import StripeCheckout from 'react-stripe-checkout';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserBasket } from '@/lib/tq/baskets/queries';
 import { Button } from '@/components/mui';
-import { add, dinero } from 'dinero.js';
-import { GBP } from '@dinero.js/currencies';
 import axios from 'axios';
-import { Router } from 'next/router';
+import { useRouter } from 'next/router';
 
 function StripeButton() {
   const { user, isLoading, error } = useUser();
   const { data: basket } = useUserBasket();
+  const router = useRouter();
 
   // calculate basket total
   const basketTotal = basket.items.reduce(
-    (total, item) =>
-      add(total, dinero({ amount: item.price * 100, currency: GBP })),
-    dinero({ amount: 0, currency: GBP }),
+    (total, item) => total + item.price * 100,
+    0,
   );
+
+  console.log('Basket Total', basketTotal);
 
   // token callback
 
@@ -36,7 +36,7 @@ function StripeButton() {
         amount: basketTotal,
       });
       console.log(result);
-      Router.push({
+      router.push({
         pathname: '/thankyou',
         query: {
           receiptURL: result.data.receiptURL,

@@ -10,9 +10,11 @@ import { toDecimal } from 'dinero.js';
 import { dinero } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
 import { useAddToBasket } from '@/lib/tq/baskets/mutations';
+import { useTheme } from '@emotion/react';
 
 function NewArrival({ removeHandler = () => {}, userProductPermissions = {} }) {
   const { isLoading, isError, error, data: products } = useProducts();
+  const theme = useTheme();
 
   // console.log(products)
 
@@ -40,7 +42,25 @@ function NewArrival({ removeHandler = () => {}, userProductPermissions = {} }) {
     addToBasketMutate.mutate(productId);
   };
   return (
-    <Box sx={{ height: '100vh', width: '100%' }}>
+    <Box
+      component="section"
+      sx={{
+        height: '100vh',
+        width: '100%',
+        '&::before': {
+          height: '100%',
+          width: '100%',
+          top: 0,
+          left: 0,
+          content: '""',
+          position: 'absolute',
+          backgroundColor: 'transparent',
+          backgroundImage: `linear-gradient(90deg, ${theme.palette.secondary.main} 50%,${theme.palette.primary.main} 50%)`,
+          opacity: 0.67,
+          zIndex: 1,
+        },
+      }}
+    >
       <Image
         src={product.image}
         alt={product.name}
@@ -49,25 +69,47 @@ function NewArrival({ removeHandler = () => {}, userProductPermissions = {} }) {
         objectPosition="center"
         style={{ zIndex: 0 }}
       />
-      <Box sx={{ zIndex: 1, position: 'relative' }}>
-        <Typography component="h2" variant="h3" sx={{ zIndex: 1 }}>
-          Newly Launched
-        </Typography>
-        <ErrorBoundary>
-          <Heading component="h4" variant="h4">
-            {title}
-          </Heading>
-          <Paragraph>About: {description}</Paragraph>
-          <Paragraph>
-            Price:{' '}
-            {formatPrice(
-              toDecimal(dinero({ amount: price * 100, currency: GBP })),
-            )}
-          </Paragraph>
-          <Button variant="contained" onClick={() => addToBasketHandler(_id)}>
-            Buy Now
-          </Button>
-        </ErrorBoundary>
+      <Box sx={{ maxWidth: '1200px', margin: '0 auto', height: '100%' }}>
+        {/* title */}
+        <Box
+          sx={{
+            zIndex: 1,
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            color: 'white',
+            maxWidth: '40%',
+            height: '100%',
+          }}
+        >
+          <Typography component="h1" variant="h4" sx={{ zIndex: 1 }}>
+            Newly Launched
+          </Typography>
+          <ErrorBoundary>
+            <Heading component="h1" variant="h1">
+              {title}
+            </Heading>
+            <Typography component="h5" variant="h5" sx={{ zIndex: 1 }}>
+              Specification
+            </Typography>
+            <Paragraph> {description}</Paragraph>
+            <Paragraph>
+              Price:{' '}
+              {formatPrice(
+                toDecimal(dinero({ amount: price * 100, currency: GBP })),
+              )}
+            </Paragraph>
+            <Button
+              variant="contained"
+              sx={{ marginRight: 'auto', color: 'white' }}
+              onClick={() => addToBasketHandler(_id)}
+            >
+              Buy Now
+            </Button>
+          </ErrorBoundary>
+        </Box>
       </Box>
     </Box>
   );

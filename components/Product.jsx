@@ -71,7 +71,7 @@ function Product({
   return (
     <Card
       component="div"
-      sx={{ width: '100%', borderRadius: 0, borderShadow: 'none' }}
+      sx={{ width: '100%', borderRadius: 0, borderShadow: 'none', height: '100%' }}
     >
       <CardMedia
         sx={{

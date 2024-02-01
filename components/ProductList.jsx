@@ -78,7 +78,8 @@ function ProductList({
       component="ol"
       sx={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        gridTemplateColumns: '1fr 1fr 1fr 1fr',
+        gap: '0.3rem',
       }}
     >
       {products.map((product) => (
@@ -91,6 +92,7 @@ function ProductList({
               headingLevel="h5"
               removeHandler={removeHandler}
               userProductPermissions={userProductPermissions}
+              summary
             />
           </ErrorBoundary>
         </ListItem>

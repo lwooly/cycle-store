@@ -14,7 +14,7 @@ function Header() {
   };
 
   return (
-    <Box sx={{ display: 'flex', position: 'absolute', width:'100%' }}>
+    <Box sx={{ display: 'flex', position: 'fixed', top: 0, left:0, zIndex: 1000 }}>
       <MobileNavigation
         handleDrawerToggle={handleDrawerToggle}
         mobileOpen={mobileOpen}

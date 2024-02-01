@@ -22,7 +22,11 @@ function DesktopNavigation({
   // console.log(theme);
   const lightTextColor = theme.palette.common.white;
   return (
-    <AppBar component="nav" position="sticky" sx={{ mb: 2 }}>
+    <AppBar
+      component="nav"
+      sx={{ mb: 2, backgroundImage: 'none', boxShadow: 'none' }}
+      color='transparent'
+    >
       <Toolbar>
         <IconButton
           color="inherit"

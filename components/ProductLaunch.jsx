@@ -12,7 +12,7 @@ import { GBP } from '@dinero.js/currencies';
 import { useAddToBasket } from '@/lib/tq/baskets/mutations';
 import { useTheme } from '@emotion/react';
 
-function NewArrival({ removeHandler = () => {}, userProductPermissions = {} }) {
+function ProductLaunch() {
   const { isLoading, isError, error, data: products } = useProducts();
   const theme = useTheme();
 
@@ -28,7 +28,6 @@ function NewArrival({ removeHandler = () => {}, userProductPermissions = {} }) {
 
   if (!products.length) return <Paragraph>No products available</Paragraph>;
 
-  console.log(userProductPermissions);
 
   const product = products[0];
 
@@ -115,4 +114,4 @@ function NewArrival({ removeHandler = () => {}, userProductPermissions = {} }) {
   );
 }
 
-export default NewArrival;
+export default ProductLaunch;

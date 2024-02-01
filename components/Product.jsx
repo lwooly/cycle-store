@@ -26,6 +26,7 @@ function Product({
   values: { _id, title, description, price, quantity, image, favorites },
   linkToProductPage,
   headingLevel = 'h2',
+  summary = false,
   // eslint-disable-next-line no-console
   removeHandler = () => console.log('no delete handler provided'),
   userProductPermissions,
@@ -62,22 +63,62 @@ function Product({
   const removeFromBasketHandler = (productId) => {
     removeFromBasketMutate.mutate(productId);
   };
+
+  let link = '';
+  if (linkToProductPage) {
+    link = `/products/${slugify(title, _id)}`;
+  }
   return (
-    <Card component="div" sx={{ width: '100%', height: '500px' }}>
-      <CardMedia sx={{ display: 'grid', placeContent: 'center' }}>
+    <Card
+      component="div"
+      sx={{ width: '100%', borderRadius: 0, borderShadow: 'none' }}
+    >
+      <CardMedia
+        sx={{
+          width: '100%', // Make width responsive
+          height: 0,
+          // Limit the maximum size
+          position: 'relative',
+          paddingBottom: 'min(300px, 100%)',
+          // Equal to width for a square aspect ratio
+          overflow: 'hidden',
+          // flexGrow: 1,
+          // minWidth: { md: "30vw" },
+          //   border: '3px solid #000',
+        }}
+      >
         <Image
           src={imageSrc}
           alt={title}
-          width={200}
-          height={200}
+          fill
+          sizes="50%"
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
           onError={errorHandler}
         />
       </CardMedia>
       <CardContent>
-        <Heading component="h2" variant={headingLevel}>
-          {title}
-        </Heading>
-        <Paragraph>About: {description}</Paragraph>
+        {!linkToProductPage ? (
+          <Heading component="h2" variant={headingLevel}>
+            {title}
+          </Heading>
+        ) : (
+          <a
+            href={link}
+            rel="noopener noreferrer"
+            target="_blank"
+            aria-label="Link to product page"
+            color="black"
+          >
+            <Heading component="h2" variant={headingLevel}>
+              {title}
+            </Heading>
+          </a>
+        )}
+
+        {!summary && <Paragraph>About: {description}</Paragraph>}
         <Paragraph>
           Price:{' '}
           {formatPrice(
@@ -85,18 +126,9 @@ function Product({
           )}
         </Paragraph>
         <Paragraph>In Stock: {quantity}</Paragraph>
-        <Paragraph>Favorites: {favorites || 0}</Paragraph>
+        {/* <Paragraph>Favorites: {favorites || 0}</Paragraph> */}
       </CardContent>
       <CardActions>
-        {linkToProductPage && (
-          <Button
-            variant="contained"
-            href={`/products/${slugify(title, _id)}`}
-            component={Link}
-          >
-            Go to product page
-          </Button>
-        )}
         {!inBasket && (
           <Button variant="contained" onClick={() => addToBasketHandler(_id)}>
             Add to cart

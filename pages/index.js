@@ -10,7 +10,9 @@ import { getProductsFromDB } from '@/lib/api-functions/server/products/queries';
 import { STORAGE_KEY } from '@/lib/tq/products/settings';
 import { UIContext } from '@/components/contexts/UI.context';
 import { Query } from 'mongoose';
-import NewArrival from '@/components/NewArrival';
+import ProductLaunch from '@/components/ProductLaunch';
+import { NewReleases } from '@mui/icons-material';
+import NewArrivals from '@/components/NewArrivals';
 
 export default function Home() {
   return (
@@ -23,12 +25,9 @@ export default function Home() {
       </Head>
       <Layout>
         <QueryBoundaries>
-          <NewArrival />
+          <ProductLaunch />
         </QueryBoundaries>
-
-        <QueryBoundaries>
-          <ProductList />
-        </QueryBoundaries>
+          <NewArrivals />
       </Layout>
     </>
   );

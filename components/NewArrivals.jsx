@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import QueryBoundary from './QueryBoundary';
+import QueryBoundaries from './QueryBoundary';
 import ProductList from './ProductList';
 
 function NewArrivals() {
@@ -8,24 +8,24 @@ function NewArrivals() {
       component="section"
       sx={{
         minHeight: '100vh',
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <Box
         sx={{
           maxWidth: '1200px',
-          width: '100%', 
-          textAlign: 'center', 
+          width: '100%',
+          textAlign: 'center',
         }}
       >
-        <Typography component="h2" variant="h2" marginBottom={'2rem'}>
+        <Typography component="h2" variant="h2" marginBottom="2rem">
           New Arrivals
         </Typography>
-        <QueryBoundary>
+        <QueryBoundaries>
           <ProductList />
-        </QueryBoundary>
+        </QueryBoundaries>
       </Box>
     </Box>
   );

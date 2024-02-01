@@ -2,15 +2,13 @@ import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { useProducts } from '@/lib/tq/products/queries';
 import { Box, Button, CircularProgress, Typography } from '@/components/mui';
 import Paragraph from '@/components/Paragraph';
-import Product from '@/components/Product';
 import Image from 'next/image';
-import Heading from './Heading';
 import { formatPrice } from '@/lib/utils/formatters';
-import { toDecimal } from 'dinero.js';
-import { dinero } from 'dinero.js';
+import { toDecimal, dinero } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
 import { useAddToBasket } from '@/lib/tq/baskets/mutations';
 import { useTheme } from '@emotion/react';
+import Heading from './Heading';
 
 function ProductLaunch() {
   const { isLoading, isError, error, data: products } = useProducts();
@@ -30,8 +28,7 @@ function ProductLaunch() {
 
   const product = products[0];
 
-  const { _id, title, description, price, quantity, image, favorites } =
-    product;
+  const { _id, title, description, price } = product; // quantity, image, favorites
 
   // Add product to basket
   const addToBasketMutate = useAddToBasket();
@@ -71,7 +68,7 @@ function ProductLaunch() {
         sx={{
           maxWidth: '1200px',
           margin: '0 auto',
-          minHeight: '100vh', //noted
+          minHeight: '100vh', // noted
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',

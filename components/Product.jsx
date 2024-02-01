@@ -23,7 +23,7 @@ import { formatPrice, slugify } from '@/lib/utils/formatters';
 import Paragraph from './Paragraph';
 
 function Product({
-  values: { _id, title, description, price, quantity, image, favorites },
+  values: { _id, title, description, price, quantity, image }, // favorites,
   linkToProductPage,
   headingLevel = 'h2',
   summary = false,
@@ -71,7 +71,14 @@ function Product({
   return (
     <Card
       component="div"
-      sx={{ width: '100%', borderRadius: 0, borderShadow: 'none', height: '100%', padding:'0', gutters:'0' }}
+      sx={{
+        width: '100%',
+        borderRadius: 0,
+        borderShadow: 'none',
+        height: '100%',
+        padding: '0',
+        gutters: '0',
+      }}
     >
       <CardMedia
         sx={{

@@ -8,8 +8,6 @@ import { Card, CardContent, CardMedia } from '@/components/mui';
 
 const { HYGRAPH_ENDPOINT, HYGRAPH_TOKEN } = process.env;
 
-
-
 export default function BlogPost({ ssd = {} }) {
   const {
     title,

@@ -1,16 +1,8 @@
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
-import { useProducts } from '@/lib/tq/products/queries';
-import { Box, Button, CircularProgress, Typography } from '@/components/mui';
+import { Box, Button, Typography } from '@/components/mui';
 import Paragraph from '@/components/Paragraph';
-import Product from '@/components/Product';
-import Image from 'next/image';
-import Heading from './Heading';
-import { formatPrice } from '@/lib/utils/formatters';
-import { toDecimal } from 'dinero.js';
-import { dinero } from 'dinero.js';
-import { GBP } from '@dinero.js/currencies';
-import { useAddToBasket } from '@/lib/tq/baskets/mutations';
 import { useTheme } from '@emotion/react';
+import Heading from './Heading';
 
 function HomePageContent({ title, description, imageSrc, exploreLink }) {
   const theme = useTheme();
@@ -21,6 +13,11 @@ function HomePageContent({ title, description, imageSrc, exploreLink }) {
       sx={{
         minHeight: '100vh',
         width: '100%',
+        backgroundImage: `url(${imageSrc})`,
+        backgroundAttachment: 'fixed',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        position: 'relative',
         '&::before': {
           height: '100%',
           width: '100%',
@@ -29,25 +26,32 @@ function HomePageContent({ title, description, imageSrc, exploreLink }) {
           content: '""',
           position: 'absolute',
           backgroundColor: 'transparent',
-          //   backgroundImage: `linear-gradient(90deg, ${theme.palette.secondary.main} 50%,${theme.palette.primary.main} 50%)`,
-          opacity: 0.67,
-          zIndex: 1,
+          backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main} 0%, transparent 100%)`,
+          opacity: 1,
+          zIndex: 0,
         },
       }}
     >
-      <Image
+      {/* <Image
         src={imageSrc}
         alt={description}
         layout="fill"
         objectFit="cover"
         objectPosition="center"
         style={{ zIndex: 0 }}
-      />
-      <Box sx={{ maxWidth: '1200px', margin: '0 auto', height: '100%', minHeight: '100vh', }}>
+      /> */}
+      <Box
+        sx={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          height: '100%',
+          minHeight: '100vh',
+        }}
+      >
         {/* title */}
         <Box
           sx={{
-            p:4,
+            p: 4,
             zIndex: 1,
             position: 'relative',
             display: 'flex',

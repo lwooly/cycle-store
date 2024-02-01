@@ -25,7 +25,7 @@ function DesktopNavigation({
     <AppBar
       component="nav"
       sx={{ mb: 2, backgroundImage: 'none', boxShadow: 'none' }}
-      color='transparent'
+      color="transparent"
     >
       <Toolbar>
         <IconButton

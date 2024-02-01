@@ -1,11 +1,5 @@
 import React, { useContext } from 'react';
-import {
-  Container,
-  Alert,
-  Snackbar,
-  IconButton,
-  CloseIcon,
-} from '@/components/mui';
+import { Alert, Snackbar, IconButton, CloseIcon } from '@/components/mui';
 import { UIContext } from '@/components/contexts/UI.context';
 import Header from './Header';
 

@@ -1,17 +1,11 @@
 import Head from 'next/head';
-import { useContext } from 'react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
-import { Box, Button } from '@/components/mui';
+import { Box } from '@/components/mui';
 import Layout from '@/components/Layout';
-import Heading from '@/components/Heading';
 import QueryBoundaries from '@/components/QueryBoundary';
-import ProductList from '@/components/ProductList';
 import { getProductsFromDB } from '@/lib/api-functions/server/products/queries';
 import { STORAGE_KEY } from '@/lib/tq/products/settings';
-import { UIContext } from '@/components/contexts/UI.context';
-import { Query } from 'mongoose';
 import ProductLaunch from '@/components/ProductLaunch';
-import { NewReleases } from '@mui/icons-material';
 import NewArrivals from '@/components/NewArrivals';
 import HomePageContent from '@/components/HomePageContent';
 
@@ -31,12 +25,30 @@ export default function Home() {
         <NewArrivals />
         <Box
           component="section"
-          sx={{ position: 'relative', height: '100vh', width: '100%',  margin: '0', padding:0}}
+          sx={{
+            position: 'relative',
+            height: '100vh',
+            width: '100%',
+            margin: '0',
+            padding: 0,
+          }}
         >
           <HomePageContent
             title="Mountain Bikes"
             description="Discover the thrill of off-road biking with our premium selection of mountain bikes. From rugged trails to mountainous terrains, our MTBs are designed for adventure seekers of all levels. Explore our range!"
-            imageSrc="https://images.unsplash.com/photo-1589100984317-79246528923c?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            imageSrc="https://images.unsplash.com/photo-1578683416220-3f97273c939c?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            exploreLink="/products"
+          />
+          <HomePageContent
+            title="City Bikes"
+            description="City bikes are designed for urban commuting and leisure rides, featuring comfortable seating, upright handlebars for easy navigation, and often equipped with accessories like baskets and lights for practicality. These bikes prioritize durability and ease of use, making them ideal for daily travel in an urban environment."
+            imageSrc="https://images.unsplash.com/photo-1616963248328-6b7bea589840?q=80&w=2812&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            exploreLink="/products"
+          />
+          <HomePageContent
+            title="Speciality Bikes"
+            description="Explore our collection of specialty bikes, designed to meet the unique needs of every cyclist. From sleek road bikes engineered for speed and efficiency, to rugged mountain bikes built to tackle challenging terrains, and versatile hybrid models that blend the best of both worlds. "
+            imageSrc="https://images.unsplash.com/photo-1496147433903-1e62fdb6f4be?q=80&w=2842&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             exploreLink="/products"
           />
         </Box>

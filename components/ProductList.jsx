@@ -79,12 +79,12 @@ function ProductList({
       sx={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr 1fr 1fr',
-        gap: '0.3rem',
+        gap: '0.5rem',
       }}
     >
       {products.map((product) => (
         // eslint-disable-next-line no-underscore-dangle
-        <ListItem key={product._id} component="li">
+        <ListItem key={product._id} component="li" sx={{padding:'0'}}>
           <ErrorBoundary>
             <Product
               values={product}

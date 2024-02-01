@@ -28,7 +28,6 @@ function ProductLaunch() {
 
   if (!products.length) return <Paragraph>No products available</Paragraph>;
 
-
   const product = products[0];
 
   const { _id, title, description, price, quantity, image, favorites } =
@@ -44,7 +43,7 @@ function ProductLaunch() {
     <Box
       component="section"
       sx={{
-        height: '100vh',
+        minHeight: '100vh',
         width: '100%',
         '&::before': {
           height: '100%',
@@ -68,18 +67,25 @@ function ProductLaunch() {
         objectPosition="center"
         style={{ zIndex: 0 }}
       />
-      <Box sx={{ maxWidth: '1200px', margin: '0 auto', height: '100%' }}>
+      <Box
+        sx={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          minHeight: '100vh', //noted
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
         {/* title */}
         <Box
           sx={{
+            p: 4,
             zIndex: 1,
             position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
             gap: '0.5rem',
             color: 'white',
-            maxWidth: '40%',
+            maxWidth: '60%',
             height: '100%',
           }}
         >

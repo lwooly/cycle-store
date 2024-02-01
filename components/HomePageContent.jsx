@@ -17,9 +17,9 @@ function HomePageContent({ title, description, imageSrc, exploreLink }) {
 
   return (
     <Box
-      component="section"
+      component="article"
       sx={{
-        height: '100vh',
+        minHeight: '100vh',
         width: '100%',
         '&::before': {
           height: '100%',
@@ -43,26 +43,28 @@ function HomePageContent({ title, description, imageSrc, exploreLink }) {
         objectPosition="center"
         style={{ zIndex: 0 }}
       />
-      <Box sx={{ maxWidth: '1200px', margin: '0 auto', height: '100%' }}>
+      <Box sx={{ maxWidth: '1200px', margin: '0 auto', height: '100%', minHeight: '100vh', }}>
         {/* title */}
         <Box
           sx={{
+            p:4,
             zIndex: 1,
             position: 'relative',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            gap: '0.5rem',
+            gap: '1rem',
             color: 'white',
             maxWidth: '40%',
             height: '100%',
+            minHeight: '100vh',
           }}
         >
-          <Typography component="h2" variant="h4" sx={{ zIndex: 1 }}>
+          <Typography component="h2" variant="h5" sx={{ zIndex: 1 }}>
             Discover the collection
           </Typography>
           <ErrorBoundary>
-            <Heading component="h1" variant="h1">
+            <Heading component="h3" variant="h2">
               {title}
             </Heading>
             <Paragraph> {description}</Paragraph>

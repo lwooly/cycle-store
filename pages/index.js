@@ -31,11 +31,11 @@ export default function Home() {
         <NewArrivals />
         <Box
           component="section"
-          sx={{ position: 'relative', height: '100vh', width: '100%',  margin: '0, 0'}}
+          sx={{ position: 'relative', height: '100vh', width: '100%',  margin: '0', padding:0}}
         >
           <HomePageContent
             title="Mountain Bikes"
-            description="Discover the thrill of off-road biking with our premium selection of mountain bikes. From rugged trails to mountainous terrains, our MTBs are designed for adventure seekers of all levels. Explore our range, featuring the latest technology and innovative designs to elevate your ride. Get ready to conquer the outdoors with a bike thats built for durability and performance. Start your adventure here!"
+            description="Discover the thrill of off-road biking with our premium selection of mountain bikes. From rugged trails to mountainous terrains, our MTBs are designed for adventure seekers of all levels. Explore our range!"
             imageSrc="https://images.unsplash.com/photo-1589100984317-79246528923c?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             exploreLink="/products"
           />

@@ -23,9 +23,7 @@ function Layout({ children }) {
       <header>
         <Header />
       </header>
-      <main>
-        <Container maxWidth="xl">{children}</Container>
-      </main>
+      <main>{children}</main>
       <Snackbar
         open={open}
         autoHideDuration={hideDuration}

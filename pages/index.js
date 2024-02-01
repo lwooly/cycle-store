@@ -9,10 +9,10 @@ import ProductList from '@/components/ProductList';
 import { getProductsFromDB } from '@/lib/api-functions/server/products/queries';
 import { STORAGE_KEY } from '@/lib/tq/products/settings';
 import { UIContext } from '@/components/contexts/UI.context';
+import { Query } from 'mongoose';
+import NewArrival from '@/components/NewArrival';
 
 export default function Home() {
-  const { showMessage } = useContext(UIContext);
-
   return (
     <>
       <Head>
@@ -22,18 +22,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component="h2">Home Page</Heading>
-        <Button
-          variant="contained"
-          onClick={() =>
-            showMessage({
-              type: 'error',
-              string: 'test message',
-            })
-          }
-        >
-          Alert
-        </Button>
+        <QueryBoundaries>
+          <NewArrival />
+        </QueryBoundaries>
+
         <QueryBoundaries>
           <ProductList />
         </QueryBoundaries>

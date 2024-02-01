@@ -14,7 +14,7 @@ const handler = async (req, res) => {
     from: ADMIN_EMAIL,
     subject,
     text: message,
-    html: `<p>${message}</p>>`,
+    html: `<p>${message}</p>`,
   };
 
   console.log(msg);

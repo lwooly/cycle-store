@@ -8,13 +8,43 @@ import { withPageAuthRequired, getSession } from '@auth0/nextjs-auth0';
 import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries';
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
 import BasketTotal from '@/components/BasketTotal';
+import { useUserBasket } from '@/lib/tq/baskets/queries';
+import { CircularProgress } from '@mui/material';
+import Paragraph from '@/components/Paragraph';
+import { useEffect, useState } from 'react';
+import { useProduct } from '@/lib/tq/products/queries';
 
-export default function BasketPage({ssd}) {
+export default function BasketPage({ user }) {
+  const [basket, setBasket] = useState();
+  const [tempBasketItemIds, setTempBasketItemIds] = useState(
+    () =>
+      JSON.parse(localStorage.getItem('temporaryBasket')) || {
+        items: [],
+      },
+  );
 
-  const {user} = ssd;
+  let { isLoading, isError, error, data: userBasket } = useUserBasket();
 
-  console.log(user, 'user')
 
+  tempBasketItemIds.map((id) => {
+    const { data: product } = useProduct(id);
+    console.log(product);
+  });
+
+  
+
+  // const tempBasketFill = {
+  //   items: [],
+  // };
+
+  // tempBasketItems.forEach((id) => {
+  //   const { data: product } = useProduct(id);
+  //   console.log(product);
+  //   tempBasketFill.items.push(product);
+  //   setBasket(tempBasketFill);
+  // });
+
+  // console.log(basket, 'basket');
 
   return (
     <>
@@ -27,11 +57,9 @@ export default function BasketPage({ssd}) {
       <Layout>
         <Heading component="h2">Basket</Heading>
         <QueryBoundaries>
-          <BasketTotal />
+          <BasketTotal basket={basket} />
         </QueryBoundaries>
-        <QueryBoundaries>
-          {/* <BasketList /> */}
-        </QueryBoundaries>
+        <QueryBoundaries>{/* <BasketList /> */}</QueryBoundaries>
       </Layout>
     </>
   );

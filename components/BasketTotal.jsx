@@ -7,8 +7,8 @@ import { formatPrice } from '@/lib/utils/formatters';
 import { Button } from '@/components/mui';
 import Paragraph from './Paragraph';
 
-function BasketTotal() {
-  const { data: basket } = useUserBasket();
+function BasketTotal({basket}) {
+  // const { data: basket } = useUserBasket();
   const basketTotal = basket.items.reduce(
     (total, item) =>
       add(total, dinero({ amount: item.price * 100, currency: GBP })),

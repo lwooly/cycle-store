@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { Alert, Snackbar, IconButton, CloseIcon } from '@/components/mui';
+import { Alert, Snackbar, IconButton, CloseIcon, Box } from '@/components/mui';
 import { UIContext } from '@/components/contexts/UI.context';
 import Header from './Header';
+import Footer from './Footer';
 
 function Layout({ children }) {
   const {
@@ -18,6 +19,7 @@ function Layout({ children }) {
         <Header />
       </header>
       <main>{children}</main>
+      <Footer />
       <Snackbar
         open={open}
         autoHideDuration={hideDuration}

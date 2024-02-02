@@ -24,7 +24,7 @@ function DesktopNavigation({
   return (
     <AppBar
       component="nav"
-      sx={{ mb: 2, backgroundImage: 'none', boxShadow: 'none' }}
+      sx={{ mb: 2, backgroundImage: 'none', boxShadow: 'none', position:'static'}}
       color="transparent"
     >
       <Toolbar>
@@ -48,7 +48,7 @@ function DesktopNavigation({
             flexGrow: 1,
           }}
         >
-          Coffee Shop
+          Bike Shop
         </Typography>
         <Box
           sx={{

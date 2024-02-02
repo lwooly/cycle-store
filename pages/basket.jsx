@@ -9,7 +9,13 @@ import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries'
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
 import BasketTotal from '@/components/BasketTotal';
 
-export default function BasketPage() {
+export default function BasketPage({ssd}) {
+
+  const {user} = ssd;
+
+  console.log(user, 'user')
+
+
   return (
     <>
       <Head>
@@ -24,33 +30,34 @@ export default function BasketPage() {
           <BasketTotal />
         </QueryBoundaries>
         <QueryBoundaries>
-          <BasketList />
+          {/* <BasketList /> */}
         </QueryBoundaries>
       </Layout>
     </>
   );
 }
 
-export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps(context) {
-    // get user data from auth0
-    const { user } = await getSession(context.req, context.res);
+export const getServerSideProps = async (context) => {
+  // get user data from auth0
+  const session = await getSession(context.req, context.res);
 
-    console.log('user')
+  console.log(session?.user, 'user');
 
-    const basket = await getUserBasketFromDB(user.sub, true);
+  let userBasket = null;
+  if (session?.user) {
+    userBasket = await getUserBasketFromDB(session.user.sub, true);
+  }
 
-    const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
-    await queryClient.setQueryData(
-      [USER_OWN_BASKET_STORAGE_KEY],
-      JSON.parse(JSON.stringify(basket)),
-    );
+  if (userBasket) {
+    await queryClient.setQueryData([USER_OWN_BASKET_STORAGE_KEY], userBasket);
+  }
 
-    return {
-      props: {
-        dehydratedState: dehydrate(queryClient),
-      },
-    };
-  },
-});
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+      user: session?.user || null,
+    },
+  };
+};

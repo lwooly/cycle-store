@@ -20,10 +20,10 @@ export default function BasketIcon() {
   const [basketItems, setBasketItems] = useState([]);
 
   const { user } = useUser();
+  const { data } = useUserBasket();
 
   useEffect(() => {
     if (user) {
-      const { data } = useUserBasket();
       if (data && data.items) {
         setBasketItems(data.items);
       }

@@ -17,13 +17,13 @@ export default withMiddlewareAuthRequired(async (req) => {
   try {
     const res = NextResponse.next();
     const session = await getSession(req, res);
+    // console.log('session', session)
     const isAdmin = checkRole(session.user, identifier, roles);
 
     if (!isAdmin) {
       console.log(`Not admin`);
       return NextResponse.redirect(new URL('/', req.url));
     }
-
     return res;
   } catch (err) {
     console.log(err);

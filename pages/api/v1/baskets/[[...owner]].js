@@ -50,6 +50,7 @@ const handler = nc({
       req.user = session.user;
       next();
     } catch (err) {
+      console.log('not accessing basket')
       return handleUnauthorisedAPICall(res);
     }
   })

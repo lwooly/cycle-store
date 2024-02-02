@@ -36,6 +36,8 @@ export const getServerSideProps = withPageAuthRequired({
     // get user data from auth0
     const { user } = await getSession(context.req, context.res);
 
+    console.log('user')
+
     const basket = await getUserBasketFromDB(user.sub, true);
 
     const queryClient = new QueryClient();

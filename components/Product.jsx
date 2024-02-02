@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { dinero, toDecimal } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import {
   Card,
   CardContent,
@@ -21,6 +22,7 @@ import {
 } from '@/lib/tq/baskets/mutations';
 import { formatPrice, slugify } from '@/lib/utils/formatters';
 import Paragraph from './Paragraph';
+import addToTemporaryBasket from '@/lib/api-functions/client/basket';
 
 function Product({
   values: { _id, title, description, price, quantity, image }, // favorites,
@@ -33,6 +35,9 @@ function Product({
   inBasket,
 }) {
   const [imageSrc, setImageSrc] = useState(image);
+  const {user} = useUser();
+
+  console.log(user)
   // const [showProductLink, setShowProductLink] = useState(false)
 
   const {
@@ -54,7 +59,14 @@ function Product({
   const addToBasketMutate = useAddToBasket();
 
   const addToBasketHandler = (productId) => {
-    addToBasketMutate.mutate(productId);
+    // check if user is logged in
+    if (user) {
+      // if user is logged in add the product to the basket
+      addToBasketMutate.mutate(productId);
+    } else {
+      // if user is not logged in add the product to the temporary basket
+      addToTemporaryBasket(productId);
+    }
   };
 
   // Remove product from basket
@@ -98,12 +110,13 @@ function Product({
           src={imageSrc}
           alt={title}
           fill
+          onError={errorHandler}
           sizes="50%"
           style={{
             objectFit: 'cover',
             objectPosition: 'center',
+            maxWidth: '100%',
           }}
-          onError={errorHandler}
         />
       </CardMedia>
       <CardContent>

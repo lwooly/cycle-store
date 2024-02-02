@@ -2,7 +2,7 @@ import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { useProducts } from '@/lib/tq/products/queries';
 import { Box, Button, CircularProgress, Typography } from '@/components/mui';
 import Paragraph from '@/components/Paragraph';
-import Image from 'next/image';
+import Image from "next/image";
 import { formatPrice } from '@/lib/utils/formatters';
 import { toDecimal, dinero } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
@@ -59,11 +59,13 @@ function ProductLaunch() {
       <Image
         src={product.image}
         alt={product.name}
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
-        style={{ zIndex: 0 }}
-      />
+        fill
+        sizes="100vw"
+        style={{
+          zIndex: 0,
+          objectFit: "cover",
+          objectPosition: "center"
+        }} />
       <Box
         sx={{
           maxWidth: '1200px',

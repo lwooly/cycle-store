@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Image from 'next/image';
+import Image from "next/image";
 import Link from 'next/link';
 import {
   Card,
@@ -39,7 +39,10 @@ function Basket({
           width={200}
           height={200}
           onError={errorHandler}
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
       </CardMedia>
       <CardContent>
         <Heading component="h2" variant={headingLevel}>

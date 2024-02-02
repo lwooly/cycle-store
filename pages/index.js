@@ -7,7 +7,8 @@ import { getProductsFromDB } from '@/lib/api-functions/server/products/queries';
 import { STORAGE_KEY } from '@/lib/tq/products/settings';
 import ProductLaunch from '@/components/ProductLaunch';
 import NewArrivals from '@/components/NewArrivals';
-import HomePageContent from '@/components/HomePageContent';
+import ExploreArticle from '@/components/ExploreArticle';
+import WhyChooseSection from '@/components/WhyChooseSection';
 
 export default function Home() {
   return (
@@ -27,31 +28,31 @@ export default function Home() {
           component="section"
           sx={{
             position: 'relative',
-            height: '100vh',
             width: '100%',
             margin: '0',
             padding: 0,
           }}
         >
-          <HomePageContent
+          <ExploreArticle
             title="Mountain Bikes"
             description="Discover the thrill of off-road biking with our premium selection of mountain bikes. From rugged trails to mountainous terrains, our MTBs are designed for adventure seekers of all levels. Explore our range!"
             imageSrc="https://images.unsplash.com/photo-1578683416220-3f97273c939c?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             exploreLink="/products"
           />
-          <HomePageContent
+          <ExploreArticle
             title="City Bikes"
             description="City bikes are designed for urban commuting and leisure rides, featuring comfortable seating, upright handlebars for easy navigation, and often equipped with accessories like baskets and lights for practicality. These bikes prioritize durability and ease of use, making them ideal for daily travel in an urban environment."
             imageSrc="https://images.unsplash.com/photo-1616963248328-6b7bea589840?q=80&w=2812&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             exploreLink="/products"
           />
-          <HomePageContent
+          <ExploreArticle
             title="Speciality Bikes"
             description="Explore our collection of specialty bikes, designed to meet the unique needs of every cyclist. From sleek road bikes engineered for speed and efficiency, to rugged mountain bikes built to tackle challenging terrains, and versatile hybrid models that blend the best of both worlds. "
             imageSrc="https://images.unsplash.com/photo-1496147433903-1e62fdb6f4be?q=80&w=2842&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             exploreLink="/products"
           />
         </Box>
+        <WhyChooseSection />
       </Layout>
     </>
   );

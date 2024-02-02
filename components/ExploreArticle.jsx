@@ -4,7 +4,7 @@ import Paragraph from '@/components/Paragraph';
 import { useTheme } from '@emotion/react';
 import Heading from './Heading';
 
-function HomePageContent({ title, description, imageSrc, exploreLink }) {
+function ExploreArticle({ title, description, imageSrc, exploreLink }) {
   const theme = useTheme();
 
   return (
@@ -86,4 +86,4 @@ function HomePageContent({ title, description, imageSrc, exploreLink }) {
   );
 }
 
-export default HomePageContent;
+export default ExploreArticle;

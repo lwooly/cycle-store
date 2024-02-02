@@ -24,10 +24,15 @@ function DesktopNavigation({
   return (
     <AppBar
       component="nav"
-      sx={{ mb: 2, backgroundImage: 'none', boxShadow: 'none', position:'static'}}
+      sx={{
+        mb: 2,
+        backgroundImage: 'none',
+        boxShadow: 'none',
+        position: 'absolute',
+      }}
       color="transparent"
     >
-      <Toolbar>
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -45,7 +50,7 @@ function DesktopNavigation({
             display: { xs: 'none', sm: 'block' },
             textDecoration: 'none',
             color: lightTextColor,
-            flexGrow: 1,
+            // flexGrow: 1,
           }}
         >
           Bike Shop
@@ -55,7 +60,16 @@ function DesktopNavigation({
             display: { xs: 'none', sm: 'block' },
           }}
         >
-          <BasketIcon />
+          <Button sx={{ color: lightTextColor }} component={Link} href="/">
+            Home
+          </Button>
+          <Button
+            sx={{ color: lightTextColor }}
+            component={Link}
+            href="/products"
+          >
+            Shop
+          </Button>
           <Button
             sx={{ color: lightTextColor }}
             component={Link}
@@ -66,6 +80,8 @@ function DesktopNavigation({
           <Button sx={{ color: lightTextColor }} component={Link} href="/blog">
             Blog
           </Button>
+        </Box>
+        <Box>
           {user ? (
             <>
               <Button
@@ -92,6 +108,7 @@ function DesktopNavigation({
               Log in
             </Button>
           )}
+          <BasketIcon />
         </Box>
       </Toolbar>
     </AppBar>

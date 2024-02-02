@@ -55,11 +55,11 @@ export default function Home() {
         </Box>
         <WhyChooseSection />
         <NewBikeSection
-            title="Speciality Bikes"
-            description="Explore our collection of specialty bikes, designed to meet the unique needs of every cyclist. From sleek road bikes engineered for speed and efficiency, to rugged mountain bikes built to tackle challenging terrains, and versatile hybrid models that blend the best of both worlds. "
-            imageSrc="https://images.unsplash.com/photo-1496147433903-1e62fdb6f4be?q=80&w=2842&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            exploreLink="/products"
-          />
+          title="Speciality Bikes"
+          description="Explore our collection of specialty bikes, designed to meet the unique needs of every cyclist. From sleek road bikes engineered for speed and efficiency, to rugged mountain bikes built to tackle challenging terrains, and versatile hybrid models that blend the best of both worlds. "
+          imageSrc="https://images.unsplash.com/photo-1496147433903-1e62fdb6f4be?q=80&w=2842&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          exploreLink="/products"
+        />
       </Layout>
     </>
   );

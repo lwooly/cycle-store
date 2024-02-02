@@ -42,6 +42,6 @@ function ProfileLinks({ color = 'rgba(0, 0, 0, 0.54)' }) {
       </a>
     </Box>
   );
-};
+}
 
 export default ProfileLinks;

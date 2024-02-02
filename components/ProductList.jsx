@@ -59,7 +59,9 @@ function ProductList({
 
   const { isLoading, isError, error, data: products } = useProducts();
 
-  // console.log(products)
+
+
+  console.log(products)
 
   if (isLoading) {
     return <CircularProgress />;

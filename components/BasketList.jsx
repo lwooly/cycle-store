@@ -6,18 +6,18 @@ import Paragraph from '@/components/Paragraph';
 // import Basket from '@/components/Basket';
 import Product from '@/components/Product';
 
-function BasketList({ removeHandler = () => {} }) {
-  const { isLoading, isError, error, data: basket } = useUserBasket();
+function BasketList({basket, removeHandler = () => {} }) {
+  // const { isLoading, isError, error, data: basket } = useUserBasket();
   console.log(basket.items);
 
-  // console.log(Baskets)
-  if (isLoading) {
-    return <CircularProgress />;
-  }
+  // // console.log(Baskets)
+  // if (isLoading) {
+  //   return <CircularProgress />;
+  // }
 
-  if (isError) {
-    return <Paragraph>{error.message}</Paragraph>;
-  }
+  // if (isError) {
+  //   return <Paragraph>{error.message}</Paragraph>;
+  // }
 
   if (!basket.items.length) return <Paragraph>No items in basket</Paragraph>;
 

@@ -12,39 +12,101 @@ import { useUserBasket } from '@/lib/tq/baskets/queries';
 import { CircularProgress } from '@mui/material';
 import Paragraph from '@/components/Paragraph';
 import { useEffect, useState } from 'react';
-import { useProduct } from '@/lib/tq/products/queries';
+import { useProducts } from '@/lib/tq/products/queries';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { set } from 'mongoose';
 
-export default function BasketPage({ user }) {
-  const [basket, setBasket] = useState();
-  const [tempBasketItemIds, setTempBasketItemIds] = useState(
-    () =>
-      JSON.parse(localStorage.getItem('temporaryBasket')) || {
-        items: [],
-      },
-  );
+export default function BasketPage(ssd) {
+  console.log(ssd.user, 'ssd.user');
+  // set basket state
+  const [basket, setBasket] = useState(null);
 
-  let { isLoading, isError, error, data: userBasket } = useUserBasket();
+  //set error and loading states
+  const [error, setError] = useState(null);
+  const [isError, setIsError] = useState(null);
+  const [loading, setLoading] = useState(null);
 
+  // set user state
+  const [user, setUser] = useState(ssd.user);
 
-  tempBasketItemIds.map((id) => {
-    const { data: product } = useProduct(id);
-    console.log(product);
-  });
+  // check if user is logged in
+  const userClient = useUser();
 
-  
+  // if user is logged in set user state to userClient
+  useEffect(() => {
+    console.log(userClient.user);
+    if (userClient.user) {
+      console.log('here');
+      setUser(userClient.user);
+    }
+  }, [userClient]);
 
-  // const tempBasketFill = {
-  //   items: [],
-  // };
+  // if user is logged in get user basket from the database
+  const {
+    data: userBasket,
+    isLoading: basketLoading,
+    isError: isBasketError,
+    error: basketError,
+  } = useUserBasket({ enabled: !!user });
 
-  // tempBasketItems.forEach((id) => {
-  //   const { data: product } = useProduct(id);
-  //   console.log(product);
-  //   tempBasketFill.items.push(product);
-  //   setBasket(tempBasketFill);
-  // });
+  const {
+    data: products,
+    isLoading: productLoading,
+    isError: isproductError,
+    error: productError,
+  } = useProducts();
 
-  // console.log(basket, 'basket');
+  console.log(products);
+
+  // set loading and error states
+  useEffect(() => {
+    if (user) {
+      setLoading(basketLoading);
+      setError(basketError);
+      setIsError(isBasketError);
+    } else {
+      setLoading(productLoading);
+      setError(productError);
+      setIsError(isproductError);
+    }
+  }, [
+    user,
+    basketLoading,
+    isBasketError,
+    basketError,
+    productLoading,
+    isproductError,
+    productError,
+  ]);
+
+  useEffect(() => {
+    console.log(user);
+    if (!user) {
+      // Get user basket from local storage
+      const tempProductIds =
+        JSON.parse(localStorage.getItem('temporaryBasket')) || [];
+      let tempProducts = [];
+
+      // find products from product ids - TODO performance increase by creating a new tq hook rather than querying all
+      if (products) {
+        tempProducts = tempProductIds.map((id) =>
+          // eslint-disable-next-line no-underscore-dangle
+          products.find((product) => product._id === id),
+        );
+      }
+
+      console.log(tempProducts);
+
+      setBasket({ items: tempProducts });
+
+      // need to handle loading and error states
+    } else {
+      // set basket to user basket
+      setBasket(userBasket);
+    }
+  }, [user, products]);
+
+  console.log(basket);
 
   return (
     <>
@@ -56,10 +118,14 @@ export default function BasketPage({ user }) {
       </Head>
       <Layout>
         <Heading component="h2">Basket</Heading>
-        <QueryBoundaries>
-          <BasketTotal basket={basket} />
-        </QueryBoundaries>
-        <QueryBoundaries>{/* <BasketList /> */}</QueryBoundaries>
+        {loading && <CircularProgress />}
+        {isError && <Paragraph>{error.message}</Paragraph>}
+        {!loading && !isError && basket && (
+          <>
+            <BasketTotal basket={basket} />
+            <BasketList basket={basket} />
+          </>
+        )}
       </Layout>
     </>
   );
@@ -79,7 +145,7 @@ export const getServerSideProps = async (context) => {
   const queryClient = new QueryClient();
 
   if (userBasket) {
-    await queryClient.setQueryData([USER_OWN_BASKET_STORAGE_KEY], userBasket);
+    await queryClient.setQueryData([USER_OWN_BASKET_STORAGE_KEY], JSON.parse(JSON.stringify(userBasket)));
   }
 
   return {

@@ -8,6 +8,7 @@ import {
   getOwnBasket,
   addProductToUserBasket,
   removeItemFromUserBasket,
+  updateUserBasket,
 } from '@/lib/api-functions/server/baskets/controllers';
 
 import {
@@ -83,6 +84,10 @@ const handler = nc({
   })
 
   .put(baseRoute, async (req, res) => {
+    const { owner } = req.params;
+    if (owner === 'own') {
+      return updateUserBasket(req, res);
+    }
     if (!checkPermission(req.user, identifier, update)) {
       return handleUnauthorisedAPICall(res);
     }

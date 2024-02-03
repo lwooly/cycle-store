@@ -41,10 +41,10 @@ const handler = nc({
   // middleware to protect routes
   // eslint-disable-next-line consistent-return
   .use(async (req, res, next) => {
-    // console.log('middleware running');
-    // if (req.method === 'GET') {
-    //   return next();
-    // }
+    console.log('middleware running');
+    if (req.method === 'GET') {
+      return next();
+    }
     try {
       const session = await getSession(req, res);
       req.user = session.user;
@@ -58,7 +58,6 @@ const handler = nc({
   .get(baseRoute, async (req, res) => {
     const { owner } = req.params;
     if (owner === 'own') {
-      console.log('here');
       const basket = await getOwnBasket(req, res);
       return basket;
     }

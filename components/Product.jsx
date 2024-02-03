@@ -37,7 +37,6 @@ function Product({
   const [imageSrc, setImageSrc] = useState(image);
   const {user} = useUser();
 
-  console.log(user)
   // const [showProductLink, setShowProductLink] = useState(false)
 
   const {

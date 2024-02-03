@@ -35,8 +35,6 @@ export default function BasketIcon() {
     }
   }, [user]);
 
-  console.log(basketItems);
-
   return (
     <IconButton aria-label="basket" href="/basket">
       {/* check that this works on the home page as well as the basket page */}

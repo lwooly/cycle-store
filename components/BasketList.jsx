@@ -8,7 +8,6 @@ import Product from '@/components/Product';
 
 function BasketList({basket, removeHandler = () => {} }) {
   // const { isLoading, isError, error, data: basket } = useUserBasket();
-  console.log(basket.items);
 
   // // console.log(Baskets)
   // if (isLoading) {

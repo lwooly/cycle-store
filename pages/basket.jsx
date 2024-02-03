@@ -17,7 +17,6 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { set } from 'mongoose';
 
 export default function BasketPage(ssd) {
-  console.log(ssd.user, 'ssd.user');
   // set basket state
   const [basket, setBasket] = useState(null);
 
@@ -34,20 +33,20 @@ export default function BasketPage(ssd) {
 
   // if user is logged in set user state to userClient
   useEffect(() => {
-    console.log(userClient.user);
     if (userClient.user) {
-      console.log('here');
       setUser(userClient.user);
     }
   }, [userClient]);
 
   // if user is logged in get user basket from the database
+
+  const runQuery = !!user;
   const {
     data: userBasket,
     isLoading: basketLoading,
     isError: isBasketError,
     error: basketError,
-  } = useUserBasket({ enabled: !!user });
+  } = useUserBasket({ runQuery });
 
   const {
     data: products,
@@ -55,8 +54,6 @@ export default function BasketPage(ssd) {
     isError: isproductError,
     error: productError,
   } = useProducts();
-
-  console.log(products);
 
   // set loading and error states
   useEffect(() => {
@@ -80,7 +77,6 @@ export default function BasketPage(ssd) {
   ]);
 
   useEffect(() => {
-    console.log(user);
     if (!user) {
       // Get user basket from local storage
       const tempProductIds =
@@ -95,8 +91,6 @@ export default function BasketPage(ssd) {
         );
       }
 
-      console.log(tempProducts);
-
       setBasket({ items: tempProducts });
 
       // need to handle loading and error states
@@ -105,8 +99,6 @@ export default function BasketPage(ssd) {
       setBasket(userBasket);
     }
   }, [user, products]);
-
-  console.log(basket);
 
   return (
     <>
@@ -135,7 +127,7 @@ export const getServerSideProps = async (context) => {
   // get user data from auth0
   const session = await getSession(context.req, context.res);
 
-  console.log(session?.user, 'user');
+  // console.log(session?.user, 'user');
 
   let userBasket = null;
   if (session?.user) {
@@ -145,7 +137,10 @@ export const getServerSideProps = async (context) => {
   const queryClient = new QueryClient();
 
   if (userBasket) {
-    await queryClient.setQueryData([USER_OWN_BASKET_STORAGE_KEY], JSON.parse(JSON.stringify(userBasket)));
+    await queryClient.setQueryData(
+      [USER_OWN_BASKET_STORAGE_KEY],
+      JSON.parse(JSON.stringify(userBasket)),
+    );
   }
 
   return {

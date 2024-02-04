@@ -21,7 +21,7 @@ export default function BasketIcon() {
 
   const { user } = useUser();
   const { data } = useUserBasket();
-
+// need to update this when item added to local storage
   useEffect(() => {
     if (user) {
       if (data && data.items) {

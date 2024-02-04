@@ -43,9 +43,9 @@ const handler = nc({
   // eslint-disable-next-line consistent-return
   .use(async (req, res, next) => {
     console.log('middleware running');
-    if (req.method === 'GET') {
-      return next();
-    }
+    // if (req.method === 'GET') {
+    //   return next();
+    // }
     try {
       const session = await getSession(req, res);
       req.user = session.user;
@@ -85,6 +85,7 @@ const handler = nc({
 
   .put(baseRoute, async (req, res) => {
     const { owner } = req.params;
+    console.log(owner)
     if (owner === 'own') {
       return updateUserBasket(req, res);
     }

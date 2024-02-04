@@ -4,20 +4,23 @@ import React, { useEffect } from 'react';
 
 function BasketUserManagement() {
   const { user } = useUser();
-  const tempBasket = JSON.parse(localStorage.getItem('temporaryBasket')) || [];
-  const updateUserBasket = useUpdateUserBasket()
+  const updateUserBasket = useUpdateUserBasket();
 
   useEffect(() => {
+    // get basket from local storage
+    const tempBasketItemIds =
+      JSON.parse(localStorage.getItem('temporaryBasket')) || null;
+    console.log(tempBasketItemIds);
     // user logged in and items in temp basket - update items in users basket
-    if ({ user } && tempBasket.length > 0) {
+    if (user && tempBasketItemIds) {
       // make database call to update or create users basket
-        updateUserBasket.mutate(tempBasket)
+      updateUserBasket.mutate(tempBasketItemIds);
       // delete items from local storage basket
       localStorage.removeItem('temporaryBasket');
     }
-  });
+  }, [user]);
 
-  return <div></div>;
+  return <div className="basketStateManagement"></div>;
 }
 
 export default BasketUserManagement;

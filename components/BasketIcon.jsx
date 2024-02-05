@@ -19,23 +19,23 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function BasketIcon() {
   const [basketItems, setBasketItems] = useState([]);
 
-  const user = useUser();
+  const {user, isLoading}= useUser();
 
-  const runQuery = !!user.user;
-  const { data } = useUserBasket({ runQuery });
+  const runQuery = !!user && !isLoading;
+  const { data, isLoading:isLoadingBasket } = useUserBasket({ runQuery });
 
   // useEffect to handle user logged in
   useEffect(() => {
-    if (user.user && data && data.items) {
+    if (user && !isLoading && !isLoadingBasket && data && data.items) {
       setBasketItems(data.items);
     }
-  }, [user.user, data]);
+  }, [user, isLoading, data, isLoadingBasket]);
 
   // manage local storage to state updates
   useEffect(() => {
     // function to handle getting items from local storage
     const handleStorage = (event) => {
-      if (!user.user) {
+      if (!user) {
         const localBasket = JSON.parse(
           localStorage.getItem('temporaryBasket'),
         ) || {
@@ -52,7 +52,7 @@ export default function BasketIcon() {
     window.addEventListener('storage', handleStorage);
     // cleanup
     return () => window.removeEventListener('storage', handleStorage);
-  }, [user.user]);
+  }, [user]);
 
   return (
     <IconButton aria-label="basket" href="/basket">

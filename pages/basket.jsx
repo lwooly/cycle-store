@@ -98,7 +98,7 @@ export default function BasketPage(ssd) {
       // set basket to user basket
       setBasket(userBasket);
     }
-  }, [user, products]);
+  }, [user, products, userBasket ]);
 
   return (
     <>

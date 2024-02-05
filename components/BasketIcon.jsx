@@ -19,9 +19,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function BasketIcon() {
   const [basketItems, setBasketItems] = useState([]);
 
-  const { user } = useUser();
-  const { data } = useUserBasket();
-// need to update this when item added to local storage
+  const user = useUser();
+
+  const { data } = useUserBasket({ runQuery: true });
+
+  // need to update this when item added to local storage
   useEffect(() => {
     if (user) {
       if (data && data.items) {
@@ -31,9 +33,10 @@ export default function BasketIcon() {
       const basket = JSON.parse(localStorage.getItem('temporaryBasket')) || {
         items: [],
       };
+      console.log(basket);
       setBasketItems(basket);
     }
-  }, [user]);
+  }, [user, data]);
 
   return (
     <IconButton aria-label="basket" href="/basket">

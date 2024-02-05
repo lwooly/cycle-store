@@ -12,6 +12,7 @@ import {
   Paper,
   IconButton,
   Typography,
+  Button,
 } from '@/components/mui';
 
 import { useUserBasket } from '@/lib/tq/baskets/queries';
@@ -21,9 +22,7 @@ import { nanoid } from 'nanoid';
 import { toDecimal, dinero, add } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
 
-export default function CheckoutSummaryTable() {
-  const { data: basket } = useUserBasket();
-
+export default function CheckoutSummaryTable({ basket }) {
   // Remove product from basket
   const removeFromBasketMutate = useRemoveFromBasket();
 
@@ -77,6 +76,11 @@ export default function CheckoutSummaryTable() {
             </TableCell>
             <TableCell align="right">
               <Typography>{formatPrice(toDecimal(basketTotal))}</Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Button component={Link} href="/checkout" variant="contained">
+                Checkout
+              </Button>
             </TableCell>
           </TableRow>
         </TableBody>

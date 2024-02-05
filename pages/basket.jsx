@@ -9,12 +9,13 @@ import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries'
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
 import BasketTotal from '@/components/BasketTotal';
 import { useUserBasket } from '@/lib/tq/baskets/queries';
-import { CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Stack } from '@mui/material';
 import Paragraph from '@/components/Paragraph';
 import { useEffect, useState } from 'react';
 import { useProducts } from '@/lib/tq/products/queries';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { set } from 'mongoose';
+import CheckoutSummaryTable from '@/components/CheckoutSummary';
 
 export default function BasketPage(ssd) {
   // set basket state
@@ -48,8 +49,7 @@ export default function BasketPage(ssd) {
     isLoading: basketLoading,
     isError: isBasketError,
     error: basketError,
-  } = useUserBasket({ runQuery }); // now seems to be running this query even with no user - check if another place i have turned it on is having the effectr?
-
+  } = useUserBasket({ runQuery });
   const {
     data: products,
     isLoading: productLoading,
@@ -126,15 +126,31 @@ export default function BasketPage(ssd) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component="h2">Basket</Heading>
-        {loading && <CircularProgress />}
-        {isError && <Paragraph>{error.message}</Paragraph>}
-        {!loading && !isError && basket && (
-          <>
-            <BasketTotal basket={basket} />
-            <BasketList basket={basket} />
-          </>
-        )}
+        <Box
+          sx={{
+            backgroundColor: 'lightgrey',
+            height: '100vh',
+            width: '100%',
+            padding: '8rem 4rem',
+          }}
+        >
+          <Stack
+            gap={2}
+            sx={{ backgroundColor: 'white', padding: '3.31rem 2.5rem' }}
+          >
+            <Heading component="h1" variant={'h4'}>
+              Cart
+            </Heading>
+            {loading && <CircularProgress />}
+            {isError && <Paragraph>{error.message}</Paragraph>}
+            {!loading && !isError && basket && (
+              <Box>
+                <CheckoutSummaryTable basket={basket} />
+                {/* <BasketTotal basket={basket} /> */}
+              </Box>
+            )}
+          </Stack>
+        </Box>
       </Layout>
     </>
   );

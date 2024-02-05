@@ -21,11 +21,12 @@ export default function BasketIcon() {
 
   const user = useUser();
 
-  const { data } = useUserBasket({ runQuery: true });
+  const runQuery = !!user.user;
+  const { data } = useUserBasket({ runQuery });
 
   // need to update this when item added to local storage
   useEffect(() => {
-    if (user) {
+    if (user.user) {
       if (data && data.items) {
         setBasketItems(data.items);
       }

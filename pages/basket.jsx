@@ -46,7 +46,7 @@ export default function BasketPage(ssd) {
     isLoading: basketLoading,
     isError: isBasketError,
     error: basketError,
-  } = useUserBasket({ runQuery });
+  } = useUserBasket({ runQuery }); // now seems to be running this query even with no user - check if another place i have turned it on is having the effect? maybe in 
 
   const {
     data: products,

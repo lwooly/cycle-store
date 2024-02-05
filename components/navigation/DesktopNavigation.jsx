@@ -30,7 +30,7 @@ function DesktopNavigation({
         boxShadow: 'none',
         position: 'absolute',
       }}
-      color="transparent"
+      // color="transparent"
     >
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <IconButton

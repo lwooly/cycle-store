@@ -19,6 +19,8 @@ import { set } from 'mongoose';
 export default function BasketPage(ssd) {
   // set basket state
   const [basket, setBasket] = useState(null);
+  // flag for rerender
+  const [localBasket, setLocalBasket] = useState(true);
 
   //set error and loading states
   const [error, setError] = useState(null);
@@ -46,7 +48,7 @@ export default function BasketPage(ssd) {
     isLoading: basketLoading,
     isError: isBasketError,
     error: basketError,
-  } = useUserBasket({ runQuery }); // now seems to be running this query even with no user - check if another place i have turned it on is having the effect? maybe in 
+  } = useUserBasket({ runQuery }); // now seems to be running this query even with no user - check if another place i have turned it on is having the effectr?
 
   const {
     data: products,
@@ -98,7 +100,22 @@ export default function BasketPage(ssd) {
       // set basket to user basket
       setBasket(userBasket);
     }
-  }, [user, products, userBasket ]);
+  }, [user, products, userBasket, localBasket]);
+
+  // manage local storage to state updates
+
+  useEffect(() => {
+    const handleStorage = (event) => {
+      const basket = JSON.parse(localStorage.getItem('temporaryBasket')) || {
+        items: [],
+      };
+      setLocalBasket(basket);
+    };
+
+    window.addEventListener('storage', handleStorage);
+
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
 
   return (
     <>

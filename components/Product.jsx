@@ -22,7 +22,7 @@ import {
 } from '@/lib/tq/baskets/mutations';
 import { formatPrice, slugify } from '@/lib/utils/formatters';
 import Paragraph from './Paragraph';
-import addToTemporaryBasket from '@/lib/api-functions/client/basket';
+import  { addToTemporaryBasket, removeFromTemporaryBasket } from '@/lib/api-functions/client/basket';
 
 function Product({
   values: { _id, title, description, price, quantity, image }, // favorites,
@@ -72,7 +72,14 @@ function Product({
   const removeFromBasketMutate = useRemoveFromBasket();
 
   const removeFromBasketHandler = (productId) => {
-    removeFromBasketMutate.mutate(productId);
+    // check if user is logged in
+    if (user) {
+      // if user is logged in add the product to the basket
+      removeFromBasketMutate.mutate(productId);
+    } else {
+      // if user is not logged in add the product to the temporary basket
+      removeFromTemporaryBasket(productId);
+    }
   };
 
   let link = '';

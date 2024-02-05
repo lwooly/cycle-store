@@ -24,20 +24,35 @@ export default function BasketIcon() {
   const runQuery = !!user.user;
   const { data } = useUserBasket({ runQuery });
 
-  // need to update this when item added to local storage
+  // useEffect to handle user logged in
   useEffect(() => {
-    if (user.user) {
-      if (data && data.items) {
-        setBasketItems(data.items);
-      }
-    } else {
-      const basket = JSON.parse(localStorage.getItem('temporaryBasket')) || {
-        items: [],
-      };
-      console.log(basket);
-      setBasketItems(basket);
+    if (user.user && data && data.items) {
+      setBasketItems(data.items);
     }
-  }, [user, data]);
+  }, [user.user, data]);
+
+  // manage local storage to state updates
+  useEffect(() => {
+    // function to handle getting items from local storage
+    const handleStorage = (event) => {
+      if (!user.user) {
+        const localBasket = JSON.parse(
+          localStorage.getItem('temporaryBasket'),
+        ) || {
+          items: [],
+        };
+        setBasketItems(localBasket);
+      }
+    };
+
+    // on first mount run handle storage
+    handleStorage();
+
+    // mount event listener for changes in storage
+    window.addEventListener('storage', handleStorage);
+    // cleanup
+    return () => window.removeEventListener('storage', handleStorage);
+  }, [user.user]);
 
   return (
     <IconButton aria-label="basket" href="/basket">

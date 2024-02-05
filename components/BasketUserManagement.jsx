@@ -4,7 +4,11 @@ import React, { useEffect } from 'react';
 
 function BasketUserManagement() {
   const { user } = useUser();
-  const updateUserBasket = useUpdateUserBasket();
+
+  const runQuery = !!user;
+
+  console.log(runQuery)
+  const updateUserBasket = useUpdateUserBasket({runQuery});
 
   useEffect(() => {
     // get basket from local storage

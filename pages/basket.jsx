@@ -6,12 +6,18 @@ import { getSession } from '@auth0/nextjs-auth0';
 import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries';
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
 import { useUserBasket } from '@/lib/tq/baskets/queries';
-import { Box, CircularProgress, Stack } from '@mui/material';
+import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import Paragraph from '@/components/Paragraph';
 import { useEffect, useState } from 'react';
 import { useProducts } from '@/lib/tq/products/queries';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import CartSummaryTable from '@/components/CartSummary';
+import Link from 'next/link';
+import StripeButton from '@/components/StripeButton';
+import QueryBoundary from '@/components/QueryBoundary';
+import { useRouter } from 'next/router';
+
+// const {AUTH0_BASE_URL} = process.env;
 
 export default function BasketPage(ssd) {
   // set basket state
@@ -116,6 +122,11 @@ export default function BasketPage(ssd) {
     return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
+  //redirect users to this page after login.
+
+  const router = useRouter();
+  const currentPath = router.asPath;
+
   return (
     <>
       <Head>
@@ -143,10 +154,27 @@ export default function BasketPage(ssd) {
             {loading && <CircularProgress />}
             {isError && <Paragraph>{error.message}</Paragraph>}
             {!loading && !isError && basket && (
-              <Box>
-                <CartSummaryTable basket={basket} />
-                {/* <BasketTotal basket={basket} /> */}
-              </Box>
+              <>
+                <QueryBoundary>
+                  <CartSummaryTable basket={basket} />
+                </QueryBoundary>
+                {!user && (
+                  <Button
+                    component={Link}
+                    href={`/api/auth/login?returnTo=${encodeURIComponent(
+                      `${currentPath}`,
+                    )}`}
+                    variant="contained"
+                  >
+                    Checkout
+                  </Button>
+                )}
+                {user && (
+                  <QueryBoundary>
+                    <StripeButton />
+                  </QueryBoundary>
+                )}
+              </>
             )}
           </Stack>
         </Box>

@@ -158,13 +158,13 @@ export default function CartSummaryTable({ basket }) {
               <Typography>{formatPrice(toDecimal(basketTotal))}</Typography>
             </TableCell>
           </TableRow>
-          <TableRow>
+          {/* <TableRow>
             <TableCell align="right" colSpan={6}>
               <Button component={Link} href="/checkout" variant="contained">
                 Proceed To Checkout
               </Button>
             </TableCell>
-          </TableRow>
+          </TableRow> */}
         </TableBody>
       </Table>
     </TableContainer>

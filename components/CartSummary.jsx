@@ -40,7 +40,6 @@ export default function CartSummaryTable({ basket }) {
   const removeFromBasketMutate = useRemoveFromBasket();
   const addToBasketMutate = useAddToBasket();
   const theme = useTheme();
-  const [items, setItems] = useState([])
 
   // calculate basket total
   const basketTotal = basket.items.reduce(
@@ -56,13 +55,10 @@ export default function CartSummaryTable({ basket }) {
       uniqueItems.push(item);
     }
   });
-  console.log(uniqueItems)
+  console.log(uniqueItems);
 
-  uniqueItems.sort((a, b) => a._id.localeCompare(b._id))
-  console.log(uniqueItems)
-
-
-
+  uniqueItems.sort((a, b) => a._id.localeCompare(b._id));
+  console.log(uniqueItems);
 
   return (
     <TableContainer component={Paper} sx={{ borderShadow: 'none' }}>
@@ -86,97 +82,20 @@ export default function CartSummaryTable({ basket }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {uniqueItems.length > 0 && uniqueItems.map(
-            ({ _id, title, price, image, quantity: quantityInStock }) => {
-              const productBasketQuantity = basket.items.filter(
-                ({ _id: itemId }) => itemId === _id,
-              ).length;
-              return (
-                <TableRow
-                  key={nanoid()}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell align="right">
-                    <IconButton
-                      aria-label="remove product from basket"
-                      onClick={() =>
-                        removeFromBasketHandler({
-                          productId: _id,
-                          user,
-                          removeFromBasketMutateFn: removeFromBasketMutate,
-                        })
-                      }
-                      disabled={productBasketQuantity > 1}
-                    >
-                      <ClearIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    <Box
-                      sx={{
-                        width: '100px', // Make width responsive
-                        height: 0,
-                        // Limit the maximum size
-                        position: 'relative',
-                        paddingBottom: 'min(100px, 100%)',
-                        // Equal to width for a square aspect ratio
-                        overflow: 'hidden',
-                        // flexGrow: 1,
-                        // minWidth: { md: "30vw" },
-                        //   border: '3px solid #000',
-                      }}
-                    >
-                      <Image
-                        src={image}
-                        alt={title}
-                        fill
-                        sizes="200px"
-                        style={{
-                          objectFit: 'cover',
-                          objectPosition: 'center',
-                          maxWidth: '100%',
-                        }}
-                      />
-                    </Box>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    <Link
-                      style={{ textDecoration: 'none' }}
-                      href={`/products/${slugify(title, _id)}`}
-                    >
-                      <Typography
-                        sx={{
-                          color: theme.palette.primary.main,
-                          textDecoration: 'none',
-                        }}
-                        variant="body1"
-                      >
-                        {title}
-                      </Typography>
-                    </Link>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Typography variant="body2">
-                      {formatPrice(
-                        toDecimal(
-                          dinero({ amount: price * 100, currency: GBP }),
-                        ),
-                      )}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        flexWrap: 'nowrap',
-                        width: '100%',
-                        justifyContent: 'end',
-                        alignItems: 'center',
-                      }}
-                    >
+          {uniqueItems.length > 0 &&
+            uniqueItems.map(
+              ({ _id, title, price, image, quantity: quantityInStock }) => {
+                const productBasketQuantity = basket.items.filter(
+                  ({ _id: itemId }) => itemId === _id,
+                ).length;
+                return (
+                  <TableRow
+                    key={nanoid()}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell align="right">
                       <IconButton
-                        aria-label="reduce number of product in basket by 1"
+                        aria-label="remove product from basket"
                         onClick={() =>
                           removeFromBasketHandler({
                             productId: _id,
@@ -184,58 +103,152 @@ export default function CartSummaryTable({ basket }) {
                             removeFromBasketMutateFn: removeFromBasketMutate,
                           })
                         }
-                        disabled={productBasketQuantity <= 1}
+                        disabled={productBasketQuantity > 1}
                       >
-                        <RemoveIcon />
+                        <ClearIcon />
                       </IconButton>
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Box
+                        sx={{
+                          width: '100px', // Make width responsive
+                          height: 0,
+                          // Limit the maximum size
+                          position: 'relative',
+                          paddingBottom: 'min(100px, 100%)',
+                          // Equal to width for a square aspect ratio
+                          overflow: 'hidden',
+                          // flexGrow: 1,
+                          // minWidth: { md: "30vw" },
+                          //   border: '3px solid #000',
+                        }}
+                      >
+                        <Image
+                          src={image}
+                          alt={title}
+                          fill
+                          sizes="200px"
+                          style={{
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            maxWidth: '100%',
+                          }}
+                        />
+                      </Box>
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Link
+                        style={{ textDecoration: 'none' }}
+                        href={`/products/${slugify(title, _id)}`}
+                      >
+                        <Typography
+                          sx={{
+                            color: theme.palette.primary.main,
+                            textDecoration: 'none',
+                          }}
+                          variant="body1"
+                        >
+                          {title}
+                        </Typography>
+                      </Link>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Typography variant="body2">
+                        {formatPrice(
+                          toDecimal(
+                            dinero({ amount: price * 100, currency: GBP }),
+                          ),
+                        )}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          flexWrap: 'nowrap',
+                          width: '100%',
+                          justifyContent: 'end',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <IconButton
+                          aria-label="reduce number of product in basket by 1"
+                          onClick={() =>
+                            removeFromBasketHandler({
+                              productId: _id,
+                              user,
+                              removeFromBasketMutateFn: removeFromBasketMutate,
+                            })
+                          }
+                          disabled={productBasketQuantity <= 1}
+                        >
+                          <RemoveIcon />
+                        </IconButton>
+                        <Typography
+                          variant="body2"
+                          sx={{ color: 'black', textDecoration: 'none' }}
+                        >
+                          {/* calculate quantity in basket */}
+                          {productBasketQuantity}
+                        </Typography>
+                        <IconButton
+                          aria-label="increase number of product in basket by 1"
+                          onClick={() =>
+                            addToBasketHandler({
+                              productId: _id,
+                              user,
+                              addToBasketMutateFn: addToBasketMutate,
+                            })
+                          }
+                          disabled={quantityInStock <= productBasketQuantity}
+                        >
+                          <AddIcon />
+                        </IconButton>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="right">
                       <Typography
                         variant="body2"
                         sx={{ color: 'black', textDecoration: 'none' }}
                       >
-                        {/* calculate quantity in basket */}
-                        {productBasketQuantity}
+                        {/* calculate the subtotal */}
+                        {formatPrice(
+                          toDecimal(
+                            dinero({
+                              amount: price * 100 * productBasketQuantity,
+                              currency: GBP,
+                            }),
+                          ),
+                        )}
                       </Typography>
-                      <IconButton
-                        aria-label="increase number of product in basket by 1"
-                        onClick={() =>
-                          addToBasketHandler({
-                            productId: _id,
-                            user,
-                            addToBasketMutateFn: addToBasketMutate,
-                          })
-                        }
-                        disabled={quantityInStock <= productBasketQuantity}
-                      >
-                        <AddIcon />
-                      </IconButton>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Typography
-                      variant="body2"
-                      sx={{ color: 'black', textDecoration: 'none' }}
-                    >
-                      {/* calculate the subtotal */}
-                      {formatPrice(
-                        toDecimal(
-                          dinero({
-                            amount: price * 100 * productBasketQuantity,
-                            currency: GBP,
-                          }),
-                        ),
-                      )}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              );
-            },
+                    </TableCell>
+                  </TableRow>
+                );
+              },
+            )}
+          {uniqueItems.length === 0 && (
+            <TableRow>
+              <TableCell align="center" component="th" scope="row" colSpan={6}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexWrap: 'nowrap',
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '4rem',
+                  }}
+                >
+                  <Typography>No Items In Basket</Typography>
+                  <Button component={Link} href="/" variant="contained">
+                    View products!
+                  </Button>
+                </Box>
+              </TableCell>
+            </TableRow>
           )}
-          {uniqueItems.length === 0 && 
-          <TableRow>
-          <TableCell align="center" component="th" scope="row" colSpan={6}>
-            <Typography>No Items In Basket</Typography>
-          </TableCell>
-        </TableRow>}
           <TableRow>
             <TableCell align="right" component="th" scope="row" colSpan={4}>
               <Typography>Total:</Typography>

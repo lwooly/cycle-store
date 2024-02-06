@@ -14,6 +14,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import CartSummaryTable from '@/components/CartSummary';
 import Link from 'next/link';
 import StripeButton from '@/components/StripeButton';
+// eslint-disable-next-line import/no-named-as-default
 import QueryBoundary from '@/components/QueryBoundary';
 import { useRouter } from 'next/router';
 
@@ -122,7 +123,7 @@ export default function BasketPage(ssd) {
     return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
-  //redirect users to this page after login.
+  // redirect users to this page after login.
 
   const router = useRouter();
   const currentPath = router.asPath;
@@ -146,7 +147,11 @@ export default function BasketPage(ssd) {
         >
           <Stack
             gap={2}
-            sx={{ backgroundColor: 'white', padding: '3.31rem 2.5rem' }}
+            sx={{
+              backgroundColor: 'white',
+              padding: '3.31rem 2.5rem',
+              justifyContent: 'center',
+            }}
           >
             <Heading component="h1" variant="h4">
               Cart
@@ -158,21 +163,24 @@ export default function BasketPage(ssd) {
                 <QueryBoundary>
                   <CartSummaryTable basket={basket} />
                 </QueryBoundary>
-                {!user && (
+                {!user && basket.items.length > 0 && (
                   <Button
                     component={Link}
                     href={`/api/auth/login?returnTo=${encodeURIComponent(
                       `${currentPath}`,
                     )}`}
                     variant="contained"
+                    sx={{ width: '20%', marginLeft: 'auto' }}
                   >
                     Checkout
                   </Button>
                 )}
-                {user && (
-                  <QueryBoundary>
-                    <StripeButton />
-                  </QueryBoundary>
+                {user && basket.items.length > 0 && (
+                  <Box sx={{ marginLeft: 'auto' }}>
+                    <QueryBoundary>
+                      <StripeButton />
+                    </QueryBoundary>
+                  </Box>
                 )}
               </>
             )}

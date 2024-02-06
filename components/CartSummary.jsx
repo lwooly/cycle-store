@@ -33,12 +33,22 @@ import {
   removeFromBasketHandler,
 } from '@/lib/api-functions/client/basket';
 import { useTheme } from '@emotion/react';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  useTemporaryBasket,
+  useUserOrTempBasket,
+} from '@/lib/tq/baskets/queries';
 
-export default function CartSummaryTable({ basket }) {
+export default function CartSummaryTable() {
   const { user } = useUser();
   const removeFromBasketMutate = useRemoveFromBasket();
   const addToBasketMutate = useAddToBasket();
+  const queryClient = useQueryClient();
   const theme = useTheme();
+
+  const { data } = useUserOrTempBasket({user});
+
+  console.log(data);
 
   // calculate basket total
   const basketTotal = basket.items.reduce(
@@ -100,6 +110,7 @@ export default function CartSummaryTable({ basket }) {
                             productId: _id,
                             user,
                             removeFromBasketMutateFn: removeFromBasketMutate,
+                            queryClient,
                           })
                         }
                         disabled={productBasketQuantity > 1}
@@ -178,6 +189,7 @@ export default function CartSummaryTable({ basket }) {
                               productId: _id,
                               user,
                               removeFromBasketMutateFn: removeFromBasketMutate,
+                              queryClient,
                             })
                           }
                           disabled={productBasketQuantity <= 1}
@@ -198,6 +210,7 @@ export default function CartSummaryTable({ basket }) {
                               productId: _id,
                               user,
                               addToBasketMutateFn: addToBasketMutate,
+                              queryClient,
                             })
                           }
                           disabled={quantityInStock <= productBasketQuantity}

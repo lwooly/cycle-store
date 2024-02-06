@@ -5,7 +5,7 @@ import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { getSession } from '@auth0/nextjs-auth0';
 import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries';
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
-import { useUserBasket } from '@/lib/tq/baskets/queries';
+import { useTemporaryBasket, useUserBasket } from '@/lib/tq/baskets/queries';
 import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import Paragraph from '@/components/Paragraph';
 import { useEffect, useState } from 'react';
@@ -54,12 +54,21 @@ export default function BasketPage(ssd) {
     isError: isBasketError,
     error: basketError,
   } = useUserBasket({ runQuery });
+  // const {
+  //   data: products,
+  //   isLoading: productLoading,
+  //   isError: isproductError,
+  //   error: productError,
+  // } = useProducts();
+
   const {
-    data: products,
+    data: tempBasket,
     isLoading: productLoading,
     isError: isproductError,
     error: productError,
-  } = useProducts();
+  } = useTemporaryBasket();
+
+  console.log(tempBasket, 'tempBasket');
 
   // set loading and error states
   useEffect(() => {
@@ -82,46 +91,46 @@ export default function BasketPage(ssd) {
     productError,
   ]);
 
-  useEffect(() => {
-    if (!user) {
-      // Get user basket from local storage
-      const tempProductIds =
-        JSON.parse(localStorage.getItem('temporaryBasket')) || [];
-      let tempProducts = [];
+  // useEffect(() => {
+  //   if (!user) {
+  //     // Get user basket from local storage
+  //     const tempProductIds =
+  //       JSON.parse(localStorage.getItem('temporaryBasket')) || [];
+  //     let tempProducts = [];
 
-      // find products from product ids - TODO performance increase by creating a new tq hook rather than querying all
-      if (products) {
-        tempProducts = tempProductIds.map((id) =>
-          // eslint-disable-next-line no-underscore-dangle
-          products.find((product) => product._id === id),
-        );
-      }
+  //     // find products from product ids - TODO performance increase by creating a new tq hook rather than querying all
+  //     if (products) {
+  //       tempProducts = tempProductIds.map((id) =>
+  //         // eslint-disable-next-line no-underscore-dangle
+  //         products.find((product) => product._id === id),
+  //       );
+  //     }
 
-      setBasket({ items: tempProducts });
+  //     setBasket({ items: tempProducts });
 
-      // need to handle loading and error states
-    } else {
-      // set basket to user basket
-      setBasket(userBasket);
-    }
-  }, [user, products, userBasket, localBasket]);
+  //     // need to handle loading and error states
+  //   } else {
+  //     // set basket to user basket
+  //     setBasket(userBasket);
+  //   }
+  // }, [user, products, userBasket, localBasket]);
 
   // manage local storage to state updates
 
-  useEffect(() => {
-    const handleStorage = () => {
-      const tempBasket = JSON.parse(
-        localStorage.getItem('temporaryBasket'),
-      ) || {
-        items: [],
-      };
-      setLocalBasket(tempBasket);
-    };
+  // useEffect(() => {
+  //   const handleStorage = () => {
+  //     const tempBasket = JSON.parse(
+  //       localStorage.getItem('temporaryBasket'),
+  //     ) || {
+  //       items: [],
+  //     };
+  //     setLocalBasket(tempBasket);
+  //   };
 
-    window.addEventListener('storage', handleStorage);
+  //   window.addEventListener('storage', handleStorage);
 
-    return () => window.removeEventListener('storage', handleStorage);
-  }, []);
+  //   return () => window.removeEventListener('storage', handleStorage);
+  // }, []);
 
   // redirect users to this page after login.
 

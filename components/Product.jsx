@@ -25,6 +25,7 @@ import {
   addToBasketHandler,
   removeFromBasketHandler,
 } from '@/lib/api-functions/client/basket';
+import { useQueryClient } from '@tanstack/react-query';
 import Paragraph from './Paragraph';
 
 function Product({
@@ -39,6 +40,7 @@ function Product({
 }) {
   const [imageSrc, setImageSrc] = useState(image);
   const { user } = useUser();
+  const queryClient = useQueryClient();
 
   // const [showProductLink, setShowProductLink] = useState(false)
 
@@ -144,6 +146,7 @@ function Product({
                 productId: _id,
                 user,
                 addToBasketMutateFn: addToBasketMutate,
+                queryClient,
               })
             }
           >
@@ -158,6 +161,7 @@ function Product({
                 productId: _id,
                 user,
                 removeFromBasketMutateFn: removeFromBasketMutate,
+                queryClient,
               })
             }
           >

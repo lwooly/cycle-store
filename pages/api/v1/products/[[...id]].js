@@ -23,8 +23,6 @@ const {
   },
 } = permissions;
 
-console.log(`next connect`);
-
 const baseRoute = '/api/v1/products/:id?';
 
 const handler = nc({

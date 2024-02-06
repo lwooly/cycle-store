@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Image from "next/image";
+import Image from 'next/image';
 import { addProductSchema, updateProductSchema } from '@/lib/validation';
 import { TextField, Button } from '@/components/mui';
 import Paragraph from '../Paragraph';
@@ -72,9 +72,10 @@ function ProductForm({ submitHandler, product }) {
         width={200}
         onError={(err) => errorHandler(err)}
         style={{
-          maxWidth: "100%",
-          height: "auto"
-        }} />
+          maxWidth: '100%',
+          height: 'auto',
+        }}
+      />
     );
   };
 

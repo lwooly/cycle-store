@@ -1,21 +1,16 @@
 import Head from 'next/head';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
-import QueryBoundaries from '@/components/QueryBoundary';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
-import BasketList from '@/components/BasketList';
-import { withPageAuthRequired, getSession } from '@auth0/nextjs-auth0';
+import { getSession } from '@auth0/nextjs-auth0';
 import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries';
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
-import BasketTotal from '@/components/BasketTotal';
 import { useUserBasket } from '@/lib/tq/baskets/queries';
 import { Box, CircularProgress, Stack } from '@mui/material';
 import Paragraph from '@/components/Paragraph';
 import { useEffect, useState } from 'react';
 import { useProducts } from '@/lib/tq/products/queries';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import { set } from 'mongoose';
-import CheckoutSummaryTable from '@/components/CheckoutSummary';
 import CartSummaryTable from '@/components/CartSummary';
 
 export default function BasketPage(ssd) {
@@ -24,12 +19,13 @@ export default function BasketPage(ssd) {
   // flag for rerender
   const [localBasket, setLocalBasket] = useState(true);
 
-  //set error and loading states
+  // set error and loading states
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(null);
   const [loading, setLoading] = useState(null);
 
   // set user state
+  // eslint-disable-next-line react/destructuring-assignment
   const [user, setUser] = useState(ssd.user);
 
   // check if user is logged in
@@ -106,11 +102,13 @@ export default function BasketPage(ssd) {
   // manage local storage to state updates
 
   useEffect(() => {
-    const handleStorage = (event) => {
-      const basket = JSON.parse(localStorage.getItem('temporaryBasket')) || {
+    const handleStorage = () => {
+      const tempBasket = JSON.parse(
+        localStorage.getItem('temporaryBasket'),
+      ) || {
         items: [],
       };
-      setLocalBasket(basket);
+      setLocalBasket(tempBasket);
     };
 
     window.addEventListener('storage', handleStorage);
@@ -139,7 +137,7 @@ export default function BasketPage(ssd) {
             gap={2}
             sx={{ backgroundColor: 'white', padding: '3.31rem 2.5rem' }}
           >
-            <Heading component="h1" variant={'h4'}>
+            <Heading component="h1" variant="h4">
               Cart
             </Heading>
             {loading && <CircularProgress />}

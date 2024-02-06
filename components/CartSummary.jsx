@@ -16,21 +16,21 @@ import {
   Box,
 } from '@/components/mui';
 
-import { useUserBasket } from '@/lib/tq/baskets/queries';
 import { formatPrice, slugify } from '@/lib/utils/formatters';
 import { useRemoveFromBasket } from '@/lib/tq/baskets/mutations';
 import { nanoid } from 'nanoid';
 import { toDecimal, dinero, add } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
 import Image from 'next/image';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { removeFromBasketHandler } from '@/lib/api-functions/client/basket';
+import { useTheme } from '@emotion/react';
 
 export default function CartSummaryTable({ basket }) {
-  // Remove product from basket
+  const { user } = useUser();
   const removeFromBasketMutate = useRemoveFromBasket();
 
-  const removeFromBasketHandler = (productId) => {
-    removeFromBasketMutate.mutate(productId);
-  };
+  const theme = useTheme();
 
   // calculate basket total
   const basketTotal = basket.items.reduce(
@@ -39,7 +39,7 @@ export default function CartSummaryTable({ basket }) {
     dinero({ amount: 0, currency: GBP }),
   );
   return (
-    <TableContainer component={Paper} sx={{borderShadow: 'none'}}>
+    <TableContainer component={Paper} sx={{ borderShadow: 'none' }}>
       <Table sx={{ minWidth: 650 }} aria-label="checkout summary table">
         <TableHead>
           <TableRow>
@@ -68,7 +68,13 @@ export default function CartSummaryTable({ basket }) {
               <TableCell align="right">
                 <IconButton
                   aria-label="remove product from basket"
-                  onClick={() => removeFromBasketHandler(_id)}
+                  onClick={() =>
+                    removeFromBasketHandler({
+                      productId: _id,
+                      user,
+                      removeFromBasketMutateFn: removeFromBasketMutate,
+                    })
+                  }
                 >
                   <ClearIcon />
                 </IconButton>
@@ -102,20 +108,23 @@ export default function CartSummaryTable({ basket }) {
                 </Box>
               </TableCell>
               <TableCell component="th" scope="row">
-                <Link href={`/products/${slugify(title, _id)}`}>
+                <Link
+                  style={{ textDecoration: 'none' }}
+                  href={`/products/${slugify(title, _id)}`}
+                >
                   <Typography
+                    sx={{
+                      color: theme.palette.primary.main,
+                      textDecoration: 'none',
+                    }}
                     variant="body1"
-                    sx={{ color: 'black', textDecoration: 'none' }}
                   >
                     {title}
                   </Typography>
                 </Link>
               </TableCell>
               <TableCell align="right">
-                <Typography
-                  variant="body1"
-                  sx={{ color: 'black', textDecoration: 'none' }}
-                >
+                <Typography variant="body2">
                   {formatPrice(
                     toDecimal(dinero({ amount: price * 100, currency: GBP })),
                   )}
@@ -123,7 +132,7 @@ export default function CartSummaryTable({ basket }) {
               </TableCell>
               <TableCell align="right">
                 <Typography
-                  variant="body1"
+                  variant="body2"
                   sx={{ color: 'black', textDecoration: 'none' }}
                 >
                   1
@@ -131,7 +140,7 @@ export default function CartSummaryTable({ basket }) {
               </TableCell>
               <TableCell align="right">
                 <Typography
-                  variant="body1"
+                  variant="body2"
                   sx={{ color: 'black', textDecoration: 'none' }}
                 >
                   {formatPrice(

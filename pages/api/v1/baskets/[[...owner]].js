@@ -51,7 +51,7 @@ const handler = nc({
       req.user = session.user;
       next();
     } catch (err) {
-      console.log('not accessing basket')
+      console.log('not accessing basket');
       return handleUnauthorisedAPICall(res);
     }
   })
@@ -85,7 +85,7 @@ const handler = nc({
 
   .put(baseRoute, async (req, res) => {
     const { owner } = req.params;
-    console.log(owner)
+    console.log(owner);
     if (owner === 'own') {
       return updateUserBasket(req, res);
     }

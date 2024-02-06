@@ -19,10 +19,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function BasketIcon() {
   const [basketItems, setBasketItems] = useState([]);
 
-  const {user, isLoading}= useUser();
+  const { user, isLoading } = useUser();
 
   const runQuery = !!user && !isLoading;
-  const { data, isLoading:isLoadingBasket } = useUserBasket({ runQuery });
+  const { data, isLoading: isLoadingBasket } = useUserBasket({ runQuery });
 
   // useEffect to handle user logged in
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function BasketIcon() {
   // manage local storage to state updates
   useEffect(() => {
     // function to handle getting items from local storage
-    const handleStorage = (event) => {
+    const handleStorage = () => {
       if (!user) {
         const localBasket = JSON.parse(
           localStorage.getItem('temporaryBasket'),

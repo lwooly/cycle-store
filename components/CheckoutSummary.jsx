@@ -21,14 +21,14 @@ import { useRemoveFromBasket } from '@/lib/tq/baskets/mutations';
 import { nanoid } from 'nanoid';
 import { toDecimal, dinero, add } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
-import Image from 'next/image';
 import { useUser } from '@auth0/nextjs-auth0/client';
+
 export default function CheckoutSummaryTable() {
   // Get user basket
   const { user } = useUser();
   const runQuery = !!user;
-  const {data:basket} = useUserBasket({ runQuery });
-console.log(basket)
+  const { data: basket } = useUserBasket({ runQuery });
+  console.log(basket);
   // Remove product from basket
   const removeFromBasketMutate = useRemoveFromBasket();
 
@@ -53,7 +53,7 @@ console.log(basket)
           </TableRow>
         </TableHead>
         <TableBody>
-          {basket.items.map(({ _id, title, price, image }) => (
+          {basket.items.map(({ _id, title, price }) => (
             <TableRow
               key={nanoid()}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

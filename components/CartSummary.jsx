@@ -35,20 +35,15 @@ import {
 import { useTheme } from '@emotion/react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
-  useTemporaryBasket,
   useUserOrTempBasket,
 } from '@/lib/tq/baskets/queries';
 
-export default function CartSummaryTable() {
-  const { user } = useUser();
+export default function CartSummaryTable({basket}) {
+  const user = useUser();
   const removeFromBasketMutate = useRemoveFromBasket();
   const addToBasketMutate = useAddToBasket();
   const queryClient = useQueryClient();
   const theme = useTheme();
-
-  const { data } = useUserOrTempBasket({user});
-
-  console.log(data);
 
   // calculate basket total
   const basketTotal = basket.items.reduce(

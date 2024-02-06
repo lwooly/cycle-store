@@ -5,9 +5,8 @@ import { Button } from '@/components/mui';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
-function StripeButton() {
+function StripeButton({basket}) {
   const { user, isLoading, error } = useUser();
-  const { data: basket } = useUserBasket();
   const router = useRouter();
 
   // calculate basket total

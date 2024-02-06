@@ -33,7 +33,6 @@ import {
   removeFromBasketHandler,
 } from '@/lib/api-functions/client/basket';
 import { useTheme } from '@emotion/react';
-import { useState } from 'react';
 
 export default function CartSummaryTable({ basket }) {
   const { user } = useUser();

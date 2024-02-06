@@ -50,8 +50,8 @@ function StripeButton() {
   if (isLoading || error) return null;
   return (
     <StripeCheckout
-      name="Coffee Co." // the pop-in header title
-      description="Coffee goodness.." // the pop-in header subtitle
+      name="Bike Shop Co." // the pop-in header title
+      description="Cycling goodness.." // the pop-in header subtitle
       image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png" // the pop-in header image (default none)
       ComponentClass="div"
       amount={basketTotal} // pennies

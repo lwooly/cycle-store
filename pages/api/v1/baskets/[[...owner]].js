@@ -8,6 +8,7 @@ import {
   getOwnBasket,
   addProductToUserBasket,
   removeItemFromUserBasket,
+  updateUserBasket,
 } from '@/lib/api-functions/server/baskets/controllers';
 
 import {
@@ -41,7 +42,7 @@ const handler = nc({
   // middleware to protect routes
   // eslint-disable-next-line consistent-return
   .use(async (req, res, next) => {
-    // console.log('middleware running');
+    console.log('middleware running');
     // if (req.method === 'GET') {
     //   return next();
     // }
@@ -50,7 +51,7 @@ const handler = nc({
       req.user = session.user;
       next();
     } catch (err) {
-      console.log('not accessing basket')
+      console.log('not accessing basket');
       return handleUnauthorisedAPICall(res);
     }
   })
@@ -58,7 +59,6 @@ const handler = nc({
   .get(baseRoute, async (req, res) => {
     const { owner } = req.params;
     if (owner === 'own') {
-      console.log('here');
       const basket = await getOwnBasket(req, res);
       return basket;
     }
@@ -84,6 +84,11 @@ const handler = nc({
   })
 
   .put(baseRoute, async (req, res) => {
+    const { owner } = req.params;
+    console.log(owner);
+    if (owner === 'own') {
+      return updateUserBasket(req, res);
+    }
     if (!checkPermission(req.user, identifier, update)) {
       return handleUnauthorisedAPICall(res);
     }

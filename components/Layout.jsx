@@ -3,6 +3,7 @@ import { Alert, Snackbar, IconButton, CloseIcon } from '@/components/mui';
 import { UIContext } from '@/components/contexts/UI.context';
 import Header from './Header';
 import Footer from './Footer';
+import BasketUserManagement from './BasketUserManagement';
 
 function Layout({ children }) {
   const {
@@ -20,6 +21,7 @@ function Layout({ children }) {
       </header>
       <main>{children}</main>
       <Footer />
+      <BasketUserManagement />
       <Snackbar
         open={open}
         autoHideDuration={hideDuration}

@@ -1,8 +1,4 @@
 import { Box, Grid, Typography } from '@mui/material';
-import Image from "next/image";
-import QueryBoundaries from './QueryBoundary';
-import ProductList from './ProductList';
-import Paragraph from './Paragraph';
 import InfoCard from './InfoCard';
 
 function WhyChooseSection() {
@@ -49,7 +45,7 @@ function WhyChooseSection() {
             <InfoCard
               height="200px"
               title="Biggest service network"
-              text={``}
+              text=""
               imageSrc="https://plus.unsplash.com/premium_photo-1676399362819-d1a6d3315180?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             />
           </Grid>
@@ -57,7 +53,7 @@ function WhyChooseSection() {
             <InfoCard
               height="200px"
               title="Lifetime warranty"
-              text={``}
+              text=""
               imageSrc="https://images.unsplash.com/photo-1530263503756-b382295fd927?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             />
           </Grid>
@@ -65,7 +61,7 @@ function WhyChooseSection() {
             <InfoCard
               height="200px"
               title="Free first service"
-              text={``}
+              text=""
               imageSrc="https://plus.unsplash.com/premium_photo-1663011028956-dc51196dd07b?q=80&w=2827&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             />
           </Grid>

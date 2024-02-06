@@ -34,6 +34,8 @@ import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 
 export {
   Avatar,
@@ -43,6 +45,8 @@ export {
   Snackbar,
   IconButton,
   CloseIcon,
+  RemoveIcon,
+  AddIcon,
   Drawer,
   Divider,
   List,

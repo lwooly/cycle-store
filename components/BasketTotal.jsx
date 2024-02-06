@@ -1,14 +1,13 @@
 import Link from 'next/link';
 import { dinero, add, toDecimal } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
-import { useUserBasket } from '@/lib/tq/baskets/queries';
 import React from 'react';
 import { formatPrice } from '@/lib/utils/formatters';
 import { Button } from '@/components/mui';
 import Paragraph from './Paragraph';
 
-function BasketTotal() {
-  const { data: basket } = useUserBasket();
+function BasketTotal({ basket }) {
+  // const { data: basket } = useUserBasket();
   const basketTotal = basket.items.reduce(
     (total, item) =>
       add(total, dinero({ amount: item.price * 100, currency: GBP })),

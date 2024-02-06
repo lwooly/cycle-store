@@ -7,7 +7,7 @@ function NewArrivals() {
     <Box
       component="section"
       sx={{
-        p:4,
+        p: 4,
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',

@@ -21,8 +21,11 @@ import {
   useRemoveFromBasket,
 } from '@/lib/tq/baskets/mutations';
 import { formatPrice, slugify } from '@/lib/utils/formatters';
+import {
+  addToBasketHandler,
+  removeFromBasketHandler,
+} from '@/lib/api-functions/client/basket';
 import Paragraph from './Paragraph';
-import addToTemporaryBasket from '@/lib/api-functions/client/basket';
 
 function Product({
   values: { _id, title, description, price, quantity, image }, // favorites,
@@ -35,9 +38,8 @@ function Product({
   inBasket,
 }) {
   const [imageSrc, setImageSrc] = useState(image);
-  const {user} = useUser();
+  const { user } = useUser();
 
-  console.log(user)
   // const [showProductLink, setShowProductLink] = useState(false)
 
   const {
@@ -58,23 +60,8 @@ function Product({
   // Add product to basket
   const addToBasketMutate = useAddToBasket();
 
-  const addToBasketHandler = (productId) => {
-    // check if user is logged in
-    if (user) {
-      // if user is logged in add the product to the basket
-      addToBasketMutate.mutate(productId);
-    } else {
-      // if user is not logged in add the product to the temporary basket
-      addToTemporaryBasket(productId);
-    }
-  };
-
   // Remove product from basket
   const removeFromBasketMutate = useRemoveFromBasket();
-
-  const removeFromBasketHandler = (productId) => {
-    removeFromBasketMutate.mutate(productId);
-  };
 
   let link = '';
   if (linkToProductPage) {
@@ -150,14 +137,29 @@ function Product({
       </CardContent>
       <CardActions>
         {!inBasket && (
-          <Button variant="contained" onClick={() => addToBasketHandler(_id)}>
+          <Button
+            variant="contained"
+            onClick={() =>
+              addToBasketHandler({
+                productId: _id,
+                user,
+                addToBasketMutateFn: addToBasketMutate,
+              })
+            }
+          >
             Add to cart
           </Button>
         )}
         {inBasket && (
           <IconButton
             aria-label="remove product from basket"
-            onClick={() => removeFromBasketHandler(_id)}
+            onClick={() =>
+              removeFromBasketHandler({
+                productId: _id,
+                user,
+                removeFromBasketMutateFn: removeFromBasketMutate,
+              })
+            }
           >
             <ClearIcon />
           </IconButton>

@@ -19,23 +19,40 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function BasketIcon() {
   const [basketItems, setBasketItems] = useState([]);
 
-  const { user } = useUser();
-  const { data } = useUserBasket();
+  const { user, isLoading } = useUser();
 
+  const runQuery = !!user && !isLoading;
+  const { data, isLoading: isLoadingBasket } = useUserBasket({ runQuery });
+
+  // useEffect to handle user logged in
   useEffect(() => {
-    if (user) {
-      if (data && data.items) {
-        setBasketItems(data.items);
-      }
-    } else {
-      const basket = JSON.parse(localStorage.getItem('temporaryBasket')) || {
-        items: [],
-      };
-      setBasketItems(basket);
+    if (user && !isLoading && !isLoadingBasket && data && data.items) {
+      setBasketItems(data.items);
     }
-  }, [user]);
+  }, [user, isLoading, data, isLoadingBasket]);
 
-  console.log(basketItems);
+  // manage local storage to state updates
+  useEffect(() => {
+    // function to handle getting items from local storage
+    const handleStorage = () => {
+      if (!user) {
+        const localBasket = JSON.parse(
+          localStorage.getItem('temporaryBasket'),
+        ) || {
+          items: [],
+        };
+        setBasketItems(localBasket);
+      }
+    };
+
+    // on first mount run handle storage
+    handleStorage();
+
+    // mount event listener for changes in storage
+    window.addEventListener('storage', handleStorage);
+    // cleanup
+    return () => window.removeEventListener('storage', handleStorage);
+  }, [user]);
 
   return (
     <IconButton aria-label="basket" href="/basket">

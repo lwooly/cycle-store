@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from "next/image";
+import Image from 'next/image';
 import { useTheme } from '@emotion/react';
 import { Box, Typography } from './mui';
 import Paragraph from './Paragraph';
@@ -41,9 +41,10 @@ function InfoCard({ title, text = '', imageSrc, height = '300px' }) {
         sizes="100vw"
         style={{
           zIndex: 0,
-          objectFit: "cover",
-          objectPosition: "center"
-        }} />
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }}
+      />
       <Box
         sx={{
           p: 4,

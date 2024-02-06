@@ -64,13 +64,18 @@ function NewBikeSection() {
           </Typography>
           <ErrorBoundary>
             <Heading component="h3" variant="h2">
-            Kryo XVV Road Bike Is Here
+              Kryo XVV Road Bike Is Here
             </Heading>
-            <Paragraph>Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo.</Paragraph>
+            <Paragraph>
+              Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non
+              mauris vitae erat consequat auctor eu in elit. Class aptent taciti
+              sociosqu ad litora torquent per conubia nostra, per inceptos
+              himenaeos. Mauris in erat justo.
+            </Paragraph>
             <Button
               variant="contained"
-              sx={{ width:'50%', color: 'white', margin: '0 auto', zIndex: 1}}
-              href='/products'
+              sx={{ width: '50%', color: 'white', margin: '0 auto', zIndex: 1 }}
+              href="/products"
             >
               View now
             </Button>

@@ -1,20 +1,132 @@
 import Head from 'next/head';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
-import QueryBoundaries from '@/components/QueryBoundary';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
-import BasketList from '@/components/BasketList';
-import { withPageAuthRequired, getSession } from '@auth0/nextjs-auth0';
+import { getSession } from '@auth0/nextjs-auth0';
 import { getUserBasketFromDB } from '@/lib/api-functions/server/baskets/queries';
 import { USER_OWN_BASKET_STORAGE_KEY } from '@/lib/tq/baskets/settings';
-import BasketTotal from '@/components/BasketTotal';
+import { useUserBasket } from '@/lib/tq/baskets/queries';
+import { Box, Button, CircularProgress, Stack } from '@mui/material';
+import Paragraph from '@/components/Paragraph';
+import { useEffect, useState } from 'react';
+import { useProducts } from '@/lib/tq/products/queries';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import CartSummaryTable from '@/components/CartSummary';
+import Link from 'next/link';
+import StripeButton from '@/components/StripeButton';
+// eslint-disable-next-line import/no-named-as-default
+import QueryBoundary from '@/components/QueryBoundary';
+import { useRouter } from 'next/router';
 
-export default function BasketPage({ssd}) {
+// const {AUTH0_BASE_URL} = process.env;
 
-  const {user} = ssd;
+export default function BasketPage(ssd) {
+  // set basket state
+  const [basket, setBasket] = useState(null);
+  // flag for rerender
+  const [localBasket, setLocalBasket] = useState(true);
 
-  console.log(user, 'user')
+  // set error and loading states
+  const [error, setError] = useState(null);
+  const [isError, setIsError] = useState(null);
+  const [loading, setLoading] = useState(null);
 
+  // set user state
+  // eslint-disable-next-line react/destructuring-assignment
+  const [user, setUser] = useState(ssd.user);
+
+  // check if user is logged in
+  const userClient = useUser();
+
+  // if user is logged in set user state to userClient
+  useEffect(() => {
+    if (userClient.user) {
+      setUser(userClient.user);
+    }
+  }, [userClient]);
+
+  // if user is logged in get user basket from the database
+
+  const runQuery = !!user;
+  const {
+    data: userBasket,
+    isLoading: basketLoading,
+    isError: isBasketError,
+    error: basketError,
+  } = useUserBasket({ runQuery });
+  const {
+    data: products,
+    isLoading: productLoading,
+    isError: isproductError,
+    error: productError,
+  } = useProducts();
+
+  // set loading and error states
+  useEffect(() => {
+    if (user) {
+      setLoading(basketLoading);
+      setError(basketError);
+      setIsError(isBasketError);
+    } else {
+      setLoading(productLoading);
+      setError(productError);
+      setIsError(isproductError);
+    }
+  }, [
+    user,
+    basketLoading,
+    isBasketError,
+    basketError,
+    productLoading,
+    isproductError,
+    productError,
+  ]);
+
+  useEffect(() => {
+    if (!user) {
+      // Get user basket from local storage
+      const tempProductIds =
+        JSON.parse(localStorage.getItem('temporaryBasket')) || [];
+      let tempProducts = [];
+
+      // find products from product ids - TODO performance increase by creating a new tq hook rather than querying all
+      if (products) {
+        tempProducts = tempProductIds.map((id) =>
+          // eslint-disable-next-line no-underscore-dangle
+          products.find((product) => product._id === id),
+        );
+      }
+
+      setBasket({ items: tempProducts });
+
+      // need to handle loading and error states
+    } else {
+      // set basket to user basket
+      setBasket(userBasket);
+    }
+  }, [user, products, userBasket, localBasket]);
+
+  // manage local storage to state updates
+
+  useEffect(() => {
+    const handleStorage = () => {
+      const tempBasket = JSON.parse(
+        localStorage.getItem('temporaryBasket'),
+      ) || {
+        items: [],
+      };
+      setLocalBasket(tempBasket);
+    };
+
+    window.addEventListener('storage', handleStorage);
+
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
+  // redirect users to this page after login.
+
+  const router = useRouter();
+  const currentPath = router.asPath;
 
   return (
     <>
@@ -25,13 +137,55 @@ export default function BasketPage({ssd}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading component="h2">Basket</Heading>
-        <QueryBoundaries>
-          <BasketTotal />
-        </QueryBoundaries>
-        <QueryBoundaries>
-          {/* <BasketList /> */}
-        </QueryBoundaries>
+        <Box
+          sx={{
+            backgroundColor: 'lightgrey',
+            minHeight: '100vh',
+            width: '100%',
+            padding: '8rem 4rem',
+          }}
+        >
+          <Stack
+            gap={2}
+            sx={{
+              backgroundColor: 'white',
+              padding: '3.31rem 2.5rem',
+              justifyContent: 'center',
+            }}
+          >
+            <Heading component="h1" variant="h4">
+              Cart
+            </Heading>
+            {loading && <CircularProgress />}
+            {isError && <Paragraph>{error.message}</Paragraph>}
+            {!loading && !isError && basket && (
+              <>
+                <QueryBoundary>
+                  <CartSummaryTable basket={basket} />
+                </QueryBoundary>
+                {!user && basket.items.length > 0 && (
+                  <Button
+                    component={Link}
+                    href={`/api/auth/login?returnTo=${encodeURIComponent(
+                      `${currentPath}`,
+                    )}`}
+                    variant="contained"
+                    sx={{ width: '20%', marginLeft: 'auto' }}
+                  >
+                    Checkout
+                  </Button>
+                )}
+                {user && basket.items.length > 0 && (
+                  <Box sx={{ marginLeft: 'auto' }}>
+                    <QueryBoundary>
+                      <StripeButton />
+                    </QueryBoundary>
+                  </Box>
+                )}
+              </>
+            )}
+          </Stack>
+        </Box>
       </Layout>
     </>
   );
@@ -41,7 +195,7 @@ export const getServerSideProps = async (context) => {
   // get user data from auth0
   const session = await getSession(context.req, context.res);
 
-  console.log(session?.user, 'user');
+  // console.log(session?.user, 'user');
 
   let userBasket = null;
   if (session?.user) {
@@ -51,7 +205,10 @@ export const getServerSideProps = async (context) => {
   const queryClient = new QueryClient();
 
   if (userBasket) {
-    await queryClient.setQueryData([USER_OWN_BASKET_STORAGE_KEY], userBasket);
+    await queryClient.setQueryData(
+      [USER_OWN_BASKET_STORAGE_KEY],
+      JSON.parse(JSON.stringify(userBasket)),
+    );
   }
 
   return {

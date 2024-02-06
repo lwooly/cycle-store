@@ -16,6 +16,7 @@ import { useProducts } from '@/lib/tq/products/queries';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { set } from 'mongoose';
 import CheckoutSummaryTable from '@/components/CheckoutSummary';
+import CartSummaryTable from '@/components/CartSummary';
 
 export default function BasketPage(ssd) {
   // set basket state
@@ -129,7 +130,7 @@ export default function BasketPage(ssd) {
         <Box
           sx={{
             backgroundColor: 'lightgrey',
-            height: '100vh',
+            minHeight: '100vh',
             width: '100%',
             padding: '8rem 4rem',
           }}
@@ -145,7 +146,7 @@ export default function BasketPage(ssd) {
             {isError && <Paragraph>{error.message}</Paragraph>}
             {!loading && !isError && basket && (
               <Box>
-                <CheckoutSummaryTable basket={basket} />
+                <CartSummaryTable basket={basket} />
                 {/* <BasketTotal basket={basket} /> */}
               </Box>
             )}

@@ -1,4 +1,5 @@
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { useProducts } from '@/lib/tq/products/queries';
 import { Box, Button, CircularProgress, Typography } from '@/components/mui';
 import Paragraph from '@/components/Paragraph';
@@ -8,11 +9,13 @@ import { toDecimal, dinero } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
 import { useAddToBasket } from '@/lib/tq/baskets/mutations';
 import { useTheme } from '@emotion/react';
+import { addToBasketHandler } from '@/lib/api-functions/client/basket';
 import Heading from './Heading';
 
 function ProductLaunch() {
   const { isLoading, isError, error, data: products } = useProducts();
   const theme = useTheme();
+  const { user } = useUser();
 
   // console.log(products)
 
@@ -31,11 +34,9 @@ function ProductLaunch() {
   const { _id, title, description, price } = product; // quantity, image, favorites
 
   // Add product to basket
-  const addToBasketMutate = useAddToBasket();
+  const runQuery = !!user;
+  const addToBasketMutate = useAddToBasket({ runQuery });
 
-  const addToBasketHandler = (productId) => {
-    addToBasketMutate.mutate(productId);
-  };
   return (
     <Box
       component="section"
@@ -109,7 +110,13 @@ function ProductLaunch() {
             <Button
               variant="contained"
               sx={{ marginRight: 'auto', color: 'white' }}
-              onClick={() => addToBasketHandler(_id)}
+              onClick={() =>
+                addToBasketHandler({
+                  productId: _id,
+                  user,
+                  addToBasketMutateFn: addToBasketMutate,
+                })
+              }
             >
               Buy Now
             </Button>

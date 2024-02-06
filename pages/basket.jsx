@@ -27,6 +27,7 @@ export default function BasketPage() {
     isError,
     error,
   } = useUserOrTempBasket({ user });
+  console.log(isLoading)
 
   console.log(basket)
 

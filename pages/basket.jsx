@@ -2,7 +2,6 @@ import Head from 'next/head';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import {
-
   useUserOrTempBasket,
 } from '@/lib/tq/baskets/queries';
 import { Box, Button, CircularProgress, Stack } from '@mui/material';

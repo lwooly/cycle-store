@@ -95,6 +95,10 @@ function Product({
       height: '100%',
     };
   }
+
+  const imagePaddingStyles = summary
+    ? { paddingBottom: 'min(300px, 100%)' }
+    : { paddingBottom: '60vh' };
   return (
     <Card
       component="div"
@@ -115,7 +119,7 @@ function Product({
           height: 0,
           // Limit the maximum size
           position: 'relative',
-          paddingBottom: 'min(300px, 100%)',
+          ...imagePaddingStyles,
           // Equal to width for a square aspect ratio
           overflow: 'hidden',
           // flexGrow: 1,

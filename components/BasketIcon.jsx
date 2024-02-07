@@ -3,11 +3,7 @@ import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import {
-  useTemporaryBasket,
-  useUserBasket,
-  useUserOrTempBasket,
-} from '@/lib/tq/baskets/queries';
+import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
 import { useUser } from '@auth0/nextjs-auth0/client';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -21,16 +17,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 export default function BasketIcon() {
-  const user  = useUser();
+  const user = useUser();
   const [badgeContent, setBadgeContent] = useState('');
 
-  const {
-    data: basket,
-    isLoading,
-    isError,
-    error,
-  } = useUserOrTempBasket({ user });
-  console.log(basket);
+  const { data: basket, isLoading, isError } = useUserOrTempBasket({ user });
 
   useEffect(() => {
     if (isError || (!basket?.items && isLoading)) {

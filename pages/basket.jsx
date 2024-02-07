@@ -1,9 +1,7 @@
 import Head from 'next/head';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
-import {
-  useUserOrTempBasket,
-} from '@/lib/tq/baskets/queries';
+import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
 import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import Paragraph from '@/components/Paragraph';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -26,9 +24,6 @@ export default function BasketPage() {
     isError,
     error,
   } = useUserOrTempBasket({ user });
-  console.log(isLoading)
-
-  console.log(basket)
 
   // redirect users to this page after login.
 
@@ -70,7 +65,7 @@ export default function BasketPage() {
                 <QueryBoundary>
                   <CartSummaryTable basket={basket} />
                 </QueryBoundary>
-                {!user && basket.items.length > 0 && (
+                {!user.user && basket.items.length > 0 && (
                   <Button
                     component={Link}
                     href={`/api/auth/login?returnTo=${encodeURIComponent(
@@ -82,11 +77,11 @@ export default function BasketPage() {
                     Checkout
                   </Button>
                 )}
-                {user && basket.items.length > 0 && (
+                {user.user && basket.items.length > 0 && (
                   <Box sx={{ marginLeft: 'auto' }}>
-                    {/* <QueryBoundary>
-                      <StripeButton basket={basket}/>
-                    </QueryBoundary> */}
+                    <QueryBoundary>
+                      <StripeButton basket={basket} />
+                    </QueryBoundary>
                   </Box>
                 )}
               </>

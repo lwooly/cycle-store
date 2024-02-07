@@ -9,13 +9,21 @@ import { toDecimal, dinero } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
 import { useAddToBasket } from '@/lib/tq/baskets/mutations';
 import { useTheme } from '@emotion/react';
-import { addToBasketHandler } from '@/lib/api-functions/client/basket';
+import {
+  addToBasketHandler,
+  getNumberInBasket,
+} from '@/lib/api-functions/client/basket';
 import Heading from './Heading';
+import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
+import { useQueryClient } from '@tanstack/react-query';
 
 function ProductLaunch() {
   const { isLoading, isError, error, data: products } = useProducts();
   const theme = useTheme();
-  const { user } = useUser();
+  const user = useUser();
+  const { data: basket } = useUserOrTempBasket({ user });
+  console.log(basket);
+  const queryClient = useQueryClient()
 
   // console.log(products)
 
@@ -31,11 +39,12 @@ function ProductLaunch() {
 
   const product = products[0];
 
-  const { _id, title, description, price } = product; // quantity, image, favorites
+  const { _id, title, description, price, quantity: quantityInStock } = product; // quantity, image, favorites
+
+  const productBasketQuantity = getNumberInBasket({ basket, _id });
 
   // Add product to basket
-  const runQuery = !!user;
-  const addToBasketMutate = useAddToBasket({ runQuery });
+  const addToBasketMutate = useAddToBasket();
 
   return (
     <Box
@@ -113,10 +122,12 @@ function ProductLaunch() {
               onClick={() =>
                 addToBasketHandler({
                   productId: _id,
-                  user,
+                  user: user.user,
                   addToBasketMutateFn: addToBasketMutate,
+                  queryClient
                 })
               }
+              disabled={quantityInStock <= productBasketQuantity}
             >
               Buy Now
             </Button>

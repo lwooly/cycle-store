@@ -14,6 +14,7 @@ import {
   EditIcon,
   DeleteIcon,
   ClearIcon,
+  Typography,
 } from '@/components/mui';
 import Heading from '@/components/Heading';
 import {
@@ -23,13 +24,15 @@ import {
 import { formatPrice, slugify } from '@/lib/utils/formatters';
 import {
   addToBasketHandler,
+  getNumberInBasket,
   removeFromBasketHandler,
 } from '@/lib/api-functions/client/basket';
 import { useQueryClient } from '@tanstack/react-query';
 import Paragraph from './Paragraph';
+import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
 
 function Product({
-  values: { _id, title, description, price, quantity, image }, // favorites,
+  values: { _id, title, description, price, quantity: quantityInStock, image }, // favorites,
   linkToProductPage,
   headingLevel = 'h2',
   summary = false,
@@ -39,10 +42,12 @@ function Product({
   inBasket,
 }) {
   const [imageSrc, setImageSrc] = useState(image);
-  const { user } = useUser();
+  const user = useUser();
   const queryClient = useQueryClient();
 
-  // const [showProductLink, setShowProductLink] = useState(false)
+  // determine stock
+  const { data: basket } = useUserOrTempBasket({ user });
+  const productBasketQuantity = getNumberInBasket({ basket, _id });
 
   const {
     // canAdd = false,
@@ -127,46 +132,50 @@ function Product({
           </a>
         )}
 
-        {!summary && <Paragraph>About: {description}</Paragraph>}
-        <Paragraph>
+        {!summary && <Typography>About: {description}</Typography>}
+        <Typography variant="body1">
           Price:{' '}
           {formatPrice(
             toDecimal(dinero({ amount: price * 100, currency: GBP })),
           )}
-        </Paragraph>
-        <Paragraph>In Stock: {quantity}</Paragraph>
-        {/* <Paragraph>Favorites: {favorites || 0}</Paragraph> */}
+        </Typography>
+        <Typography variant="body2">In Stock: {quantityInStock}</Typography>
+
+        <Typography variant="body2">
+          In cart: {productBasketQuantity}
+        </Typography>
       </CardContent>
       <CardActions>
-        {!inBasket && (
+        <Button
+          variant="contained"
+          onClick={() =>
+            addToBasketHandler({
+              productId: _id,
+              user: user.user,
+              addToBasketMutateFn: addToBasketMutate,
+              queryClient,
+            })
+          }
+          disabled={quantityInStock <= productBasketQuantity}
+        >
+          Add to cart
+        </Button>
+
+        {inBasket && productBasketQuantity > 0 && (
           <Button
-            variant="contained"
-            onClick={() =>
-              addToBasketHandler({
-                productId: _id,
-                user,
-                addToBasketMutateFn: addToBasketMutate,
-                queryClient,
-              })
-            }
-          >
-            Add to cart
-          </Button>
-        )}
-        {inBasket && (
-          <IconButton
             aria-label="remove product from basket"
+            variant="contained"
             onClick={() =>
               removeFromBasketHandler({
                 productId: _id,
-                user,
+                user: user.user,
                 removeFromBasketMutateFn: removeFromBasketMutate,
                 queryClient,
               })
             }
           >
-            <ClearIcon />
-          </IconButton>
+            Remove from cart
+          </Button>
         )}
         {canUpdate && (
           <IconButton

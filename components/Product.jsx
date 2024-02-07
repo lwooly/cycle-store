@@ -14,6 +14,7 @@ import {
   EditIcon,
   DeleteIcon,
   Typography,
+  Box,
 } from '@/components/mui';
 import Heading from '@/components/Heading';
 import {
@@ -28,6 +29,7 @@ import {
 } from '@/lib/api-functions/client/basket';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
+import { useTheme } from '@emotion/react';
 import { UIContext } from './contexts/UI.context';
 
 function Product({
@@ -44,6 +46,7 @@ function Product({
   const user = useUser();
   const queryClient = useQueryClient();
   const { showMessage } = useContext(UIContext);
+  const theme = useTheme();
 
   // determine stock
   const { data: basket } = useUserOrTempBasket({ user });
@@ -74,6 +77,24 @@ function Product({
   if (linkToProductPage) {
     link = `/products/${slugify(title, _id)}`;
   }
+
+  let cardContentStyles = {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  };
+  //style card content
+  if (!summary) {
+    cardContentStyles = {
+      paddingX: { sm: '2rem' },
+      maxWidth: '1200px',
+      margin: { sm: '0 auto' },
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+    };
+  }
   return (
     <Card
       component="div"
@@ -84,6 +105,8 @@ function Product({
         height: '100%',
         padding: '0',
         gutters: '0',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <CardMedia
@@ -113,99 +136,130 @@ function Product({
           }}
         />
       </CardMedia>
-      <CardContent>
-        {!linkToProductPage ? (
-          <Heading component="h2" variant={headingLevel}>
-            {title}
-          </Heading>
-        ) : (
-          <a
-            href={link}
-            rel="noopener noreferrer"
-            target="_blank"
-            aria-label="Link to product page"
-            color="black"
-          >
+      <Box sx={cardContentStyles}>
+        <CardContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+            paddingY: '0.5rem',
+          }}
+        >
+          {!linkToProductPage ? (
             <Heading component="h2" variant={headingLevel}>
               {title}
             </Heading>
-          </a>
-        )}
-
-        {!summary && <Typography>About: {description}</Typography>}
-        <Typography variant="body1">
-          Price:{' '}
-          {formatPrice(
-            toDecimal(dinero({ amount: price * 100, currency: GBP })),
+          ) : (
+            <a
+              href={link}
+              rel="noopener noreferrer"
+              target="_blank"
+              aria-label="Link to product page"
+              color="black"
+              style={{
+                textDecoration: 'none',
+                color: theme.palette.text.primary,
+              }}
+            >
+              <Heading component="h2" variant={headingLevel}>
+                {title}
+              </Heading>
+            </a>
           )}
-        </Typography>
-        <Typography variant="body2">In Stock: {quantityInStock}</Typography>
+          {!summary && <Typography>About: {description}</Typography>}
+          <Typography variant="body2">
+            {' '}
+            {formatPrice(
+              toDecimal(dinero({ amount: price * 100, currency: GBP })),
+            )}
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: { xs: 'space-between', sm: 'start' },
+            }}
+          >
+            <Typography
+              variant="body2"
+              sx={{ fontSize: '0.85em', paddingInlineEnd: '2rem' }}
+            >
+              In Stock: {quantityInStock}
+            </Typography>
 
-        <Typography variant="body2">
-          In cart: {productBasketQuantity}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button
-          variant="contained"
-          onClick={() => {
-            addToBasketHandler({
-              productId: _id,
-              user: user.user,
-              addToBasketMutateFn: addToBasketMutate,
-              queryClient,
-            });
-            showMessage({
-              type: 'success',
-              string: 'Product added to cart!',
-            });
+            <Typography variant="body2" sx={{ fontSize: '0.85em' }}>
+              In cart: {productBasketQuantity}
+            </Typography>
+          </Box>
+        </CardContent>
+        <CardActions
+          sx={{
+            marginTop: 'auto',
+            paddingBottom: { sm: '1rem' },
           }}
-          disabled={quantityInStock <= productBasketQuantity}
         >
-          Add to cart
-        </Button>
-
-        {inBasket && productBasketQuantity > 0 && (
           <Button
-            aria-label="remove product from basket"
+            sx={{ color: 'white' }}
             variant="contained"
             onClick={() => {
-              removeFromBasketHandler({
+              addToBasketHandler({
                 productId: _id,
                 user: user.user,
-                removeFromBasketMutateFn: removeFromBasketMutate,
+                addToBasketMutateFn: addToBasketMutate,
                 queryClient,
               });
               showMessage({
                 type: 'success',
-                string: 'Product removed from cart!',
+                string: 'Product added to cart!',
               });
             }}
+            disabled={quantityInStock <= productBasketQuantity}
           >
-            Remove from cart
+            Add to cart
           </Button>
-        )}
-        {canUpdate && (
-          <IconButton
-            variant="contained"
-            aria-label="update"
-            href={`/admin/products/update/${_id}`}
-            component={Link}
-          >
-            <EditIcon />
-          </IconButton>
-        )}
 
-        {canRemove && (
-          <IconButton
-            variant="contained"
-            aria-label="delete"
-            onClick={() => removeHandler(_id)}
-          >
-            <DeleteIcon />
-          </IconButton>
-        )}
-      </CardActions>
+          {inBasket && productBasketQuantity > 0 && (
+            <Button
+              aria-label="remove product from basket"
+              sx={{ color: 'white' }}
+              variant="contained"
+              onClick={() => {
+                removeFromBasketHandler({
+                  productId: _id,
+                  user: user.user,
+                  removeFromBasketMutateFn: removeFromBasketMutate,
+                  queryClient,
+                });
+                showMessage({
+                  type: 'success',
+                  string: 'Product removed from cart!',
+                });
+              }}
+            >
+              Remove from cart
+            </Button>
+          )}
+          {canUpdate && (
+            <IconButton
+              variant="contained"
+              aria-label="update"
+              href={`/admin/products/update/${_id}`}
+              component={Link}
+            >
+              <EditIcon />
+            </IconButton>
+          )}
+
+          {canRemove && (
+            <IconButton
+              variant="contained"
+              aria-label="delete"
+              onClick={() => removeHandler(_id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          )}
+        </CardActions>
+      </Box>
     </Card>
   );
 }

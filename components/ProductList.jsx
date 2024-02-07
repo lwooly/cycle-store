@@ -36,7 +36,7 @@ function ProductList({
       component="ol"
       sx={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr 1fr 1fr',
+        gridTemplateColumns: {xs: '1fr', sm:'1fr 1fr', md:'1fr 1fr 1fr 1fr'},
         gap: '0.5rem',
       }}
     >

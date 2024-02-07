@@ -7,6 +7,7 @@ import {
   getProductsFromDB,
 } from '@/lib/api-functions/server/products/queries';
 import Layout from '@/components/Layout';
+import { Box } from '@mui/material';
 
 const hyphenate = (str) => str.replaceAll(' ', '-');
 const slugify = (str, id) => `${hyphenate(str).toLowerCase()}-${id}`;
@@ -22,9 +23,11 @@ function SingleProduct({ ssd }) {
       </Head>
       <Layout>
         {/* <Heading component={"h2"}></Heading> */}
-        <ErrorBoundary>
-          <Product values={ssd} headingLevel="h1" inBasket />
-        </ErrorBoundary>
+        <Box pt={6} component="section">
+          <ErrorBoundary>
+            <Product values={ssd} headingLevel="h1" inBasket />
+          </ErrorBoundary>
+        </Box>
       </Layout>
     </>
   );

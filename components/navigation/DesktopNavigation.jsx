@@ -38,16 +38,16 @@ function DesktopNavigation({
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { sm: 'none' } }}
+          sx={{ mr: 2, display: { md: 'none' } }}
         >
-          <MenuIcon color="white" />
+          <MenuIcon sx={{color:'white'}} fontSize='large'/>
         </IconButton>
         <Typography
           variant="h6"
           component={Link}
           href="/"
           sx={{
-            display: { xs: 'none', sm: 'block' },
+            display: { xs: 'none', md: 'block' },
             textDecoration: 'none',
             color: lightTextColor,
             // flexGrow: 1,
@@ -57,13 +57,13 @@ function DesktopNavigation({
         </Typography>
         <Box
           sx={{
-            display: { xs: 'none', sm: 'block' },
+            display: { xs: 'none', md: 'block' },
           }}
         >
           <Button
             sx={{
               color: lightTextColor,
-              display: { xs: 'none', sm: 'inline-flex' },
+              display: { xs: 'none', md: 'inline-flex' },
             }}
             component={Link}
             href="/"
@@ -73,7 +73,7 @@ function DesktopNavigation({
           <Button
             sx={{
               color: lightTextColor,
-              display: { xs: 'none', sm: 'inline-flex' },
+              display: { xs: 'none', md: 'inline-flex' },
             }}
             component={Link}
             href="/products"
@@ -83,7 +83,7 @@ function DesktopNavigation({
           <Button
             sx={{
               color: lightTextColor,
-              display: { xs: 'none', sm: 'inline-flex' },
+              display: { xs: 'none', md: 'inline-flex' },
             }}
             component={Link}
             href="/contact"
@@ -93,7 +93,7 @@ function DesktopNavigation({
           <Button
             sx={{
               color: lightTextColor,
-              display: { xs: 'none', sm: 'inline-flex' },
+              display: { xs: 'none', md: 'inline-flex' },
             }}
             component={Link}
             href="/blog"
@@ -107,7 +107,7 @@ function DesktopNavigation({
               <Button
                 sx={{
                   color: lightTextColor,
-                  display: { xs: 'none', sm: 'inline-flex' },
+                  display: { xs: 'none', md: 'inline-flex' },
                 }}
                 component={Link}
                 href="/profile"
@@ -117,7 +117,7 @@ function DesktopNavigation({
               <Button
                 sx={{
                   color: lightTextColor,
-                  display: { xs: 'none', sm: 'inline-flex' },
+                  display: { xs: 'none', md: 'inline-flex' },
                 }}
                 component={Link}
                 href="/api/auth/logout"
@@ -129,7 +129,7 @@ function DesktopNavigation({
             <Button
               sx={{
                 color: lightTextColor,
-                display: { xs: 'none', sm: 'inline-flex' },
+                display: { xs: 'none', md: 'inline-flex' },
               }}
               component={Link}
               href="/api/auth/login"

@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@/components/mui';
 import BasketIcon from '@/components/BasketIcon';
+import theme from '@/lib/theme';
 
 function MobileNavigation({
   mobileOpen = false,
@@ -22,6 +23,7 @@ function MobileNavigation({
     display: 'block',
     textDecoration: 'none',
     flexGrow: 1,
+    color: theme.palette.text.primary,
   };
 
   const { user } = useUser();
@@ -35,7 +37,7 @@ function MobileNavigation({
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: 'block', sm: 'none' },
+          display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
         }}
       >
@@ -45,9 +47,9 @@ function MobileNavigation({
           </Typography>
           <Divider />
           <List>
-            <ListItem>
+            {/* <ListItem>
               <BasketIcon />
-            </ListItem>
+            </ListItem> */}
             <ListItem>
               <Link href="/" passHref style={itemLinkStyles} to="/">
                 <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>

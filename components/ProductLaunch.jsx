@@ -15,8 +15,8 @@ import {
 } from '@/lib/api-functions/client/basket';
 import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
 import { useQueryClient } from '@tanstack/react-query';
-import Heading from './Heading';
 import { useContext } from 'react';
+import Heading from './Heading';
 import { UIContext } from './contexts/UI.context';
 
 function ProductLaunch() {
@@ -98,8 +98,10 @@ function ProductLaunch() {
             position: 'relative',
             gap: '0.5rem',
             color: 'white',
-            maxWidth: '60%',
+            maxWidth: { sm: '60%' },
             height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
           <Typography component="h1" variant="h4" sx={{ zIndex: 1 }}>
@@ -121,7 +123,14 @@ function ProductLaunch() {
             </Paragraph>
             <Button
               variant="contained"
-              sx={{ marginRight: 'auto', color: 'white' }}
+              sx={{
+                marginRight: 'auto',
+                color: 'white',
+                '&.Mui-disabled': {
+                  background: '#eaeaea',
+                  color: '#c0c0c0',
+                },
+              }}
               onClick={() => {
                 addToBasketHandler({
                   productId: _id,

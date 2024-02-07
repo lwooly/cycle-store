@@ -39,19 +39,19 @@ export default function BasketPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Box
+        <Box 
           sx={{
             backgroundColor: 'lightgrey',
             minHeight: '100vh',
             width: '100%',
-            padding: '8rem 4rem',
+            padding: {xs:'6rem 0.5rem', sm:'8rem 2rem'},
           }}
         >
           <Stack
             gap={2}
             sx={{
               backgroundColor: 'white',
-              padding: '3.31rem 2.5rem',
+              padding: {xs:'2rem  0.5rem', sm:'3.31rem  2.5rem'},
               justifyContent: 'center',
             }}
           >

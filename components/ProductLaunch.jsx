@@ -16,6 +16,8 @@ import {
 import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
 import { useQueryClient } from '@tanstack/react-query';
 import Heading from './Heading';
+import { useContext } from 'react';
+import { UIContext } from './contexts/UI.context';
 
 function ProductLaunch() {
   const { isLoading, isError, error, data: products } = useProducts();
@@ -24,6 +26,7 @@ function ProductLaunch() {
   const { data: basket } = useUserOrTempBasket({ user });
   console.log(basket);
   const queryClient = useQueryClient();
+  const { showMessage } = useContext(UIContext);
 
   // console.log(products)
 
@@ -119,14 +122,18 @@ function ProductLaunch() {
             <Button
               variant="contained"
               sx={{ marginRight: 'auto', color: 'white' }}
-              onClick={() =>
+              onClick={() => {
                 addToBasketHandler({
                   productId: _id,
                   user: user.user,
                   addToBasketMutateFn: addToBasketMutate,
                   queryClient,
-                })
-              }
+                });
+                showMessage({
+                  type: 'success',
+                  string: 'Product added to cart!',
+                });
+              }}
               disabled={quantityInStock <= productBasketQuantity}
             >
               Buy Now

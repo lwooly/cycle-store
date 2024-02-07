@@ -30,17 +30,17 @@ function Layout({ children }) {
         <Alert
           onClose={handleClose}
           severity={severity}
-          sx={{ width: '100%', mb: 0 }}
+          sx={{ width: '100%', mb: 0, display: 'flex', alignItems: 'center' }}
         >
           {message}
-          <IconButton
+          {/* <IconButton
             size="small"
             aria-label="close"
             color="inherit"
             onClick={handleClose}
           >
             <CloseIcon fontSize="small" />
-          </IconButton>
+          </IconButton> */}
         </Alert>
       </Snackbar>
     </>

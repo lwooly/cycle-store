@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { dinero, toDecimal } from 'dinero.js';
@@ -28,6 +28,7 @@ import {
 } from '@/lib/api-functions/client/basket';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
+import { UIContext } from './contexts/UI.context';
 
 function Product({
   values: { _id, title, description, price, quantity: quantityInStock, image }, // favorites,
@@ -42,6 +43,7 @@ function Product({
   const [imageSrc, setImageSrc] = useState(image);
   const user = useUser();
   const queryClient = useQueryClient();
+  const { showMessage } = useContext(UIContext);
 
   // determine stock
   const { data: basket } = useUserOrTempBasket({ user });
@@ -146,14 +148,18 @@ function Product({
       <CardActions>
         <Button
           variant="contained"
-          onClick={() =>
+          onClick={() => {
             addToBasketHandler({
               productId: _id,
               user: user.user,
               addToBasketMutateFn: addToBasketMutate,
               queryClient,
-            })
-          }
+            });
+            showMessage({
+              type: 'success',
+              string: 'Product added to cart!',
+            });
+          }}
           disabled={quantityInStock <= productBasketQuantity}
         >
           Add to cart
@@ -163,14 +169,18 @@ function Product({
           <Button
             aria-label="remove product from basket"
             variant="contained"
-            onClick={() =>
+            onClick={() => {
               removeFromBasketHandler({
                 productId: _id,
                 user: user.user,
                 removeFromBasketMutateFn: removeFromBasketMutate,
                 queryClient,
-              })
-            }
+              });
+              showMessage({
+                type: 'success',
+                string: 'Product removed from cart!',
+              });
+            }}
           >
             Remove from cart
           </Button>

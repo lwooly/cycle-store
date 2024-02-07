@@ -36,6 +36,8 @@ import {
 } from '@/lib/api-functions/client/basket';
 import { useTheme } from '@emotion/react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
+import { UIContext } from './contexts/UI.context';
 
 export default function CartSummaryTable({ basket }) {
   const user = useUser();
@@ -43,7 +45,9 @@ export default function CartSummaryTable({ basket }) {
   const addToBasketMutate = useAddToBasket();
   const queryClient = useQueryClient();
   const theme = useTheme();
+  const { showMessage } = useContext(UIContext);
 
+  console.log(showMessage);
   // calculate basket total
   const basketTotal = basket.items.reduce(
     (total, item) =>
@@ -92,14 +96,18 @@ export default function CartSummaryTable({ basket }) {
                     <TableCell align="right">
                       <IconButton
                         aria-label="remove product from basket"
-                        onClick={() =>
+                        onClick={() => {
                           removeFromBasketHandler({
                             productId: _id,
                             user: user.user,
                             removeFromBasketMutateFn: removeFromBasketMutate,
                             queryClient,
-                          })
-                        }
+                          });
+                          showMessage({
+                            type: 'success',
+                            string: 'Item removed from basket!',
+                          });
+                        }}
                         disabled={productBasketQuantity > 1}
                       >
                         <ClearIcon />
@@ -171,14 +179,14 @@ export default function CartSummaryTable({ basket }) {
                       >
                         <IconButton
                           aria-label="reduce number of product in basket by 1"
-                          onClick={() =>
+                          onClick={() => {
                             removeFromBasketHandler({
                               productId: _id,
                               user: user.user,
                               removeFromBasketMutateFn: removeFromBasketMutate,
                               queryClient,
-                            })
-                          }
+                            });
+                          }}
                           disabled={productBasketQuantity <= 1}
                         >
                           <RemoveIcon />

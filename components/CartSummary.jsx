@@ -103,7 +103,7 @@ export default function CartSummaryTable({basket}) {
                         onClick={() =>
                           removeFromBasketHandler({
                             productId: _id,
-                            user,
+                            user: user.user,
                             removeFromBasketMutateFn: removeFromBasketMutate,
                             queryClient,
                           })
@@ -182,7 +182,7 @@ export default function CartSummaryTable({basket}) {
                           onClick={() =>
                             removeFromBasketHandler({
                               productId: _id,
-                              user,
+                              user: user.user,
                               removeFromBasketMutateFn: removeFromBasketMutate,
                               queryClient,
                             })
@@ -203,7 +203,7 @@ export default function CartSummaryTable({basket}) {
                           onClick={() =>
                             addToBasketHandler({
                               productId: _id,
-                              user,
+                              user: user.user,
                               addToBasketMutateFn: addToBasketMutate,
                               queryClient,
                             })

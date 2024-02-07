@@ -66,7 +66,9 @@ function StripeButton({ basket }) {
       zipCode={false}
       token={onToken} // submit callback
     >
-      <Button variant="contained">Pay with Stripe</Button>
+      <Button variant="contained" sx={{ color: 'white' }}>
+        Pay with Stripe
+      </Button>
     </StripeCheckout>
   );
 }

@@ -3,6 +3,8 @@ import Head from 'next/head';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import ContactForm from '@/components/forms/ContactForm';
+import ContactHeader from '@/components/ContactHeader';
+import { Box } from '@mui/material';
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -16,8 +18,17 @@ export default function Contact() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading>Contact</Heading>
-        <ContactForm />
+        <Box component="section">
+          <ContactHeader
+            title="Contact Us"
+            imageSrc={
+              'https://images.unsplash.com/photo-1605235456089-289f866adef2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            }
+          />
+          {/* <Heading>Contact</Heading> */}
+
+          <ContactForm />
+        </Box>
       </Layout>
     </>
   );

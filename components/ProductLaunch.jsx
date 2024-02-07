@@ -13,9 +13,9 @@ import {
   addToBasketHandler,
   getNumberInBasket,
 } from '@/lib/api-functions/client/basket';
-import Heading from './Heading';
 import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
 import { useQueryClient } from '@tanstack/react-query';
+import Heading from './Heading';
 
 function ProductLaunch() {
   const { isLoading, isError, error, data: products } = useProducts();
@@ -23,7 +23,7 @@ function ProductLaunch() {
   const user = useUser();
   const { data: basket } = useUserOrTempBasket({ user });
   console.log(basket);
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   // console.log(products)
 
@@ -124,7 +124,7 @@ function ProductLaunch() {
                   productId: _id,
                   user: user.user,
                   addToBasketMutateFn: addToBasketMutate,
-                  queryClient
+                  queryClient,
                 })
               }
               disabled={quantityInStock <= productBasketQuantity}

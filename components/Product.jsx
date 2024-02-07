@@ -13,7 +13,6 @@ import {
   IconButton,
   EditIcon,
   DeleteIcon,
-  ClearIcon,
   Typography,
 } from '@/components/mui';
 import Heading from '@/components/Heading';
@@ -28,7 +27,6 @@ import {
   removeFromBasketHandler,
 } from '@/lib/api-functions/client/basket';
 import { useQueryClient } from '@tanstack/react-query';
-import Paragraph from './Paragraph';
 import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
 
 function Product({

@@ -36,7 +36,6 @@ import {
 } from '@/lib/api-functions/client/basket';
 import { useTheme } from '@emotion/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useContext } from 'react';
 
 export default function CartSummaryTable({ basket }) {
   const user = useUser();
@@ -44,9 +43,6 @@ export default function CartSummaryTable({ basket }) {
   const addToBasketMutate = useAddToBasket();
   const queryClient = useQueryClient();
   const theme = useTheme();
-  const UIContext = useContext(UIContext)
-
-  console.log(UIContext)
 
   // calculate basket total
   const basketTotal = basket.items.reduce(
@@ -56,7 +52,7 @@ export default function CartSummaryTable({ basket }) {
   );
 
   // get a list of unique items from basket
-  const uniqueItems = getUniqueBasketItems(basket)
+  const uniqueItems = getUniqueBasketItems(basket);
 
   return (
     <TableContainer component={Paper} sx={{ borderShadow: 'none' }}>
@@ -83,8 +79,11 @@ export default function CartSummaryTable({ basket }) {
           {uniqueItems.length > 0 &&
             uniqueItems.map(
               ({ _id, title, price, image, quantity: quantityInStock }) => {
-                const productBasketQuantity = getNumberInBasket({basket, _id})
-                console.log(productBasketQuantity)
+                const productBasketQuantity = getNumberInBasket({
+                  basket,
+                  _id,
+                });
+                console.log(productBasketQuantity);
                 return (
                   <TableRow
                     key={nanoid()}

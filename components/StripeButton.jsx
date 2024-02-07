@@ -1,11 +1,10 @@
 import StripeCheckout from 'react-stripe-checkout';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import { useUserBasket } from '@/lib/tq/baskets/queries';
 import { Button } from '@/components/mui';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
-function StripeButton({basket}) {
+function StripeButton({ basket }) {
   const { user, isLoading, error } = useUser();
   const router = useRouter();
 

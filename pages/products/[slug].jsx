@@ -23,7 +23,7 @@ function SingleProduct({ ssd }) {
       <Layout>
         {/* <Heading component={"h2"}></Heading> */}
         <ErrorBoundary>
-          <Product values={ssd} headingLevel="h1" inBasket={true} />
+          <Product values={ssd} headingLevel="h1" inBasket />
         </ErrorBoundary>
       </Layout>
     </>

@@ -40,7 +40,7 @@ function DesktopNavigation({
           onClick={handleDrawerToggle}
           sx={{ mr: 2, display: { sm: 'none' } }}
         >
-          <MenuIcon />
+          <MenuIcon color="white" />
         </IconButton>
         <Typography
           variant="h6"
@@ -60,24 +60,44 @@ function DesktopNavigation({
             display: { xs: 'none', sm: 'block' },
           }}
         >
-          <Button sx={{ color: lightTextColor }} component={Link} href="/">
+          <Button
+            sx={{
+              color: lightTextColor,
+              display: { xs: 'none', sm: 'inline-flex' },
+            }}
+            component={Link}
+            href="/"
+          >
             Home
           </Button>
           <Button
-            sx={{ color: lightTextColor }}
+            sx={{
+              color: lightTextColor,
+              display: { xs: 'none', sm: 'inline-flex' },
+            }}
             component={Link}
             href="/products"
           >
             Shop
           </Button>
           <Button
-            sx={{ color: lightTextColor }}
+            sx={{
+              color: lightTextColor,
+              display: { xs: 'none', sm: 'inline-flex' },
+            }}
             component={Link}
             href="/contact"
           >
             Contact
           </Button>
-          <Button sx={{ color: lightTextColor }} component={Link} href="/blog">
+          <Button
+            sx={{
+              color: lightTextColor,
+              display: { xs: 'none', sm: 'inline-flex' },
+            }}
+            component={Link}
+            href="/blog"
+          >
             Blog
           </Button>
         </Box>
@@ -85,14 +105,20 @@ function DesktopNavigation({
           {user ? (
             <>
               <Button
-                sx={{ color: lightTextColor }}
+                sx={{
+                  color: lightTextColor,
+                  display: { xs: 'none', sm: 'inline-flex' },
+                }}
                 component={Link}
                 href="/profile"
               >
                 Profile
               </Button>
               <Button
-                sx={{ color: lightTextColor }}
+                sx={{
+                  color: lightTextColor,
+                  display: { xs: 'none', sm: 'inline-flex' },
+                }}
                 component={Link}
                 href="/api/auth/logout"
               >
@@ -101,7 +127,10 @@ function DesktopNavigation({
             </>
           ) : (
             <Button
-              sx={{ color: lightTextColor }}
+              sx={{
+                color: lightTextColor,
+                display: { xs: 'none', sm: 'inline-flex' },
+              }}
               component={Link}
               href="/api/auth/login"
             >

@@ -30,14 +30,18 @@ import Image from 'next/image';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import {
   addToBasketHandler,
+  getNumberInBasket,
+  getUniqueBasketItems,
   removeFromBasketHandler,
 } from '@/lib/api-functions/client/basket';
 import { useTheme } from '@emotion/react';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function CartSummaryTable({ basket }) {
-  const { user } = useUser();
+  const user = useUser();
   const removeFromBasketMutate = useRemoveFromBasket();
   const addToBasketMutate = useAddToBasket();
+  const queryClient = useQueryClient();
   const theme = useTheme();
 
   // calculate basket total
@@ -48,16 +52,7 @@ export default function CartSummaryTable({ basket }) {
   );
 
   // get a list of unique items from basket
-  const uniqueItems = [];
-  basket.items.forEach((item) => {
-    if (!uniqueItems.map((uniqueItem) => uniqueItem._id).includes(item._id)) {
-      uniqueItems.push(item);
-    }
-  });
-  console.log(uniqueItems);
-
-  uniqueItems.sort((a, b) => a._id.localeCompare(b._id));
-  console.log(uniqueItems);
+  const uniqueItems = getUniqueBasketItems(basket);
 
   return (
     <TableContainer component={Paper} sx={{ borderShadow: 'none' }}>
@@ -84,9 +79,11 @@ export default function CartSummaryTable({ basket }) {
           {uniqueItems.length > 0 &&
             uniqueItems.map(
               ({ _id, title, price, image, quantity: quantityInStock }) => {
-                const productBasketQuantity = basket.items.filter(
-                  ({ _id: itemId }) => itemId === _id,
-                ).length;
+                const productBasketQuantity = getNumberInBasket({
+                  basket,
+                  _id,
+                });
+                console.log(productBasketQuantity);
                 return (
                   <TableRow
                     key={nanoid()}
@@ -98,8 +95,9 @@ export default function CartSummaryTable({ basket }) {
                         onClick={() =>
                           removeFromBasketHandler({
                             productId: _id,
-                            user,
+                            user: user.user,
                             removeFromBasketMutateFn: removeFromBasketMutate,
+                            queryClient,
                           })
                         }
                         disabled={productBasketQuantity > 1}
@@ -176,8 +174,9 @@ export default function CartSummaryTable({ basket }) {
                           onClick={() =>
                             removeFromBasketHandler({
                               productId: _id,
-                              user,
+                              user: user.user,
                               removeFromBasketMutateFn: removeFromBasketMutate,
+                              queryClient,
                             })
                           }
                           disabled={productBasketQuantity <= 1}
@@ -196,8 +195,9 @@ export default function CartSummaryTable({ basket }) {
                           onClick={() =>
                             addToBasketHandler({
                               productId: _id,
-                              user,
+                              user: user.user,
                               addToBasketMutateFn: addToBasketMutate,
+                              queryClient,
                             })
                           }
                           disabled={quantityInStock <= productBasketQuantity}

@@ -1,4 +1,5 @@
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { useProducts } from '@/lib/tq/products/queries';
 import { Box, Button, CircularProgress, Typography } from '@/components/mui';
 import Paragraph from '@/components/Paragraph';
@@ -8,11 +9,21 @@ import { toDecimal, dinero } from 'dinero.js';
 import { GBP } from '@dinero.js/currencies';
 import { useAddToBasket } from '@/lib/tq/baskets/mutations';
 import { useTheme } from '@emotion/react';
+import {
+  addToBasketHandler,
+  getNumberInBasket,
+} from '@/lib/api-functions/client/basket';
+import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
+import { useQueryClient } from '@tanstack/react-query';
 import Heading from './Heading';
 
 function ProductLaunch() {
   const { isLoading, isError, error, data: products } = useProducts();
   const theme = useTheme();
+  const user = useUser();
+  const { data: basket } = useUserOrTempBasket({ user });
+  console.log(basket);
+  const queryClient = useQueryClient();
 
   // console.log(products)
 
@@ -28,14 +39,13 @@ function ProductLaunch() {
 
   const product = products[0];
 
-  const { _id, title, description, price } = product; // quantity, image, favorites
+  const { _id, title, description, price, quantity: quantityInStock } = product; // quantity, image, favorites
+
+  const productBasketQuantity = getNumberInBasket({ basket, _id });
 
   // Add product to basket
   const addToBasketMutate = useAddToBasket();
 
-  const addToBasketHandler = (productId) => {
-    addToBasketMutate.mutate(productId);
-  };
   return (
     <Box
       component="section"
@@ -109,7 +119,15 @@ function ProductLaunch() {
             <Button
               variant="contained"
               sx={{ marginRight: 'auto', color: 'white' }}
-              onClick={() => addToBasketHandler(_id)}
+              onClick={() =>
+                addToBasketHandler({
+                  productId: _id,
+                  user: user.user,
+                  addToBasketMutateFn: addToBasketMutate,
+                  queryClient,
+                })
+              }
+              disabled={quantityInStock <= productBasketQuantity}
             >
               Buy Now
             </Button>

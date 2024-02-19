@@ -7,8 +7,6 @@ import Heading from './Heading';
 function ContactHeader({ title, imageSrc }) {
   const theme = useTheme();
 
-  console.log(title)
-
   return (
     <Box
       component="div"
@@ -16,9 +14,10 @@ function ContactHeader({ title, imageSrc }) {
         height: '50vh',
         width: '100%',
         backgroundImage: `url(${imageSrc})`,
-        backgroundPosition: '0 0',
-        backgroundSize: '120%',
+        backgroundPosition: '50 50',
+        backgroundSize: 'cover',
         backgroundAttachment: 'fixed',
+        backgroundRepeat: 'no-repeat',
         position: 'relative',
         '&::before': {
           height: '100%',
@@ -49,7 +48,11 @@ function ContactHeader({ title, imageSrc }) {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant='h1'  sx={{ color:'white', zIndex: 2 }}>
+        <Typography
+          component="h1"
+          variant="h1"
+          sx={{ color: 'white', zIndex: 2 }}
+        >
           {title}
         </Typography>
       </Box>

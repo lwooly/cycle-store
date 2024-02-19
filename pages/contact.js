@@ -4,9 +4,19 @@ import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import ContactForm from '@/components/forms/ContactForm';
 import ContactHeader from '@/components/ContactHeader';
+import Map from '@/components/Map';
 import { Box } from '@mui/material';
+import GoogleMap from '@/components/Map';
+import Service from '@/components/Services';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 // const inter = Inter({ subsets: ['latin'] })
+
+const serviceInfo = {
+  icon,
+  heading,
+  description
+}
 
 export default function Contact() {
   return (
@@ -25,7 +35,11 @@ export default function Contact() {
               'https://images.unsplash.com/photo-1605235456089-289f866adef2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
             }
           />
-          {/* <Heading>Contact</Heading> */}
+          <Box component={'article'} sx={{width: '100%', height: '50vh'}}>
+          <GoogleMap />
+          </Box>
+          <Service serviceInfo={serviceInfo}>
+          
 
           <ContactForm />
         </Box>

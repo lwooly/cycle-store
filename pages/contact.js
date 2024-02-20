@@ -30,37 +30,77 @@ export default function Contact() {
             <GoogleMap />
           </Box>
           <ServiceInfo />
-          <Box sx={{ overflowY: 'visible', display: 'flex' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              position: 'relative',
+              backgroundColour: 'hsl(0deg 0% 66.27%)',
+            }}
+          >
+            <Box
+              sx={{
+                width:'50%',
+                backgroundColor: 'transparent',
+              }}
+            >
+              <Box
+                sx={{
+                  padding: '4rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1.5rem',
+                  position: 'absolute',
+                  top: '-8rem',
+                  backgroundColor: 'white',
+                  width: '50%',
+                  boxShadow: '0 0 0 10px grey',
+                }}
+              >
+                <Heading component="h2">Get in touch</Heading>
+                <ContactForm />
+              </Box>
+            </Box>
             <Box
               sx={{
                 height: '120%',
+                flexBasis: 1,
                 flexGrow: 1,
                 padding: '4rem',
+                marginBottom: '4rem',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '1.5rem',
+                backgroundColor: 'transparent',
               }}
             >
-              <Heading component="h2">Get in touch</Heading>
-              <ContactForm />
-            </Box>
-            <Box sx={{
-                height: '120%',
-                flexGrow: 1,
-                padding: '4rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1.5rem',
-              }}>
-            <Heading component="h2">Contact Details</Heading>
+              <Heading component="h2">Contact Details</Heading>
               <Box>
-              <Heading component="h4" sx={{marginBottom:'1rem'}}>Our Hours</Heading>
-              <Typography component={'p'} variant='body2'>10:00 AM – 22.00 PM</Typography>
-              <Typography component={'p'} variant='body2'>Monday – Friday</Typography>
-
-
+                <Heading component="h4" sx={{ marginBottom: '0.7rem' }}>
+                  Our Hours
+                </Heading>
+                <Typography component='p' variant="body2">
+                  10:00 AM – 22.00 PM
+                </Typography>
+                <Typography component='p' variant="body2">
+                  Monday – Friday
+                </Typography>
               </Box>
-             
+              <Box>
+                <Heading component="h4" sx={{ marginBottom: '0.7rem' }}>
+                  Location
+                </Heading>
+                <Typography component='p' variant="body2">
+                  UK
+                </Typography>
+              </Box>
+              <Box>
+                <Heading component="h4" sx={{ marginBottom: '0.7rem' }}>
+                  Contact Details
+                </Heading>
+                <Typography component={'p'} variant="body2">
+                  contact@localcycle.com
+                </Typography>
+              </Box>
             </Box>
           </Box>
         </Box>

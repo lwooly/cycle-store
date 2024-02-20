@@ -53,7 +53,7 @@ function ContactForm() {
             <TextField
               type="from"
               {...field}
-              label="from"
+              label="From"
               fullWidth
               error={!!errors.from}
               helperText={errors.from?.message}
@@ -69,7 +69,7 @@ function ContactForm() {
             <TextField
               type="subject"
               {...field}
-              label="subject"
+              label="Subject"
               fullWidth
               error={!!errors.subject}
               helperText={errors.subject?.message}
@@ -85,7 +85,7 @@ function ContactForm() {
             <TextField
               type="message"
               {...field}
-              label="message"
+              label="Message"
               multiline
               rows={4}
               fullWidth

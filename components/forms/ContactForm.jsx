@@ -2,7 +2,7 @@
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TextField, Button } from '@/components/mui';
+import { TextField, Button, Box } from '@/components/mui';
 import sendEmail from '@/lib/api-functions/client/index';
 
 const schema = yup
@@ -53,7 +53,7 @@ function ContactForm() {
             <TextField
               type="from"
               {...field}
-              label="From"
+              label="Name"
               fullWidth
               error={!!errors.from}
               helperText={errors.from?.message}
@@ -95,7 +95,14 @@ function ContactForm() {
           )}
         />
       </div>
-      <Button
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '1rem',
+          flexDirection: { xs: 'column', md: 'row' },
+        }}
+      >
+        {/* <Button
         type="reset"
         onClick={() => reset()}
         primary="true"
@@ -104,15 +111,17 @@ function ContactForm() {
         sx={{ mx: 2 }}
       >
         Reset
-      </Button>
-      <Button
-        type="submit"
-        primary="true"
-        variant="contained"
-        disabled={isSubmitting || !isDirty || (!isDirty && !isValid)}
-      >
-        Send Message
-      </Button>
+      </Button> */}
+        <Button
+          sx={{ color: 'white' }}
+          type="submit"
+          primary="true"
+          variant="contained"
+          disabled={isSubmitting || !isDirty || (!isDirty && !isValid)}
+        >
+          Send Message
+        </Button>
+      </Box>
     </form>
   );
 }

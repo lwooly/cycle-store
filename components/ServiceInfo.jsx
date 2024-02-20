@@ -25,9 +25,15 @@ const serviceInfo = [
 
 function ServiceInfo() {
   return (
-    <Box sx={{ display: 'flex', paddingTop: '100px', paddingBottom: '200px' }}>
+    <Box
+      sx={{
+        display: { xs: 'block', md: 'flex' },
+        paddingTop: '100px',
+        paddingBottom: { xs: '100px', md: '200px' },
+      }}
+    >
       {serviceInfo.map((service) => (
-        <Service serviceInfo={service} />
+        <Service key={service.heading} serviceInfo={service} />
       ))}
     </Box>
   );

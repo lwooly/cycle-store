@@ -7,8 +7,17 @@ function Service({ serviceInfo }) {
 
   const { icon, heading, description } = serviceInfo;
   return (
-    <Box sx={{ textAlign: 'center', flexBasis: 1, flexGrow: 1 }}>
-      <Box sx={{ color: theme.palette.primary.main, fontSize:'3rem'}}>{icon}</Box>
+    <Box
+      sx={{
+        textAlign: 'center',
+        flexBasis: 1,
+        flexGrow: 1,
+        marginBottom: '2rem',
+      }}
+    >
+      <Box sx={{ color: theme.palette.primary.main, fontSize: '3rem' }}>
+        {icon}
+      </Box>
       <Typography component="h3" variant="h3">
         {heading}
       </Typography>

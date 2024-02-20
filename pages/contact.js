@@ -4,7 +4,6 @@ import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import ContactForm from '@/components/forms/ContactForm';
 import ContactHeader from '@/components/ContactHeader';
-import Map from '@/components/Map';
 import { Box, Typography } from '@mui/material';
 import GoogleMap from '@/components/Map';
 import ServiceInfo from '@/components/ServiceInfo';
@@ -32,15 +31,16 @@ export default function Contact() {
           <ServiceInfo />
           <Box
             sx={{
-              display: 'flex',
+              display: { xs: 'block', md: 'flex' },
               position: 'relative',
-              backgroundColour: 'hsl(0deg 0% 66.27%)',
+              backgroundColor: 'hsl(0deg 0% 96%)',
             }}
           >
             <Box
               sx={{
-                width:'50%',
-                backgroundColor: 'transparent',
+                width: { xs: '100%', lg: '50%' },
+                // flexGrow:1,
+                // backgroundColor: 'transparent',
               }}
             >
               <Box
@@ -49,11 +49,13 @@ export default function Contact() {
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '1.5rem',
-                  position: 'absolute',
+                  position: { xs: 'static', lg: 'absolute' },
                   top: '-8rem',
+                  left: '4rem',
                   backgroundColor: 'white',
-                  width: '50%',
-                  boxShadow: '0 0 0 10px grey',
+                  boxShadow: '0 0 45px  hsl(0deg 0% 66.27%)',
+                  height: '100%',
+                  width: { xs: '100%', lg: '45%' },
                 }}
               >
                 <Heading component="h2">Get in touch</Heading>
@@ -62,15 +64,13 @@ export default function Contact() {
             </Box>
             <Box
               sx={{
-                height: '120%',
-                flexBasis: 1,
-                flexGrow: 1,
                 padding: '4rem',
-                marginBottom: '4rem',
+                marginBottom: { xs: '0px', lg: '4rem' },
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '1.5rem',
                 backgroundColor: 'transparent',
+                width: { xs: '100%', lg: '50%' },
               }}
             >
               <Heading component="h2">Contact Details</Heading>
@@ -78,10 +78,10 @@ export default function Contact() {
                 <Heading component="h4" sx={{ marginBottom: '0.7rem' }}>
                   Our Hours
                 </Heading>
-                <Typography component='p' variant="body2">
+                <Typography component="p" variant="body2">
                   10:00 AM – 22.00 PM
                 </Typography>
-                <Typography component='p' variant="body2">
+                <Typography component="p" variant="body2">
                   Monday – Friday
                 </Typography>
               </Box>
@@ -89,7 +89,7 @@ export default function Contact() {
                 <Heading component="h4" sx={{ marginBottom: '0.7rem' }}>
                   Location
                 </Heading>
-                <Typography component='p' variant="body2">
+                <Typography component="p" variant="body2">
                   UK
                 </Typography>
               </Box>

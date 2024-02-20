@@ -111,7 +111,7 @@ function ContactForm() {
         variant="contained"
         disabled={isSubmitting || !isDirty || (!isDirty && !isValid)}
       >
-        Submit
+        Send Message
       </Button>
     </form>
   );

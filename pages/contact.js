@@ -5,18 +5,11 @@ import Heading from '@/components/Heading';
 import ContactForm from '@/components/forms/ContactForm';
 import ContactHeader from '@/components/ContactHeader';
 import Map from '@/components/Map';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import GoogleMap from '@/components/Map';
-import Service from '@/components/Services';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import ServiceInfo from '@/components/ServiceInfo';
 
 // const inter = Inter({ subsets: ['latin'] })
-
-const serviceInfo = {
-  icon,
-  heading,
-  description
-}
 
 export default function Contact() {
   return (
@@ -31,17 +24,45 @@ export default function Contact() {
         <Box component="section">
           <ContactHeader
             title="Contact Us"
-            imageSrc={
-              'https://images.unsplash.com/photo-1605235456089-289f866adef2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-            }
+            imageSrc="https://images.unsplash.com/photo-1605235456089-289f866adef2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           />
-          <Box component={'article'} sx={{width: '100%', height: '50vh'}}>
-          <GoogleMap />
+          <Box component="article" sx={{ width: '100%', height: '50vh' }}>
+            <GoogleMap />
           </Box>
-          <Service serviceInfo={serviceInfo}>
-          
+          <ServiceInfo />
+          <Box sx={{ overflowY: 'visible', display: 'flex' }}>
+            <Box
+              sx={{
+                height: '120%',
+                flexGrow: 1,
+                padding: '4rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.5rem',
+              }}
+            >
+              <Heading component="h2">Get in touch</Heading>
+              <ContactForm />
+            </Box>
+            <Box sx={{
+                height: '120%',
+                flexGrow: 1,
+                padding: '4rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.5rem',
+              }}>
+            <Heading component="h2">Contact Details</Heading>
+              <Box>
+              <Heading component="h4" sx={{marginBottom:'1rem'}}>Our Hours</Heading>
+              <Typography component={'p'} variant='body2'>10:00 AM – 22.00 PM</Typography>
+              <Typography component={'p'} variant='body2'>Monday – Friday</Typography>
 
-          <ContactForm />
+
+              </Box>
+             
+            </Box>
+          </Box>
         </Box>
       </Layout>
     </>

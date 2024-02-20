@@ -4,7 +4,7 @@ import Paragraph from '@/components/Paragraph';
 import { useTheme } from '@emotion/react';
 import Heading from './Heading';
 
-function ContactHeader({ title, imageSrc }) {
+function PageImageHeader({ title, imageSrc }) {
   const theme = useTheme();
 
   return (
@@ -60,4 +60,4 @@ function ContactHeader({ title, imageSrc }) {
   );
 }
 
-export default ContactHeader;
+export default PageImageHeader;

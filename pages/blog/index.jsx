@@ -1,22 +1,26 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import { AllPosts } from '@/lib/hygraph/queries';
 import {
+  Box,
   Card,
   CardActions,
   CardContent,
   CardMedia,
+  IconButton,
   List,
   ListItem,
 } from '@/components/mui';
+import ReadMoreIcon from '@mui/icons-material/ReadMore';
+import PageImageHeader from '@/components/PageImageHeader';
+import { useTheme } from '@emotion/react';
 
 const { HYGRAPH_ENDPOINT, HYGRAPH_TOKEN } = process.env;
 
 export default function Blog({ ssd = [] }) {
-  console.log(ssd, `ssd`);
+  const theme = useTheme();
   return (
     <>
       <Head>
@@ -26,33 +30,103 @@ export default function Blog({ ssd = [] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heading>Blog</Heading>
-        <List component="ol" sx={{ listStyle: 'none' }}>
-          {ssd.map(({ id, title, slug, heroImage: { url } }) => (
-            <ListItem key={id}>
-              <Card component="article" sx={{ width: '100%' }}>
-                <CardMedia sx={{ display: 'grid', placeContent: 'center' }}>
-                  <Image
-                    alt={title}
-                    src={url}
-                    width={200}
-                    height={200}
-                    style={{
-                      maxWidth: '100%',
-                      height: 'auto',
+        <Box component="section">
+          <PageImageHeader
+            title="Blog"
+            imageSrc="https://images.unsplash.com/photo-1633707167344-503c1c751027?q=80&w=2765&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          />
+          <List
+            component="ol"
+            sx={{
+              listStyle: 'none',
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '75vw',
+              margin: 'auto',
+            }}
+          >
+            {ssd.map(({ id, title, slug, heroImage: { url } }) => (
+              <ListItem
+                key={id}
+                sx={{
+                  width: '50%',
+                  minHeight: '100%',
+                  flexShrink: 0,
+                  flexGrow: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Card
+                  component="article"
+                  sx={{
+                    width: '100%',
+                    minHeight: '100%',
+                    position: 'relative',
+                    '&:hover': {
+                      backgroundColor: theme.palette.grey[100],
+                      '& .iconBtn': {
+                        backgroundColor: theme.palette.primary.main,
+                      },
+                    },
+                  }}
+                >
+                  <CardMedia
+                    sx={{
+                      width: '100%', // Make width responsive
+                      height: 0,
+                      // Limit the maximum size
+                      position: 'relative',
+                      paddingBottom: 'min(200px, 100%)',
+                      // Equal to width for a square aspect ratio
+                      overflow: 'hidden',
                     }}
-                  />
-                </CardMedia>
-                <CardContent>
-                  <Heading component="h2">{title}</Heading>
-                </CardContent>
-                <CardActions>
-                  <Link href={`/blog/${slug}`}>Read more...</Link>
-                </CardActions>
-              </Card>
-            </ListItem>
-          ))}
-        </List>
+                  >
+                    <Image
+                      src={url}
+                      alt={title}
+                      fill
+                      // onError={errorHandler}
+                      sizes="50%"
+                      style={{
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        maxWidth: '100%',
+                      }}
+                    />
+                  </CardMedia>
+                  <CardContent>
+                    <Heading component="h2">{title}</Heading>
+                  </CardContent>
+                  <CardActions>
+                    <IconButton
+                      className="iconBtn"
+                      sx={{
+                        fontSize: '4rem',
+                        position: 'absolute',
+                        top: '130px',
+                        right: '20px',
+                        colour: 'white',
+                        backgroundColor: theme.palette.grey[400],
+
+                        '&:hover': {
+                          scale: '1.05',
+                        },
+                      }}
+                      variant="contained"
+                      href={`/blog/${slug}`}
+                    >
+                      <ReadMoreIcon
+                        fontSize="inherit"
+                        sx={{ color: 'white' }}
+                      />
+                    </IconButton>
+                  </CardActions>
+                </Card>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
       </Layout>
     </>
   );

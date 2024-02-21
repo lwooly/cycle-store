@@ -1,7 +1,6 @@
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { useProducts } from '@/lib/tq/products/queries';
-import { CircularProgress, List, ListItem } from '@/components/mui';
-import Paragraph from '@/components/Paragraph';
+import { List, ListItem, Typography } from '@/components/mui';
 import Product from '@/components/Product';
 import { useMemo } from 'react';
 
@@ -9,12 +8,13 @@ function ProductList({
   removeHandler = () => {},
   userProductPermissions = {},
   sortBy,
+  filterBy,
   maxNumber,
 }) {
   const { data: productList } = useProducts();
 
   // sort products
-  const sortedAndLimitedProducts = useMemo(() => {
+  const filterSortAndLimitProducts = useMemo(() => {
     const sortedProducts = [...productList]; // Create a shallow copy to avoid mutating the original array
 
     // Sorting
@@ -28,11 +28,18 @@ function ProductList({
       sortedProducts.sort((a, b) => a.stock - b.stock);
     }
 
-    // Limiting
-    return maxNumber ? sortedProducts.slice(0, maxNumber) : sortedProducts;
-  }, [productList, sortBy, maxNumber]);
+    console.log(filterBy);
+    // Filtering by category
+    const filteredAndSortedProducts = filterBy
+      ? sortedProducts.filter((product) => filterBy === product.category)
+      : sortedProducts;
 
-  console.log(sortedAndLimitedProducts);
+    console.log(filteredAndSortedProducts);
+    // Limiting
+    return maxNumber
+      ? filteredAndSortedProducts.slice(0, maxNumber)
+      : filteredAndSortedProducts;
+  }, [productList, sortBy, filterBy, maxNumber]);
 
   return (
     <List
@@ -47,7 +54,12 @@ function ProductList({
         gap: '0.5rem',
       }}
     >
-      {sortedAndLimitedProducts.map((product) => (
+      {!filterSortAndLimitProducts.length && (
+        <Typography variant="h6" component="p">
+          No products to display
+        </Typography>
+      )}
+      {filterSortAndLimitProducts.map((product) => (
         // eslint-disable-next-line no-underscore-dangle
         <ListItem key={product._id} component="li" sx={{ padding: '0' }}>
           <ErrorBoundary>

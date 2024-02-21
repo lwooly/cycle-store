@@ -13,12 +13,15 @@ import NewBikeSection from '@/components/NewBikeSection';
 import ProductList from '@/components/ProductList';
 import PageImageHeader from '@/components/PageImageHeader';
 import { Select } from '@mui/material';
-import BasicSelect from '@/components/Select';
+import BasicSelect from '@/components/ProductSortSelect';
 import { useState } from 'react';
+import ProductSortSelect from '@/components/ProductSortSelect';
+import ProductFilterSelect from '@/components/ProductFilterSelect';
 
 export default function ProductsPage() {
   const [productFilter, setProductFilter] = useState('');
-
+  console.log(productFilter)
+  const [productSort, setProductSort] = useState('');
   return (
     <>
       <Head>
@@ -32,10 +35,15 @@ export default function ProductsPage() {
           title="Explore our stock!"
           imageSrc="https://images.unsplash.com/photo-1601067095185-b8b73ad7db10?q=80&w=3026&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         />
-        <BasicSelect setFn={setProductFilter} />
-        <QueryBoundaries>
-          <ProductList sortBy={productFilter} />
-        </QueryBoundaries>
+        <Box sx={{ padding: '1rem', display: 'flex' }}>
+          <ProductFilterSelect setFn={setProductFilter} />
+          <ProductSortSelect setFn={setProductSort} />
+        </Box>
+        <Box sx={{ padding: '1rem' }}>
+          <QueryBoundaries>
+            <ProductList sortBy={productSort} filterBy={productFilter} />
+          </QueryBoundaries>
+        </Box>
       </Layout>
     </>
   );

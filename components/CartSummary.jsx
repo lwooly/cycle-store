@@ -36,6 +36,9 @@ import {
 } from '@/lib/api-functions/client/basket';
 import { useTheme } from '@emotion/react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
+import { useMediaQuery } from '@mui/material';
+import { UIContext } from './contexts/UI.context';
 
 export default function CartSummaryTable({ basket }) {
   const user = useUser();
@@ -43,7 +46,7 @@ export default function CartSummaryTable({ basket }) {
   const addToBasketMutate = useAddToBasket();
   const queryClient = useQueryClient();
   const theme = useTheme();
-
+  const { showMessage } = useContext(UIContext);
   // calculate basket total
   const basketTotal = basket.items.reduce(
     (total, item) =>
@@ -54,24 +57,55 @@ export default function CartSummaryTable({ basket }) {
   // get a list of unique items from basket
   const uniqueItems = getUniqueBasketItems(basket);
 
+  const tableTextStyles = {
+    fontSize: { xs: '0.8em', sm: '1em' },
+  };
+
+  const iconButtonStyles = {
+    padding: { xs: 0, sm: 'default' },
+    fontSize: { xs: '0.5em', sm: 'default' },
+  };
+
+  const isScreenSmall = useMediaQuery(theme.breakpoints.down('md'));
+  console.log(isScreenSmall);
+  const tableSize = isScreenSmall ? 'small' : 'default';
   return (
     <TableContainer component={Paper} sx={{ borderShadow: 'none' }}>
-      <Table sx={{ minWidth: 650 }} aria-label="checkout summary table">
+      <Table
+        size={tableSize}
+        sx={{
+          minWidth: { md: 650 },
+          padding: { xs: 1, md: 'default' },
+          '& .MuiTableCell-sizeSmall': {
+            paddingX: ' 5px',
+            paddingY: '1rem',
+          },
+        }}
+        aria-label="checkout summary table"
+      >
         <TableHead>
           <TableRow>
             <TableCell />
             <TableCell />
             <TableCell>
-              <Typography variant="body1">Product</Typography>
+              <Typography variant="body1" sx={tableTextStyles}>
+                Product
+              </Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="body1">Product</Typography>
+              <Typography variant="body1" sx={tableTextStyles}>
+                Price
+              </Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="body1">Quantity</Typography>
+              <Typography variant="body1" sx={tableTextStyles}>
+                Quantity
+              </Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="body1">Subtotal</Typography>
+              <Typography variant="body1" sx={tableTextStyles}>
+                Subtotal
+              </Typography>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -91,28 +125,36 @@ export default function CartSummaryTable({ basket }) {
                   >
                     <TableCell align="right">
                       <IconButton
+                        sx={iconButtonStyles}
                         aria-label="remove product from basket"
-                        onClick={() =>
+                        onClick={() => {
                           removeFromBasketHandler({
                             productId: _id,
                             user: user.user,
                             removeFromBasketMutateFn: removeFromBasketMutate,
                             queryClient,
-                          })
-                        }
+                          });
+                          showMessage({
+                            type: 'success',
+                            string: 'Item removed from basket!',
+                          });
+                        }}
                         disabled={productBasketQuantity > 1}
                       >
-                        <ClearIcon />
+                        <ClearIcon size="small" />
                       </IconButton>
                     </TableCell>
                     <TableCell component="th" scope="row">
                       <Box
                         sx={{
-                          width: '100px', // Make width responsive
+                          width: { xs: '50px', sm: '100px' }, // Make width responsive
                           height: 0,
                           // Limit the maximum size
                           position: 'relative',
-                          paddingBottom: 'min(100px, 100%)',
+                          paddingBottom: {
+                            xs: 'min(50px, 100%)',
+                            sm: 'min(100px, 100%)',
+                          },
                           // Equal to width for a square aspect ratio
                           overflow: 'hidden',
                           // flexGrow: 1,
@@ -142,6 +184,7 @@ export default function CartSummaryTable({ basket }) {
                           sx={{
                             color: theme.palette.primary.main,
                             textDecoration: 'none',
+                            ...tableTextStyles,
                           }}
                           variant="body1"
                         >
@@ -150,7 +193,7 @@ export default function CartSummaryTable({ basket }) {
                       </Link>
                     </TableCell>
                     <TableCell align="right">
-                      <Typography variant="body2">
+                      <Typography variant="body2" sx={tableTextStyles}>
                         {formatPrice(
                           toDecimal(
                             dinero({ amount: price * 100, currency: GBP }),
@@ -165,32 +208,38 @@ export default function CartSummaryTable({ basket }) {
                           flexDirection: 'row',
                           flexWrap: 'nowrap',
                           width: '100%',
-                          justifyContent: 'end',
+                          justifyContent: 'space-between',
                           alignItems: 'center',
                         }}
                       >
                         <IconButton
+                          sx={iconButtonStyles}
                           aria-label="reduce number of product in basket by 1"
-                          onClick={() =>
+                          onClick={() => {
                             removeFromBasketHandler({
                               productId: _id,
                               user: user.user,
                               removeFromBasketMutateFn: removeFromBasketMutate,
                               queryClient,
-                            })
-                          }
+                            });
+                          }}
                           disabled={productBasketQuantity <= 1}
                         >
-                          <RemoveIcon />
+                          <RemoveIcon size="small" />
                         </IconButton>
                         <Typography
                           variant="body2"
-                          sx={{ color: 'black', textDecoration: 'none' }}
+                          sx={{
+                            color: 'black',
+                            textDecoration: 'none',
+                            ...tableTextStyles,
+                          }}
                         >
                           {/* calculate quantity in basket */}
                           {productBasketQuantity}
                         </Typography>
                         <IconButton
+                          sx={iconButtonStyles}
                           aria-label="increase number of product in basket by 1"
                           onClick={() =>
                             addToBasketHandler({
@@ -202,14 +251,18 @@ export default function CartSummaryTable({ basket }) {
                           }
                           disabled={quantityInStock <= productBasketQuantity}
                         >
-                          <AddIcon />
+                          <AddIcon size="small" />
                         </IconButton>
                       </Box>
                     </TableCell>
                     <TableCell align="right">
                       <Typography
                         variant="body2"
-                        sx={{ color: 'black', textDecoration: 'none' }}
+                        sx={{
+                          color: 'black',
+                          textDecoration: 'none',
+                          ...tableTextStyles,
+                        }}
                       >
                         {/* calculate the subtotal */}
                         {formatPrice(

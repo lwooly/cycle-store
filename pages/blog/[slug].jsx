@@ -1,20 +1,13 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import Markdown from 'marked-react';
+
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import { AllPosts, SinglePost } from '@/lib/hygraph/queries';
-import { Card, CardContent, CardMedia } from '@/components/mui';
+import BlogPost from '@/components/BlogPost';
 
 const { HYGRAPH_ENDPOINT, HYGRAPH_TOKEN } = process.env;
 
-export default function BlogPost({ ssd = {} }) {
-  const {
-    title,
-    body,
-    heroImage: { url },
-  } = ssd;
-
+export default function BlogPostPage({ ssd = {} }) {
   return (
     <>
       <Head>
@@ -25,24 +18,7 @@ export default function BlogPost({ ssd = {} }) {
       </Head>
       <Layout>
         <Heading />
-        <Card component="article" sx={{ width: '100%' }}>
-          <CardMedia sx={{ display: 'grid', placeContent: 'center' }}>
-            <Image
-              alt={title}
-              src={url}
-              width={400}
-              height={300}
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-              }}
-            />
-          </CardMedia>
-          <CardContent>
-            <Heading component="h2">{title}</Heading>
-            <Markdown>{body}</Markdown>
-          </CardContent>
-        </Card>
+        <BlogPost blogPost={ssd} />
       </Layout>
     </>
   );
@@ -71,8 +47,6 @@ export const getStaticPaths = async () => {
   const paths = allPosts.map((post) => ({
     params: { slug: post.slug },
   }));
-
-  console.log(`PATHS`, paths);
 
   return {
     paths,

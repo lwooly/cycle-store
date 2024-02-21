@@ -3,7 +3,7 @@ import { createContext, useMemo, useState } from 'react';
 export const UIContext = createContext({
   snackbar: {
     isOpen: false,
-    hideDuration: 6000,
+    hideDuration: 1000,
     onClose: () => {},
     message: 'success',
     showMessage: () => {},
@@ -31,7 +31,7 @@ export function UIProvider({ children }) {
   const contextValue = useMemo(
     () => ({
       isOpen: open,
-      hideDuration: 6000,
+      hideDuration: 1000,
       onClose,
       message,
       showMessage,

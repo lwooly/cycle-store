@@ -14,9 +14,10 @@ function Footer() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
+        marginTop: 'auto',
       }}
     >
-      <Typography variant="h6" color="#FFF">
+      <Typography sx={{ marginLeft: '1rem' }} variant="h6" color="#FFF">
         Design by websitedemos.net
       </Typography>
       <ProfileLinks color="#FFF" />

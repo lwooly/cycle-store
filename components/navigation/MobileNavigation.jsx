@@ -10,7 +10,8 @@ import {
   ListItemText,
   Typography,
 } from '@/components/mui';
-import BasketIcon from '@/components/BasketIcon';
+// import BasketIcon from '@/components/BasketIcon';
+import theme from '@/lib/theme';
 
 function MobileNavigation({
   mobileOpen = false,
@@ -22,6 +23,7 @@ function MobileNavigation({
     display: 'block',
     textDecoration: 'none',
     flexGrow: 1,
+    color: theme.palette.text.primary,
   };
 
   const { user } = useUser();
@@ -35,19 +37,19 @@ function MobileNavigation({
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: 'block', sm: 'none' },
+          display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
         }}
       >
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
           <Typography variant="h6" sx={{ my: 2 }}>
-            Coffee Shop
+            Bike Shop
           </Typography>
           <Divider />
           <List>
-            <ListItem>
+            {/* <ListItem>
               <BasketIcon />
-            </ListItem>
+            </ListItem> */}
             <ListItem>
               <Link href="/" passHref style={itemLinkStyles} to="/">
                 <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
@@ -55,6 +57,14 @@ function MobileNavigation({
                 </ListItemButton>
               </Link>
             </ListItem>
+            <ListItem>
+              <Link href="/products" passHref style={itemLinkStyles}>
+                <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
+                  <ListItemText primary="Shop" />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+
             <ListItem>
               <Link href="/contact" passHref style={itemLinkStyles}>
                 <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
@@ -72,13 +82,13 @@ function MobileNavigation({
 
             {user ? (
               <>
-                <ListItem>
+                {/* <ListItem>
                   <Link href="/profile" passHref style={itemLinkStyles}>
                     <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
                       <ListItemText primary="Profile" />
                     </ListItemButton>
                   </Link>
-                </ListItem>
+                </ListItem> */}
                 <ListItem>
                   <Link href="/api/auth/logout" passHref style={itemLinkStyles}>
                     <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>

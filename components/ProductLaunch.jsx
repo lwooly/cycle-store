@@ -15,17 +15,17 @@ import {
 } from '@/lib/api-functions/client/basket';
 import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
 import { useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
 import Heading from './Heading';
+import { UIContext } from './contexts/UI.context';
 
 function ProductLaunch() {
   const { isLoading, isError, error, data: products } = useProducts();
   const theme = useTheme();
   const user = useUser();
   const { data: basket } = useUserOrTempBasket({ user });
-  console.log(basket);
   const queryClient = useQueryClient();
-
-  // console.log(products)
+  const { showMessage } = useContext(UIContext);
 
   if (isLoading) {
     return <CircularProgress />;
@@ -68,7 +68,7 @@ function ProductLaunch() {
     >
       <Image
         src={product.image}
-        alt={product.name}
+        alt={product.title}
         fill
         sizes="100vw"
         style={{
@@ -95,8 +95,10 @@ function ProductLaunch() {
             position: 'relative',
             gap: '0.5rem',
             color: 'white',
-            maxWidth: '60%',
+            maxWidth: { sm: '60%' },
             height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
           <Typography component="h1" variant="h4" sx={{ zIndex: 1 }}>
@@ -118,15 +120,26 @@ function ProductLaunch() {
             </Paragraph>
             <Button
               variant="contained"
-              sx={{ marginRight: 'auto', color: 'white' }}
-              onClick={() =>
+              sx={{
+                marginRight: 'auto',
+                color: 'white',
+                '&.Mui-disabled': {
+                  background: '#eaeaea',
+                  color: '#c0c0c0',
+                },
+              }}
+              onClick={() => {
                 addToBasketHandler({
                   productId: _id,
                   user: user.user,
                   addToBasketMutateFn: addToBasketMutate,
                   queryClient,
-                })
-              }
+                });
+                showMessage({
+                  type: 'success',
+                  string: 'Product added to cart!',
+                });
+              }}
               disabled={quantityInStock <= productBasketQuantity}
             >
               Buy Now

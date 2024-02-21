@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { Alert, Snackbar, IconButton, CloseIcon } from '@/components/mui';
+import { Alert, Snackbar } from '@/components/mui';
 import { UIContext } from '@/components/contexts/UI.context';
+import { Box } from '@mui/material';
 import Header from './Header';
 import Footer from './Footer';
 import BasketUserManagement from './BasketUserManagement';
@@ -16,11 +17,16 @@ function Layout({ children }) {
 
   return (
     <>
-      <header>
-        <Header />
-      </header>
-      <main>{children}</main>
-      <Footer />
+      <Box
+        sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
+      >
+        <header>
+          <Header />
+        </header>
+        <main>{children}</main>
+        <Footer />
+      </Box>
+
       <BasketUserManagement />
       <Snackbar
         open={open}
@@ -30,17 +36,17 @@ function Layout({ children }) {
         <Alert
           onClose={handleClose}
           severity={severity}
-          sx={{ width: '100%', mb: 0 }}
+          sx={{ width: '100%', mb: 0, display: 'flex', alignItems: 'center' }}
         >
           {message}
-          <IconButton
+          {/* <IconButton
             size="small"
             aria-label="close"
             color="inherit"
             onClick={handleClose}
           >
             <CloseIcon fontSize="small" />
-          </IconButton>
+          </IconButton> */}
         </Alert>
       </Snackbar>
     </>

@@ -59,7 +59,7 @@ function ExploreArticle({ title, description, imageSrc, exploreLink }) {
             justifyContent: 'center',
             gap: '1rem',
             color: 'white',
-            maxWidth: '40%',
+            maxWidth: { sm: '80%', md: '60%' },
             height: '100%',
             minHeight: '100vh',
           }}

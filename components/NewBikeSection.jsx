@@ -53,7 +53,7 @@ function NewBikeSection() {
             justifyContent: 'center',
             gap: '1rem',
             color: 'white',
-            maxWidth: '40%',
+            maxWidth: { sm: '75%', md: '60%' },
             height: '100%',
             minHeight: '100vh',
             textAlign: 'center',
@@ -74,7 +74,7 @@ function NewBikeSection() {
             </Paragraph>
             <Button
               variant="contained"
-              sx={{ width: '50%', color: 'white', margin: '0 auto', zIndex: 1 }}
+              sx={{ color: 'white', margin: '0 auto', zIndex: 1 }}
               href="/products"
             >
               View now

@@ -10,7 +10,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     right: -3,
     top: 13,
-    border: `2px solid ${theme.palette.secondary.main}`,
+    border: `1.5px solid ${theme.palette.secondary.main}`,
     padding: '0 4px',
     backgroundColor: 'white',
   },
@@ -33,7 +33,11 @@ export default function BasketIcon() {
   return (
     <IconButton aria-label="basket" href="/basket">
       {/* check that this works on the home page as well as the basket page */}
-      <StyledBadge badgeContent={badgeContent} color="secondary">
+      <StyledBadge
+        badgeContent={badgeContent}
+        color="secondary"
+        sx={{ fontSize: 'large' }}
+      >
         <ShoppingCartIcon sx={{ color: 'white' }} />
       </StyledBadge>
     </IconButton>

@@ -129,6 +129,22 @@ function ProductForm({ submitHandler, product }) {
       <div style={formRowStyle}>
         <Controller
           control={control}
+          name="category"
+          render={({ field }) => (
+            <TextField
+              type="text"
+              {...field}
+              label="category"
+              fullWidth
+              error={!!errors.category}
+              helperText={errors.category?.message}
+            />
+          )}
+        />
+      </div>
+      <div style={formRowStyle}>
+        <Controller
+          control={control}
           name="description"
           render={({ field }) => (
             <TextField

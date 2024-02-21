@@ -17,14 +17,13 @@ function Layout({ children }) {
 
   return (
     <>
-      <header>
-        <Header />
-      </header>
       <Box
         sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
       >
+        <header>
+          <Header />
+        </header>
         <main>{children}</main>
-
         <Footer />
       </Box>
 

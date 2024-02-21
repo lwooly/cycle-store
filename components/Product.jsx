@@ -31,6 +31,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useUserOrTempBasket } from '@/lib/tq/baskets/queries';
 import { useTheme } from '@emotion/react';
 import { UIContext } from './contexts/UI.context';
+import LinkWrapper from './LinkWrapper';
+import ReadMoreIcon from '@mui/icons-material/ReadMore';
 
 function Product({
   values: { _id, title, description, price, quantity: quantityInStock, image }, // favorites,
@@ -98,172 +100,185 @@ function Product({
   const imagePaddingStyles = summary
     ? { paddingBottom: 'min(300px, 100%)' }
     : { paddingBottom: '60vh' };
+
   return (
-    <Card
-      component="div"
-      sx={{
-        width: '100%',
-        borderRadius: 0,
-        borderShadow: 'none',
-        height: '100%',
-        padding: '0',
-        gutters: '0',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <CardMedia
+    <LinkWrapper link={link}>
+      <Card
+        component="div"
         sx={{
-          width: '100%', // Make width responsive
-          height: 0,
-          // Limit the maximum size
-          position: 'relative',
-          ...imagePaddingStyles,
-          // Equal to width for a square aspect ratio
-          overflow: 'hidden',
-          // flexGrow: 1,
-          // minWidth: { md: "30vw" },
-          //   border: '3px solid #000',
+          width: '100%',
+          borderRadius: 0,
+          borderShadow: 'none',
+          height: '100%',
+          padding: '0',
+          gutters: '0',
+          display: 'flex',
+          flexDirection: 'column',
+          '&:hover': {
+            backgroundColor: theme.palette.grey[100],
+            '& .iconBtn': {
+              backgroundColor: theme.palette.primary.main,
+            },
+          },
         }}
       >
-        <Image
-          src={imageSrc}
-          alt={title}
-          fill
-          onError={errorHandler}
-          sizes="50%"
-          style={{
-            objectFit: 'cover',
-            objectPosition: 'center',
-            maxWidth: '100%',
-          }}
-        />
-      </CardMedia>
-      <Box sx={cardContentStyles}>
-        <CardContent
+        <CardMedia
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.5rem',
-            paddingY: '0.5rem',
+            width: '100%', // Make width responsive
+            height: 0,
+            // Limit the maximum size
+            position: 'relative',
+            ...imagePaddingStyles,
+            // Equal to width for a square aspect ratio
+            overflow: 'hidden',
+            // flexGrow: 1,
+            // minWidth: { md: "30vw" },
+            //   border: '3px solid #000',
           }}
         >
-          {!linkToProductPage ? (
+          <Image
+            src={imageSrc}
+            alt={title}
+            fill
+            onError={errorHandler}
+            sizes="50%"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center',
+              maxWidth: '100%',
+            }}
+          />
+        </CardMedia>
+        <Box sx={cardContentStyles}>
+          <CardContent
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem',
+              paddingY: '0.5rem',
+            }}
+          >
             <Heading component="h2" variant={headingLevel}>
               {title}
             </Heading>
-          ) : (
-            <a
-              href={link}
-              rel="noopener noreferrer"
-              target="_blank"
-              aria-label="Link to product page"
-              color="black"
-              style={{
-                textDecoration: 'none',
-                color: theme.palette.text.primary,
+
+            {!summary && <Typography>About: {description}</Typography>}
+            <Typography variant="body2">
+              {' '}
+              {formatPrice(
+                toDecimal(dinero({ amount: price * 100, currency: GBP })),
+              )}
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: { xs: 'space-between', sm: 'start' },
               }}
             >
-              <Heading component="h2" variant={headingLevel}>
-                {title}
-              </Heading>
-            </a>
-          )}
-          {!summary && <Typography>About: {description}</Typography>}
-          <Typography variant="body2">
-            {' '}
-            {formatPrice(
-              toDecimal(dinero({ amount: price * 100, currency: GBP })),
-            )}
-          </Typography>
-          <Box
+              <Typography
+                variant="body2"
+                sx={{ fontSize: '0.85em', paddingInlineEnd: '2rem' }}
+              >
+                In Stock: {quantityInStock}
+              </Typography>
+
+              <Typography variant="body2" sx={{ fontSize: '0.85em' }}>
+                In cart: {productBasketQuantity}
+              </Typography>
+            </Box>
+          </CardContent>
+          <CardActions
             sx={{
-              display: 'flex',
-              justifyContent: { xs: 'space-between', sm: 'start' },
+              marginTop: 'auto',
+              paddingBottom: { sm: '1rem' },
             }}
           >
-            <Typography
-              variant="body2"
-              sx={{ fontSize: '0.85em', paddingInlineEnd: '2rem' }}
-            >
-              In Stock: {quantityInStock}
-            </Typography>
-
-            <Typography variant="body2" sx={{ fontSize: '0.85em' }}>
-              In cart: {productBasketQuantity}
-            </Typography>
-          </Box>
-        </CardContent>
-        <CardActions
-          sx={{
-            marginTop: 'auto',
-            paddingBottom: { sm: '1rem' },
-          }}
-        >
-          <Button
-            sx={{ color: 'white' }}
-            variant="contained"
-            onClick={() => {
-              addToBasketHandler({
-                productId: _id,
-                user: user.user,
-                addToBasketMutateFn: addToBasketMutate,
-                queryClient,
-              });
-              showMessage({
-                type: 'success',
-                string: 'Product added to cart!',
-              });
-            }}
-            disabled={quantityInStock <= productBasketQuantity}
-          >
-            Add to cart
-          </Button>
-
-          {inBasket && productBasketQuantity > 0 && (
             <Button
-              aria-label="remove product from basket"
               sx={{ color: 'white' }}
               variant="contained"
               onClick={() => {
-                removeFromBasketHandler({
+                addToBasketHandler({
                   productId: _id,
                   user: user.user,
-                  removeFromBasketMutateFn: removeFromBasketMutate,
+                  addToBasketMutateFn: addToBasketMutate,
                   queryClient,
                 });
                 showMessage({
                   type: 'success',
-                  string: 'Product removed from cart!',
+                  string: 'Product added to cart!',
                 });
               }}
+              disabled={quantityInStock <= productBasketQuantity}
             >
-              Remove from cart
+              Add to cart
             </Button>
-          )}
-          {canUpdate && (
-            <IconButton
-              variant="contained"
-              aria-label="update"
-              href={`/admin/products/update/${_id}`}
-              component={Link}
-            >
-              <EditIcon />
-            </IconButton>
-          )}
 
-          {canRemove && (
-            <IconButton
-              variant="contained"
-              aria-label="delete"
-              onClick={() => removeHandler(_id)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          )}
-        </CardActions>
-      </Box>
-    </Card>
+            {link && (
+              <IconButton
+                className="iconBtn"
+                sx={{
+                  fontSize: '2rem',
+                  position: 'absolute',
+                  bottom: '200px',
+                  right: '20px',
+                  colour: 'white',
+                  backgroundColor: theme.palette.grey[400],
+
+                  '&:hover': {
+                    scale: '1.05',
+                  },
+                }}
+                variant="contained"
+              >
+                <ReadMoreIcon fontSize="inherit" sx={{ color: 'white' }} />
+              </IconButton>
+            )}
+
+            {inBasket && productBasketQuantity > 0 && (
+              <Button
+                aria-label="remove product from basket"
+                sx={{ color: 'white' }}
+                variant="contained"
+                onClick={() => {
+                  removeFromBasketHandler({
+                    productId: _id,
+                    user: user.user,
+                    removeFromBasketMutateFn: removeFromBasketMutate,
+                    queryClient,
+                  });
+                  showMessage({
+                    type: 'success',
+                    string: 'Product removed from cart!',
+                  });
+                }}
+              >
+                Remove from cart
+              </Button>
+            )}
+            {canUpdate && (
+              <IconButton
+                variant="contained"
+                aria-label="update"
+                href={`/admin/products/update/${_id}`}
+                component={Link}
+              >
+                <EditIcon />
+              </IconButton>
+            )}
+
+            {canRemove && (
+              <IconButton
+                variant="contained"
+                aria-label="delete"
+                onClick={() => removeHandler(_id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
+          </CardActions>
+        </Box>
+      </Card>
+    </LinkWrapper>
   );
 }
 

@@ -11,6 +11,7 @@ import {
 import Markdown from 'marked-react';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import React from 'react';
+import LinkWrapper from './LinkWrapper';
 
 function BlogPost({ blogPost, isSummary }) {
   const theme = useTheme();
@@ -26,74 +27,76 @@ function BlogPost({ blogPost, isSummary }) {
     body,
   } = blogPost;
   return (
-    <Card
-      component="article"
-      sx={{
-        width: '100%',
-        minHeight: '100%',
-        position: 'relative',
-        '&:hover': {
-          backgroundColor: theme.palette.grey[100],
-          '& .iconBtn': {
-            backgroundColor: theme.palette.primary.main,
-          },
-        },
-      }}
-    >
-      <CardMedia
+    <LinkWrapper link={`/blog/${slug}`}>
+      <Card
+        component="article"
         sx={{
-          width: '100%', // Make width responsive
-          height: 0,
-          // Limit the maximum size
+          width: '100%',
+          minHeight: '100%',
           position: 'relative',
-          ...imagePaddingStyles,
-          // Equal to width for a square aspect ratio
-          overflow: 'hidden',
+          '&:hover': {
+            backgroundColor: theme.palette.grey[100],
+            '& .iconBtn': {
+              backgroundColor: theme.palette.primary.main,
+            },
+          },
         }}
       >
-        <Image
-          src={url}
-          alt={title}
-          fill
-          // onError={errorHandler}
-          sizes="50%"
-          style={{
-            objectFit: 'cover',
-            objectPosition: 'center',
-            maxWidth: '100%',
+        <CardMedia
+          sx={{
+            width: '100%', // Make width responsive
+            height: 0,
+            // Limit the maximum size
+            position: 'relative',
+            ...imagePaddingStyles,
+            // Equal to width for a square aspect ratio
+            overflow: 'hidden',
           }}
-        />
-      </CardMedia>
-      <CardContent sx={{ width: { sm: '100%', md: '75%' }, margin: 'auto' }}>
-        <Heading component="h2" variant="h4">
-          {title}
-        </Heading>
-        {!isSummary && <Markdown>{body}</Markdown>}
-      </CardContent>
-      {isSummary && (
-        <CardActions>
-          <IconButton
-            className="iconBtn"
-            sx={{
-              fontSize: '4rem',
-              position: 'absolute',
-              top: '130px',
-              right: '20px',
-              colour: 'white',
-              backgroundColor: theme.palette.grey[400],
-
-              '&:hover': {
-                scale: '1.05',
-              },
+        >
+          <Image
+            src={url}
+            alt={title}
+            fill
+            // onError={errorHandler}
+            sizes="50%"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center',
+              maxWidth: '100%',
             }}
-            variant="contained"
-            href={`/blog/${slug}`}
-          >
-            <ReadMoreIcon fontSize="inherit" sx={{ color: 'white' }} />
-          </IconButton>
-        </CardActions>
-      )}
-    </Card>
+          />
+        </CardMedia>
+        <CardContent sx={{ width: { sm: '100%', md: '75%' }, margin: 'auto' }}>
+          <Heading component="h2" variant="h4">
+            {title}
+          </Heading>
+          {!isSummary && <Markdown>{body}</Markdown>}
+        </CardContent>
+        {isSummary && (
+          <CardActions>
+            <IconButton
+              className="iconBtn"
+              sx={{
+                fontSize: '4rem',
+                position: 'absolute',
+                top: '130px',
+                right: '20px',
+                colour: 'white',
+                backgroundColor: theme.palette.grey[400],
+
+                '&:hover': {
+                  scale: '1.05',
+                },
+              }}
+              variant="contained"
+              href={`/blog/${slug}`}
+            >
+              <ReadMoreIcon fontSize="inherit" sx={{ color: 'white' }} />
+            </IconButton>
+          </CardActions>
+        )}
+      </Card>
+    </LinkWrapper>
   );
 }
 

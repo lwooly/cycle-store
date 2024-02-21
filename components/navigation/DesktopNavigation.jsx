@@ -25,10 +25,10 @@ function DesktopNavigation({
     <AppBar
       component="nav"
       sx={{
-        mb: 2,
         backgroundImage: 'none',
         boxShadow: 'none',
-        position: 'absolute',
+        display: 'block',
+        position: 'static',
       }}
       // color="transparent"
     >

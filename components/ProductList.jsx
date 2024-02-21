@@ -3,31 +3,36 @@ import { useProducts } from '@/lib/tq/products/queries';
 import { CircularProgress, List, ListItem } from '@/components/mui';
 import Paragraph from '@/components/Paragraph';
 import Product from '@/components/Product';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 function ProductList({
   removeHandler = () => {},
   userProductPermissions = {},
+  sortBy,
+  maxNumber,
 }) {
-  const [products, setProducts] = useState([]);
+  const { data: productList } = useProducts();
 
-  const { isLoading, isError, error, data: productList } = useProducts();
+  // sort products
+  const sortedAndLimitedProducts = useMemo(() => {
+    const sortedProducts = [...productList]; // Create a shallow copy to avoid mutating the original array
 
-  useEffect(() => {
-    if (productList) {
-      setProducts(productList);
+    // Sorting
+    if (sortBy === 'pricelowhigh') {
+      sortedProducts.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'pricehighlow') {
+      sortedProducts.sort((a, b) => b.price - a.price);
+    } else if (sortBy === 'alphabetical') {
+      sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortBy === 'stock') {
+      sortedProducts.sort((a, b) => a.stock - b.stock);
     }
-  }, [productList]);
 
-  if (isLoading) {
-    return <CircularProgress />;
-  }
+    // Limiting
+    return maxNumber ? sortedProducts.slice(0, maxNumber) : sortedProducts;
+  }, [productList, sortBy, maxNumber]);
 
-  if (isError) {
-    return <Paragraph>{error.message}</Paragraph>;
-  }
-
-  if (!products.length) return <Paragraph>No products available</Paragraph>;
+  console.log(sortedAndLimitedProducts);
 
   return (
     <List
@@ -42,7 +47,7 @@ function ProductList({
         gap: '0.5rem',
       }}
     >
-      {products.map((product) => (
+      {sortedAndLimitedProducts.map((product) => (
         // eslint-disable-next-line no-underscore-dangle
         <ListItem key={product._id} component="li" sx={{ padding: '0' }}>
           <ErrorBoundary>

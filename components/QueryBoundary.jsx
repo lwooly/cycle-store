@@ -28,7 +28,7 @@ export function QueryBoundary({ children }) {
 
   return (
     <div>
-      <ErrorBoundary fallbackCompnent={ErrorView} onReset={reset}>
+      <ErrorBoundary fallbackComponent={ErrorView} onReset={reset}>
         <Suspense fallback={<LoadingView />}>{children}</Suspense>
       </ErrorBoundary>
     </div>

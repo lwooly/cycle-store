@@ -27,9 +27,9 @@ export default function Blog({ ssd = [] }) {
             component="ol"
             sx={{
               listStyle: 'none',
-              display: 'flex',
+              display: { md: 'flex' },
               flexWrap: 'wrap',
-              width: '75vw',
+              width: { sm: '75vw' },
               margin: 'auto',
             }}
           >
@@ -37,7 +37,7 @@ export default function Blog({ ssd = [] }) {
               <ListItem
                 key={blogPost.id}
                 sx={{
-                  width: '50%',
+                  width: { xs: '100%', md: '50%' },
                   minHeight: '100%',
                   flexShrink: 0,
                   flexGrow: 0,

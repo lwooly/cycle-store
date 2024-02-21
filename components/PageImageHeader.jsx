@@ -49,7 +49,7 @@ function PageImageHeader({ title, imageSrc }) {
         <Typography
           component="h1"
           variant="h1"
-          sx={{ color: 'white', zIndex: 2 }}
+          sx={{ color: 'white', zIndex: 2, padding: '1rem' }}
         >
           {title}
         </Typography>

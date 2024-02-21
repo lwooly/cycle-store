@@ -40,7 +40,7 @@ function DesktopNavigation({
           onClick={handleDrawerToggle}
           sx={{ mr: 2, display: { md: 'none' } }}
         >
-          <MenuIcon sx={{color:'white'}} fontSize='large'/>
+          <MenuIcon sx={{ color: 'white' }} fontSize="large" />
         </IconButton>
         <Typography
           variant="h6"

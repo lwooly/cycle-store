@@ -8,7 +8,7 @@ function NewArrivals() {
       component="section"
       sx={{
         px: 4,
-        py:8,
+        py: 8,
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',

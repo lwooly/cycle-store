@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Alert, Snackbar } from '@/components/mui';
 import { UIContext } from '@/components/contexts/UI.context';
+import { Box } from '@mui/material';
 import Header from './Header';
 import Footer from './Footer';
 import BasketUserManagement from './BasketUserManagement';
@@ -19,8 +20,14 @@ function Layout({ children }) {
       <header>
         <Header />
       </header>
-      <main >{children}</main>
-      <Footer />
+      <Box
+        sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
+      >
+        <main>{children}</main>
+
+        <Footer />
+      </Box>
+
       <BasketUserManagement />
       <Snackbar
         open={open}

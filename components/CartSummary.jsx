@@ -37,8 +37,8 @@ import {
 import { useTheme } from '@emotion/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useContext } from 'react';
-import { UIContext } from './contexts/UI.context';
 import { useMediaQuery } from '@mui/material';
+import { UIContext } from './contexts/UI.context';
 
 export default function CartSummaryTable({ basket }) {
   const user = useUser();
@@ -56,8 +56,6 @@ export default function CartSummaryTable({ basket }) {
 
   // get a list of unique items from basket
   const uniqueItems = getUniqueBasketItems(basket);
-
-
 
   const tableTextStyles = {
     fontSize: { xs: '0.8em', sm: '1em' },

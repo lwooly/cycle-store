@@ -97,7 +97,7 @@ export default function Contact() {
                 <Heading component="h4" sx={{ marginBottom: '0.7rem' }}>
                   Contact Details
                 </Heading>
-                <Typography component={'p'} variant="body2">
+                <Typography component="p" variant="body2">
                   contact@localcycle.com
                 </Typography>
               </Box>

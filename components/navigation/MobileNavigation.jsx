@@ -10,7 +10,7 @@ import {
   ListItemText,
   Typography,
 } from '@/components/mui';
-import BasketIcon from '@/components/BasketIcon';
+// import BasketIcon from '@/components/BasketIcon';
 import theme from '@/lib/theme';
 
 function MobileNavigation({

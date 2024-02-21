@@ -14,6 +14,7 @@ function Footer() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
+        marginTop: 'auto',
       }}
     >
       <Typography variant="h6" color="#FFF">

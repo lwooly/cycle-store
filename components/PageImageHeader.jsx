@@ -1,8 +1,6 @@
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
-import { Box, Button, Typography } from '@/components/mui';
-import Paragraph from '@/components/Paragraph';
+import { Box, Typography } from '@/components/mui';
+
 import { useTheme } from '@emotion/react';
-import Heading from './Heading';
 
 function PageImageHeader({ title, imageSrc }) {
   const theme = useTheme();

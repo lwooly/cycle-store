@@ -82,9 +82,8 @@ function Product({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
   };
-  //style card content
+  // style card content
   if (!summary) {
     cardContentStyles = {
       paddingX: { sm: '2rem' },

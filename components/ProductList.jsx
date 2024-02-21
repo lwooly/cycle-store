@@ -28,13 +28,12 @@ function ProductList({
       sortedProducts.sort((a, b) => a.stock - b.stock);
     }
 
-    console.log(filterBy);
     // Filtering by category
-    const filteredAndSortedProducts = filterBy
-      ? sortedProducts.filter((product) => filterBy === product.category)
-      : sortedProducts;
+    const filteredAndSortedProducts =
+      !filterBy || filterBy === 'all'
+        ? sortedProducts
+        : sortedProducts.filter((product) => filterBy === product.category);
 
-    console.log(filteredAndSortedProducts);
     // Limiting
     return maxNumber
       ? filteredAndSortedProducts.slice(0, maxNumber)

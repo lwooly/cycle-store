@@ -5,13 +5,13 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function ProductFilterSelect({ setFn }) {
+export default function ProductFilterSelect({ setFn, value }) {
   const handleChange = (event) => {
     setFn(event.target.value);
   };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ minWidth: '15rem' }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Filter</InputLabel>
         <Select
@@ -19,7 +19,11 @@ export default function ProductFilterSelect({ setFn }) {
           id="demo-simple-select"
           label="Filter"
           onChange={handleChange}
+          value={value}
         >
+          <MenuItem selected value="all">
+            All
+          </MenuItem>
           <MenuItem value="bicycle">Bicycles</MenuItem>
           <MenuItem value="accessories">Accessories</MenuItem>
         </Select>

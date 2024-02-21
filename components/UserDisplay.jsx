@@ -33,12 +33,12 @@ function UserDisplay({ ssd: user }) {
 
   return (
     <Box>
-      <Card>
+      <Card sx={{ padding: '2rem' }}>
         <CardMedia>
           <Avatar alt="User avatar" src={user.picture} />
         </CardMedia>
         <CardContent>
-          <pre>{JSON.stringify(user, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
           <Paragraph>User: {user.name}</Paragraph>
           <Paragraph>Email: {user.email}</Paragraph>
           <Paragraph>User: {user.nickname}</Paragraph>

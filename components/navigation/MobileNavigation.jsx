@@ -58,6 +58,14 @@ function MobileNavigation({
               </Link>
             </ListItem>
             <ListItem>
+              <Link href="/products" passHref style={itemLinkStyles}>
+                <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
+                  <ListItemText primary="Shop" />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+
+            <ListItem>
               <Link href="/contact" passHref style={itemLinkStyles}>
                 <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
                   <ListItemText primary="Contact" />
@@ -74,13 +82,13 @@ function MobileNavigation({
 
             {user ? (
               <>
-                <ListItem>
+                {/* <ListItem>
                   <Link href="/profile" passHref style={itemLinkStyles}>
                     <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>
                       <ListItemText primary="Profile" />
                     </ListItemButton>
                   </Link>
-                </ListItem>
+                </ListItem> */}
                 <ListItem>
                   <Link href="/api/auth/logout" passHref style={itemLinkStyles}>
                     <ListItemButton sx={{ textAlign: 'left', width: '100%' }}>

@@ -104,7 +104,7 @@ function DesktopNavigation({
         <Box>
           {user ? (
             <>
-              <Button
+              {/* <Button
                 sx={{
                   color: lightTextColor,
                   display: { xs: 'none', md: 'inline-flex' },
@@ -113,7 +113,7 @@ function DesktopNavigation({
                 href="/profile"
               >
                 Profile
-              </Button>
+              </Button> */}
               <Button
                 sx={{
                   color: lightTextColor,

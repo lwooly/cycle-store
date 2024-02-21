@@ -5,22 +5,15 @@ import Layout from '@/components/Layout';
 import QueryBoundaries from '@/components/QueryBoundary';
 import { getProductsFromDB } from '@/lib/api-functions/server/products/queries';
 import { STORAGE_KEY } from '@/lib/tq/products/settings';
-import ProductLaunch from '@/components/ProductLaunch';
-import NewArrivals from '@/components/NewArrivals';
-import ExploreArticle from '@/components/ExploreArticle';
-import WhyChooseSection from '@/components/WhyChooseSection';
-import NewBikeSection from '@/components/NewBikeSection';
 import ProductList from '@/components/ProductList';
 import PageImageHeader from '@/components/PageImageHeader';
-import { Select } from '@mui/material';
-import BasicSelect from '@/components/ProductSortSelect';
 import { useState } from 'react';
 import ProductSortSelect from '@/components/ProductSortSelect';
 import ProductFilterSelect from '@/components/ProductFilterSelect';
 
 export default function ProductsPage() {
   const [productFilter, setProductFilter] = useState('');
-  console.log(productFilter)
+  console.log(productFilter);
   const [productSort, setProductSort] = useState('');
   return (
     <>
@@ -35,14 +28,29 @@ export default function ProductsPage() {
           title="Explore our stock!"
           imageSrc="https://images.unsplash.com/photo-1601067095185-b8b73ad7db10?q=80&w=3026&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         />
-        <Box sx={{ padding: '1rem', display: 'flex' }}>
-          <ProductFilterSelect setFn={setProductFilter} />
-          <ProductSortSelect setFn={setProductSort} />
-        </Box>
-        <Box sx={{ padding: '1rem' }}>
-          <QueryBoundaries>
-            <ProductList sortBy={productSort} filterBy={productFilter} />
-          </QueryBoundaries>
+        <Box sx={{ width: { sm: '75vw' }, margin: 'auto', minHeight: '100vh' }}>
+          <Box sx={{ padding: '3rem 2rem 2rem 0rem ', display: 'flex' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: '1rem',
+                marginLeft: 'auto',
+                flexWrap: 'wrap',
+                paddingLeft: '1rem',
+              }}
+            >
+              <ProductFilterSelect
+                setFn={setProductFilter}
+                value={productFilter}
+              />
+              <ProductSortSelect setFn={setProductSort} value={productSort} />
+            </Box>
+          </Box>
+          <Box sx={{}}>
+            <QueryBoundaries>
+              <ProductList sortBy={productSort} filterBy={productFilter} />
+            </QueryBoundaries>
+          </Box>
         </Box>
       </Layout>
     </>

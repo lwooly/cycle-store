@@ -24,11 +24,8 @@ function ProductLaunch() {
   const theme = useTheme();
   const user = useUser();
   const { data: basket } = useUserOrTempBasket({ user });
-  console.log(basket);
   const queryClient = useQueryClient();
   const { showMessage } = useContext(UIContext);
-
-  // console.log(products)
 
   if (isLoading) {
     return <CircularProgress />;
@@ -71,7 +68,7 @@ function ProductLaunch() {
     >
       <Image
         src={product.image}
-        alt={product.name}
+        alt={product.title}
         fill
         sizes="100vw"
         style={{

@@ -26,7 +26,7 @@ function NewArrivals() {
           New Arrivals
         </Typography>
         <QueryBoundaries>
-          <ProductList maxNumber={4}/>
+          <ProductList maxNumber={4} />
         </QueryBoundaries>
       </Box>
     </Box>

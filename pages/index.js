@@ -71,7 +71,7 @@ export const getStaticProps = async () => {
 
   await queryClient.setQueryData(
     [STORAGE_KEY],
-    JSON.parse(JSON.stringify(products)),
+    JSON.parse(JSON.stringify(products.slice(0, 4))),
   );
 
   return {

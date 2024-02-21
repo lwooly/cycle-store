@@ -58,6 +58,7 @@ export default function AdminProductList({ user }) {
         <Heading component="h2">Products Admin</Heading>
         {userProductPermissions.canAdd && (
           <Button
+            variant="contained"
             component={Link}
             href="/admin/products/add"
             aria-label="create product"
@@ -86,11 +87,7 @@ export const getServerSideProps = withPageAuthRequired({
       JSON.parse(JSON.stringify(products)),
     );
 
-    console.log('context', context);
-
     const session = await getSession(context.req, context.res);
-
-    console.log(session);
 
     return {
       props: {

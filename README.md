@@ -19,7 +19,7 @@ Live demo: [Cycle Store Demo](https://commerce-app-kappa.vercel.app)
 
 - **Frontend**: Next.js for its server-side rendering and SEO advantages, with React Query for advanced state management and MUI for a polished UI.
 - **Authentication**: Auth0 integration for robust and flexible user authentication.
-- **Backend**: A Node.js and Express.js setup for server-side logic, MongoDB as the database choice, Mongoose for object data modeling, and Hygraph for content management.
+- **Backend**: Next.js server-side logic, MongoDB as the database choice, Mongoose for object data modeling, and Hygraph for content management.
 - **Payment Processing**: Stripe integration for secure and straightforward payment transactions.
 - **Email Service**: Sendgrid for reliable email delivery and user notifications.
 

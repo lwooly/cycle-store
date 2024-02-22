@@ -89,7 +89,6 @@ function BlogPost({ blogPost, isSummary }) {
                 },
               }}
               variant="contained"
-              href={`/blog/${slug}`}
             >
               <ReadMoreIcon fontSize="inherit" sx={{ color: 'white' }} />
             </IconButton>

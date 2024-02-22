@@ -39,6 +39,7 @@ function GoogleMap() {
 
       const map = new Map(mapRef.current, options);
       // add the marker in the map
+      // eslint-disable-next-line no-unused-vars
       const marker = new AdvancedMarkerElement({
         map,
         position: location,

@@ -8,7 +8,7 @@ Live demo: [Cycle Store Demo](https://commerce-app-kappa.vercel.app)
 
 - **E-commerce Functionality**: A user-friendly shopping cart that allows users to seamlessly transition from browsing to checkout, enhanced with Auth0 for secure session management.
 - **Admin Pages**: An intuitive admin interface for managing products, giving administrators control over the site's operations.
-- - **User Sessions** Auth0 for user session management.
+- **User Sessions** Auth0 for user session management.
 - **Checkout Experience**: Streamlined and secure checkout process powered by Stripe, designed for ease of use and transaction security.
 - **Dynamic Content**: Blog pages managed with Hygraph, facilitating the publication of content that enhances user engagement and supports SEO efforts.
 - **Data Management**: Efficient handling of products, orders, and shopping baskets using MongoDB, with Mongoose for data modeling and access.

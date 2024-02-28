@@ -17,7 +17,7 @@ const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 const handler = async (req, res) => {
   // ensure post calls only
-  if (req.method !== 'POST') {
+  if (req.method !== 'POST' || req.method !== 'post') {
     return res.status(405).json({ message: 'Wrong Method. Post only' });
   }
 

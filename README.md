@@ -1,40 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cycle Store - Full Stack E-commerce Application
 
-## Getting Started
+Cycle Store, a comprehensive full stack e-commerce platform. This project demonstrates a practical application of modern web development technologies, including a fully functional admin interface, a checkout experience, and dynamic content management. Built with Next.js and React Query for state management, the Cycle Store offers an efficient and user-friendly platform for both customers and administrators.
 
-First, run the development server:
+Live demo: [Cycle Store Demo](https://commerce-app-kappa.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Key Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **E-commerce Functionality**: A user-friendly shopping cart that allows users to seamlessly transition from browsing to checkout, enhanced with Auth0 for secure session management.
+- **Admin Pages**: An intuitive admin interface for managing products, giving administrators control over the site's operations.
+- **User Sessions** Auth0 for user session management.
+- **Checkout Experience**: Streamlined and secure checkout process powered by Stripe, designed for ease of use and transaction security.
+- **Dynamic Content**: Blog pages managed with Hygraph, facilitating the publication of content that enhances user engagement and supports SEO efforts.
+- **Data Management**: Efficient handling of products, orders, and shopping baskets using MongoDB, with Mongoose for data modeling and access.
+- **State Management**: Application-wide state management using React Query, incorporating Suspense and Error Boundaries to handle loading states and errors gracefully.
+- **Styling**: Clean and responsive UI design implemented with Material-UI (MUI), ensuring a cohesive and accessible user experience.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Technology Stack
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- **Frontend**: Next.js for its server-side rendering and SEO advantages, with React Query for advanced state management and MUI for a polished UI.
+- **Authentication**: Auth0 integration for robust and flexible user authentication.
+- **Backend**: Next.js server-side logic, MongoDB as the database choice, Mongoose for object data modeling, and Hygraph for content management.
+- **Payment Processing**: Stripe integration for secure and straightforward payment transactions.
+- **Email Service**: Sendgrid for reliable email delivery and user notifications.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Design by websitedemos.net
